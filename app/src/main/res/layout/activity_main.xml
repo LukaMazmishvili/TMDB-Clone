@@ -20,6 +20,10 @@
         android:id="@+id/bottomNavView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/app_dark"
+        app:itemIconTint="@color/app_gray"
+        app:itemTextColor="@color/app_gray"
+        style="@style/Widget.Material3.BottomNavigationView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/nav_menu" />
 

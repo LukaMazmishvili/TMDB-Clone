@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.TMDBClone" parent="Base.Theme.TMDBClone" />
+
+    <style name="App.Bottom.Nav.Bar" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="itemTextAppearanceActive">@color/app_green</item>
+    </style>
 </resources>
