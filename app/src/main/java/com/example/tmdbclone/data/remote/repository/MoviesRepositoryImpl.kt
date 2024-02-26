@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(private val moviesService: MoviesService) :
     MoviesRepository {
+
     override suspend fun fetchMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> = flow {
         try {
 
@@ -31,4 +32,77 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
 
         }
     }
+
+    override suspend fun fetchNowPlaying(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+        flow {
+            try {
+
+                emit(Resource.Loading(true))
+
+                val response = moviesService.fetchNowPlaying()
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body?.let {
+                        emit(Resource.Success(body.results))
+                    }
+                } else {
+                    emit(Resource.Error("Something Went Wrong !"))
+                }
+
+            } catch (e: Exception) {
+
+                emit(Resource.Error("Something Went Wrong !"))
+
+            }
+        }
+
+    override suspend fun fetchTrendingMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+        flow {
+            try {
+
+                emit(Resource.Loading(true))
+
+                val response = moviesService.fetchTrendingMovies()
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body?.let {
+                        emit(Resource.Success(body.results))
+                    }
+                } else {
+                    emit(Resource.Error("Something Went Wrong !"))
+                }
+
+            } catch (e: Exception) {
+
+                emit(Resource.Error("Something Went Wrong !"))
+
+            }
+        }
+
+
+    override suspend fun fetchTopRatedMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+        flow {
+            try {
+
+                emit(Resource.Loading(true))
+
+                val response = moviesService.fetchTopRatedMovies()
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body?.let {
+                        emit(Resource.Success(body.results))
+                    }
+                } else {
+                    emit(Resource.Error("Something Went Wrong !"))
+                }
+
+            } catch (e: Exception) {
+
+                emit(Resource.Error("Something Went Wrong !"))
+
+            }
+        }
 }

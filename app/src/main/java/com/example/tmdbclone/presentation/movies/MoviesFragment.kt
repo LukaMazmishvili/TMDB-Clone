@@ -11,6 +11,7 @@ import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.common.Endpoints
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.databinding.FragmentMoviesBinding
+import com.example.tmdbclone.presentation.movies.adapters.GridAdapter
 import com.example.tmdbclone.presentation.movies.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -21,8 +22,20 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     private val viewModel: MoviesViewModel by viewModels()
 
-    private val adapter by lazy {
-        PopularAdapter()
+    private val adapterPopular by lazy {
+        PopularAdapter(0)
+    }
+
+    private val adapterPIT by lazy {
+        PopularAdapter(1)
+    }
+
+    private val adapterTrending by lazy {
+        PopularAdapter(0)
+    }
+
+    private val adapterTopRated by lazy {
+        GridAdapter()
     }
 
     override fun started() {
@@ -35,27 +48,74 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     private fun setupViews() {
         with(binding) {
-            trvPopularMovies.setTitle("Popular")
-            trvPopularMovies.setRecyclerViewAdapter(adapter)
 
-            trvPlaintInTheater.setTitle("Playing In Theater")
+            // Popular Movies Recycler
+            trvPopularMovies.setTitle("Popular")
+            trvPopularMovies.setRecyclerViewAdapter(adapterPopular)
+
+            // Playing In Theater Recycler
+            trvPlayingInTheater.setTitle("Playing In Theater")
+            trvPlayingInTheater.setRecyclerViewAdapter(adapterPIT)
+
+            // Trending Movies Recycler
+            trvTrendingMovies.setTitle("Trending")
+            trvTrendingMovies.setRecyclerViewAdapter(adapterTrending)
+
+            // Trending Movies Recycler
+            trvTopRatedMovies.setTitle("Top Rated")
+            trvTopRatedMovies.setGridRecyclerAdapter(adapterTopRated, 4)
+
+
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.title = "Movies"
     }
 
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.moviesState.collect { list ->
-                    adapter.submitList(list)
+                    adapterPopular.submitList(list)
                 }
             }
+        }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.playingNowMoviesState.collect { list ->
+                    adapterPIT.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.trendingMoviesState.collect { list ->
+                    adapterTrending.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.topRatedMoviesState.collect { list ->
+                    adapterTopRated.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.errorMsg.collect { errorMsg ->
                     Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                 }
             }
+        }
 
+        viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.isLoading.collect { isLoading ->
                     Log.d("isLoading", "observer: $isLoading")

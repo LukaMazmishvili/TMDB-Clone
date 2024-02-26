@@ -1,13 +1,34 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.TMDBClone" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.TMDBClone" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!--        <item name="colorPrimary">?attr/colorPrimary</item>-->
     </style>
 
-    <style name="Theme.TMDBClone" parent="Base.Theme.TMDBClone" />
+    <!--    todo change action bar color ბაჩუ -->
 
-    <style name="App.Bottom.Nav.Bar" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="itemTextAppearanceActive">@color/app_green</item>
+    <style name="Theme.TMDBClone" parent="Base.Theme.TMDBClone">
+        <!-- set bottom navigation style overlay-->
+        <item name="bottomNavigationStyle">@style/BottomNavigationOverLay</item>
+
+        <item name="toolbarStyle">@style/ActionBarStyle</item>
     </style>
+
+    <style name="BottomNavigationOverLay" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/BottomNavigation</item>
+    </style>
+
+    <style name="BottomNavigation" parent="">
+        <item name="colorPrimary">@color/app_green</item>
+        <item name="colorOnSurface">@color/app_gray</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
+        <item name="colorSurface">@color/app_gray</item>
+        <item name="colorOnSurface">@color/app_dark</item>
+        <item name="colorPrimary">@color/app_gray</item>
+        <item name="colorPrimaryVariant">@color/app_gray</item>
+        <item name="colorOnPrimary">@color/app_gray</item>
+    </style>
+
 </resources>

@@ -4,18 +4,21 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.tmdbclone.R
 
 class TitledRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val tvTitle: TextView
     private val btnSeeAll: TextView
@@ -37,6 +40,13 @@ class TitledRecyclerView @JvmOverloads constructor(
         btnSeeAll.setOnClickListener(listener)
     }
 
+    fun setGridRecyclerAdapter(adapter: ListAdapter<*, *>, columns: Int) {
+        recyclerView.layoutManager =
+            GridLayoutManager(context, columns, GridLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = adapter
+    }
+
+    // todo must rename this function
     fun setRecyclerViewAdapter(adapter: ListAdapter<*, *>) {
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

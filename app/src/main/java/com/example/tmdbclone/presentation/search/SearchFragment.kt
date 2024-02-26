@@ -15,6 +15,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity?.title = "Search"
+    }
+
     override fun listeners() {
 
     }

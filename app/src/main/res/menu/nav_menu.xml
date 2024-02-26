@@ -3,32 +3,32 @@
 
     <item
         android:id="@+id/moviesFragment"
-        android:icon="@drawable/selector_movies_icon"
-        android:iconTint="@color/white"
+        android:enabled="true"
+        android:icon="@drawable/ic_movies"
         android:title="@string/movies" />
 
     <item
         android:id="@+id/tvShowsFragment"
+        android:enabled="true"
         android:icon="@drawable/ic_tv"
-        android:iconTint="@color/white"
         android:title="@string/tv_shows" />
 
     <item
         android:id="@+id/celebritiesFragment"
+        android:enabled="true"
         android:icon="@drawable/ic_person"
-        android:iconTint="@color/white"
         android:title="@string/celebrities" />
 
     <item
         android:id="@+id/searchFragment"
+        android:enabled="true"
         android:icon="@drawable/baseline_search_24"
-        android:iconTint="@color/white"
         android:title="@string/tv_shows" />
 
     <item
         android:id="@+id/TMDBFragment"
+        android:enabled="true"
         android:icon="@drawable/baseline_account_box_24"
-        android:iconTint="@color/white"
         android:title="@string/celebrities" />
 
 </menu>

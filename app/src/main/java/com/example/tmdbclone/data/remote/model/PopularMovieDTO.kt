@@ -3,9 +3,15 @@ package com.example.tmdbclone.data.remote.model
 import com.google.gson.annotations.SerializedName
 
 data class PopularMovieDTO(
+    val dates: Dates,
     val page: Int?,
     val results: List<MovieModelDto>
-    ) {
+) {
+
+    data class Dates(
+        val maximum: String,
+        val minimum: String
+    )
 
     data class MovieModelDto(
         val adult: Boolean?,
@@ -22,6 +28,8 @@ data class PopularMovieDTO(
         val popularity: Double?,
         @SerializedName("poster_path")
         val posterPath: String?,
+        @SerializedName("media_type")
+        val mediaType: String,
         @SerializedName("release_date")
         val releaseDate: String?,
         val title: String?,

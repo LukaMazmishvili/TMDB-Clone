@@ -20,8 +20,23 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
     private val _moviesState = MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
     val moviesState = _moviesState.asStateFlow()
 
+    private val _playingNowMoviesState =
+        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+    val playingNowMoviesState = _playingNowMoviesState.asStateFlow()
+
+    private val _trendingMoviesState =
+        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+    val trendingMoviesState = _trendingMoviesState.asStateFlow()
+
+    private val _topRatedMoviesState =
+        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+    val topRatedMoviesState = _topRatedMoviesState.asStateFlow()
+
     init {
         fetchMovies()
+        fetchNowPlayingMovies()
+        fetchTrendingMovies()
+        fetchTopRatedMovies()
     }
 
     private fun fetchMovies() {
@@ -31,6 +46,69 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
                     is Resource.Success -> {
                         hideLoading()
                         _moviesState.value = response.data!!
+                    }
+
+                    is Resource.Error -> {
+                        hideLoading()
+                        setErrorMsg(response.errorMsg)
+                    }
+
+                    is Resource.Loading -> showLoading()
+
+                }
+            }
+        }
+    }
+
+    private fun fetchNowPlayingMovies() {
+        viewModelScope.launch {
+            getMoviesUseCase.getNowPlayingMovies().collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        hideLoading()
+                        _playingNowMoviesState.value = response.data!!
+                    }
+
+                    is Resource.Error -> {
+                        hideLoading()
+                        setErrorMsg(response.errorMsg)
+                    }
+
+                    is Resource.Loading -> showLoading()
+
+                }
+            }
+        }
+    }
+
+    private fun fetchTrendingMovies() {
+        viewModelScope.launch {
+            getMoviesUseCase.getTrendingMovies().collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        hideLoading()
+                        _trendingMoviesState.value = response.data!!
+                    }
+
+                    is Resource.Error -> {
+                        hideLoading()
+                        setErrorMsg(response.errorMsg)
+                    }
+
+                    is Resource.Loading -> showLoading()
+
+                }
+            }
+        }
+    }
+
+    private fun fetchTopRatedMovies() {
+        viewModelScope.launch {
+            getMoviesUseCase.getTopRatedMovies().collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        hideLoading()
+                        _topRatedMoviesState.value = response.data!!
                     }
 
                     is Resource.Error -> {

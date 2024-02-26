@@ -9,5 +9,11 @@ object Endpoints {
     const val POPULAR_ENDPOINT =
         "discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc"
 
+    const val NOW_PLAYING = "movie/now_playing?language=en-US&page=1"
+
+    const val TRENDING_ALL = "trending/all/day?language=en-US"
+
+    const val TOP_RATED = "movie/top_rated?language=en-US&page=1"
+
     const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 }
