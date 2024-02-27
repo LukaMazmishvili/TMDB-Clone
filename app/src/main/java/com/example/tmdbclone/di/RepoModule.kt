@@ -1,8 +1,14 @@
 package com.example.tmdbclone.di
 
+import com.example.tmdbclone.data.remote.repository.CelebritiesRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.MoviesRepositoryImpl
+import com.example.tmdbclone.data.remote.repository.TvShowsRepositoryImpl
+import com.example.tmdbclone.data.remote.service.CelebritiesService
 import com.example.tmdbclone.data.remote.service.MoviesService
+import com.example.tmdbclone.data.remote.service.TvShowsService
+import com.example.tmdbclone.domain.repository.CelebritiesRepository
 import com.example.tmdbclone.domain.repository.MoviesRepository
+import com.example.tmdbclone.domain.repository.TvShowsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +23,17 @@ object RepoModule {
     @Singleton
     fun provideMoviesRepo(apiService: MoviesService): MoviesRepository {
         return MoviesRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTvShowsRepo(apiService: TvShowsService): TvShowsRepository {
+        return TvShowsRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCelebritiesRepo(apiService: CelebritiesService): CelebritiesRepository {
+        return CelebritiesRepositoryImpl(apiService)
     }
 }

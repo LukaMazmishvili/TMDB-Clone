@@ -1,4 +1,4 @@
-package com.example.tmdbclone.presentation.movies.adapters
+package com.example.tmdbclone.presentation.adapters
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +31,7 @@ class PopularAdapter(private val type: Int) :
                 }
             }
             Log.d("Link_In_adapter", "onBindViewHolder: ${IMAGE_BASE_URL + item.posterPath}")
-            tvMovieTitle.text = item.title
+            tvMovieTitle.text = item.title ?: item.originalName
             tvMovieCategories.text = item.genreIds.toString()
         }
 

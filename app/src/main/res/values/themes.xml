@@ -5,13 +5,13 @@
         <!--        <item name="colorPrimary">?attr/colorPrimary</item>-->
     </style>
 
-    <!--    todo change action bar color ბაჩუ -->
+    <!--    todo change action bar color ბაჩუ : tryN: 3 :DD-->
 
     <style name="Theme.TMDBClone" parent="Base.Theme.TMDBClone">
         <!-- set bottom navigation style overlay-->
         <item name="bottomNavigationStyle">@style/BottomNavigationOverLay</item>
 
-        <item name="toolbarStyle">@style/ActionBarStyle</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
     </style>
 
     <style name="BottomNavigationOverLay" parent="Widget.MaterialComponents.BottomNavigationView">
@@ -23,12 +23,16 @@
         <item name="colorOnSurface">@color/app_gray</item>
     </style>
 
-    <style name="ActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
-        <item name="colorSurface">@color/app_gray</item>
-        <item name="colorOnSurface">@color/app_dark</item>
-        <item name="colorPrimary">@color/app_gray</item>
+    <style name="Widget.App.Toolbar" parent="@style/Widget.MaterialComponents.ActionBar.Primary">
+        <item name="materialThemeOverlay">@style/ActionBarStyle</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="@style/Widget.MaterialComponents.ActionBar.Primary">
+        <item name="background">@color/app_dark</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/app_background</item>
         <item name="colorPrimaryVariant">@color/app_gray</item>
-        <item name="colorOnPrimary">@color/app_gray</item>
+        <item name="colorOnPrimary">@color/app_green</item>
     </style>
 
 </resources>

@@ -1,6 +1,10 @@
 package com.example.tmdbclone.presentation.movies
 
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,8 +15,8 @@ import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.common.Endpoints
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.databinding.FragmentMoviesBinding
-import com.example.tmdbclone.presentation.movies.adapters.GridAdapter
-import com.example.tmdbclone.presentation.movies.adapters.PopularAdapter
+import com.example.tmdbclone.presentation.adapters.GridAdapter
+import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -36,6 +40,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     private val adapterTopRated by lazy {
         GridAdapter()
+    }
+
+    private val adapterUpcoming by lazy {
+        PopularAdapter(0)
     }
 
     override fun started() {
@@ -65,6 +73,9 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
             trvTopRatedMovies.setTitle("Top Rated")
             trvTopRatedMovies.setGridRecyclerAdapter(adapterTopRated, 4)
 
+            // Trending Movies Recycler
+            trvUpcomingMovies.setTitle("Upcoming")
+            trvUpcomingMovies.setRecyclerViewAdapter(adapterUpcoming)
 
         }
     }
@@ -109,8 +120,18 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.upcomingMoviesState.collect { list ->
+                    adapterUpcoming.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.errorMsg.collect { errorMsg ->
-                    Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
+                    if (errorMsg.isNotEmpty()) {
+                        Toast.makeText(requireActivity(), errorMsg, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

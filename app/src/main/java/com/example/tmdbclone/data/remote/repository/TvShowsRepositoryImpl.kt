@@ -2,44 +2,22 @@ package com.example.tmdbclone.data.remote.repository
 
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
-import com.example.tmdbclone.data.remote.service.MoviesService
-import com.example.tmdbclone.domain.repository.MoviesRepository
+import com.example.tmdbclone.data.remote.service.TvShowsService
+import com.example.tmdbclone.domain.repository.TvShowsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class MoviesRepositoryImpl @Inject constructor(private val moviesService: MoviesService) :
-    MoviesRepository {
+class TvShowsRepositoryImpl @Inject constructor(private val tvShowsService: TvShowsService) :
+    TvShowsRepository {
 
-    override suspend fun fetchPopularMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> = flow {
-        try {
-
-            emit(Resource.Loading(true))
-
-            val response = moviesService.fetchPopularMovies()
-
-            if (response.isSuccessful) {
-                val body = response.body()
-                body?.let {
-                    emit(Resource.Success(body.results))
-                }
-            } else {
-                emit(Resource.Error("Something Went Wrong !"))
-            }
-        } catch (e: Exception) {
-
-            emit(Resource.Error("Something Went Wrong !"))
-
-        }
-    }
-
-    override suspend fun fetchNowPlaying(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchAiringTodayTvShows(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
         flow {
             try {
 
                 emit(Resource.Loading(true))
 
-                val response = moviesService.fetchNowPlaying()
+                val response = tvShowsService.fetchAiringTodayTvShows()
 
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -49,7 +27,6 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
                 } else {
                     emit(Resource.Error("Something Went Wrong !"))
                 }
-
             } catch (e: Exception) {
 
                 emit(Resource.Error("Something Went Wrong !"))
@@ -57,13 +34,13 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
             }
         }
 
-    override suspend fun fetchTrendingMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchTrendingTvShows(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
         flow {
             try {
 
                 emit(Resource.Loading(true))
 
-                val response = moviesService.fetchTrendingMovies()
+                val response = tvShowsService.fetchTrendingTvShows()
 
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -73,7 +50,6 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
                 } else {
                     emit(Resource.Error("Something Went Wrong !"))
                 }
-
             } catch (e: Exception) {
 
                 emit(Resource.Error("Something Went Wrong !"))
@@ -81,14 +57,13 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
             }
         }
 
-
-    override suspend fun fetchTopRatedMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchTopRatedTvShows(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
         flow {
             try {
 
                 emit(Resource.Loading(true))
 
-                val response = moviesService.fetchTopRatedMovies()
+                val response = tvShowsService.fetchTopRatedTvShows()
 
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -98,7 +73,6 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
                 } else {
                     emit(Resource.Error("Something Went Wrong !"))
                 }
-
             } catch (e: Exception) {
 
                 emit(Resource.Error("Something Went Wrong !"))
@@ -106,13 +80,13 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
             }
         }
 
-    override suspend fun fetchUpcomingMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchPopularTvShows(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
         flow {
             try {
 
                 emit(Resource.Loading(true))
 
-                val response = moviesService.fetchUpcomingMovies()
+                val response = tvShowsService.fetchPopularTvShows() // todo change this
 
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -122,7 +96,6 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
                 } else {
                     emit(Resource.Error("Something Went Wrong !"))
                 }
-
             } catch (e: Exception) {
 
                 emit(Resource.Error("Something Went Wrong !"))

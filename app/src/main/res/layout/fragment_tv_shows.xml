@@ -5,47 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background"
-    tools:context=".presentation.movies.MoviesFragment">
+    tools:context=".presentation.tvShows.TvShowsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.example.tmdbclone.presentation.customViews.TitledRecyclerView
-            android:id="@+id/trvPopularMovies"
+            android:id="@+id/trvAiringTodayTvShows"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.example.tmdbclone.presentation.customViews.TitledRecyclerView
-            android:id="@+id/trvPlayingInTheater"
+            android:id="@+id/trvTrendingTvShows"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/trvPopularMovies" />
+            app:layout_constraintTop_toBottomOf="@id/trvAiringTodayTvShows" />
 
         <com.example.tmdbclone.presentation.customViews.TitledRecyclerView
-            android:id="@+id/trvTrendingMovies"
+            android:id="@+id/trvTopRatedTvShows"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/trvPlayingInTheater" />
+            app:layout_constraintTop_toBottomOf="@id/trvTrendingTvShows" />
 
         <com.example.tmdbclone.presentation.customViews.TitledRecyclerView
-            android:id="@+id/trvTopRatedMovies"
+            android:id="@+id/trvPopularTvShows"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/trvTrendingMovies" />
-
-        <com.example.tmdbclone.presentation.customViews.TitledRecyclerView
-            android:id="@+id/trvUpcomingMovies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintTop_toBottomOf="@id/trvTopRatedMovies" />
+            app:layout_constraintTop_toBottomOf="@id/trvTopRatedTvShows" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

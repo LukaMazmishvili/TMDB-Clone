@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:importantForAccessibility="no"
         android:scaleType="fitXY"
+        android:padding="0.5dp"
+        android:background="@drawable/bg_stroke"
         android:src="@mipmap/ic_launcher" />
 
     <androidx.appcompat.widget.AppCompatTextView

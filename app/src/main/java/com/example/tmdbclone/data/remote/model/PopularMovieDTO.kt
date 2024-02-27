@@ -24,6 +24,8 @@ data class PopularMovieDTO(
         val originalLanguage: String?,
         @SerializedName("original_title")
         val originalTitle: String?,
+        @SerializedName("original_name")
+        val originalName: String?,
         val overview: String?,
         val popularity: Double?,
         @SerializedName("poster_path")

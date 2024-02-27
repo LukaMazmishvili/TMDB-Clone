@@ -1,10 +1,10 @@
-package com.example.tmdbclone.presentation.movies
+package com.example.tmdbclone.presentation.tvShows
 
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
-import com.example.tmdbclone.domain.usecase.GetMoviesUseCase
+import com.example.tmdbclone.domain.usecase.GetTvShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,43 +12,39 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMoviesUseCase) :
+class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvShowsUseCase) :
     BaseViewModel() {
 
-    private val _moviesState = MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
-    val moviesState = _moviesState.asStateFlow()
-
-    private val _playingNowMoviesState =
+    private val _airingTodayTvShowsState =
         MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
-    val playingNowMoviesState = _playingNowMoviesState.asStateFlow()
+    val airingTodayTvShowsState = _airingTodayTvShowsState.asStateFlow()
 
-    private val _trendingMoviesState =
+    private val _trendingTvShowsState =
         MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
-    val trendingMoviesState = _trendingMoviesState.asStateFlow()
+    val trendingTvShowsState = _trendingTvShowsState.asStateFlow()
 
-    private val _topRatedMoviesState =
+    private val _topRatedTvShowsState =
         MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
-    val topRatedMoviesState = _topRatedMoviesState.asStateFlow()
+    val topRatedTvShowsState = _topRatedTvShowsState.asStateFlow()
 
-    private val _upcomingMoviesState =
+    private val _popularTvShowsState =
         MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
-    val upcomingMoviesState = _upcomingMoviesState.asStateFlow()
+    val popularTvShowsState = _popularTvShowsState.asStateFlow()
 
     init {
-        fetchMovies()
-        fetchNowPlayingMovies()
-        fetchTrendingMovies()
-        fetchTopRatedMovies()
-        fetchUpcomingMovies()
+        fetchAiringTodayTvShows()
+        fetchTrendingTvShows()
+        fetchTopRatedTvShows()
+        fetchPopularTvShows()
     }
 
-    private fun fetchMovies() {
+    private fun fetchAiringTodayTvShows() {
         viewModelScope.launch {
-            getMoviesUseCase.getPopularMovies().collect { response ->
+            getTvShowsUseCase.getAiringTodayTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _moviesState.value = response.data!!
+                        _airingTodayTvShowsState.value = response.data!!
                     }
 
                     is Resource.Error -> {
@@ -63,13 +59,13 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
         }
     }
 
-    private fun fetchNowPlayingMovies() {
+    private fun fetchTrendingTvShows() {
         viewModelScope.launch {
-            getMoviesUseCase.getNowPlayingMovies().collect { response ->
+            getTvShowsUseCase.getTrendingTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _playingNowMoviesState.value = response.data!!
+                        _trendingTvShowsState.value = response.data!!
                     }
 
                     is Resource.Error -> {
@@ -84,13 +80,13 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
         }
     }
 
-    private fun fetchTrendingMovies() {
+    private fun fetchTopRatedTvShows() {
         viewModelScope.launch {
-            getMoviesUseCase.getTrendingMovies().collect { response ->
+            getTvShowsUseCase.getTopRatedTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _trendingMoviesState.value = response.data!!
+                        _topRatedTvShowsState.value = response.data!!
                     }
 
                     is Resource.Error -> {
@@ -105,34 +101,13 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
         }
     }
 
-    private fun fetchTopRatedMovies() {
+    private fun fetchPopularTvShows() {
         viewModelScope.launch {
-            getMoviesUseCase.getTopRatedMovies().collect { response ->
+            getTvShowsUseCase.getPopularTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _topRatedMoviesState.value = response.data!!
-                    }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
-                }
-            }
-        }
-    }
-
-    private fun fetchUpcomingMovies() {
-        viewModelScope.launch {
-            getMoviesUseCase.getUpcomingMovies().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _upcomingMoviesState.value = response.data!!
+                        _popularTvShowsState.value = response.data!!
                     }
 
                     is Resource.Error -> {
