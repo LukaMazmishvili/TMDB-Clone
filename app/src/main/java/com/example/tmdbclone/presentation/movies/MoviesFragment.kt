@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding::inflate) {
 
-    private val viewModel: MoviesViewModel by viewModels()
+    private val viewModel: MoviesViewModel by activityViewModels()
 
     private val adapterPopular by lazy {
         PopularAdapter(0)

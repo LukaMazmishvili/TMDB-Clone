@@ -1,7 +1,10 @@
 package com.example.tmdbclone.presentation.celebrities
 
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.FragmentCelebritiesBinding
+import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
 import com.example.tmdbclone.presentation.adapters.GridAdapter
@@ -19,7 +23,7 @@ import kotlinx.coroutines.launch
 class CelebritiesFragment :
     BaseFragment<FragmentCelebritiesBinding>(FragmentCelebritiesBinding::inflate) {
 
-    private val viewModel: CelebritiesViewModel by viewModels()
+    private val viewModel: CelebritiesViewModel by activityViewModels()
 
     private val adapterPopular by lazy {
         CelebritiesAdapter()
@@ -108,6 +112,12 @@ class CelebritiesFragment :
         val list2 = list.subList(middle, listSize)
 
         return listOf(list1, list2)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).setToolBarTitle("Celebrities")
     }
 
 }

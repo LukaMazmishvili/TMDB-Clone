@@ -23,12 +23,12 @@ class CelebritiesViewModel @Inject constructor(private val getCelebritiesUseCase
         MutableStateFlow<List<CelebritiesModelDto.Result>>(emptyList())
     val trendingCelebritiesState = _trendingCelebritiesState.asStateFlow()
 
-    init {
-        getPopularCelebrities()
-        getTrendingCelebrities()
-    }
+//    init {
+//        getPopularCelebrities()
+//        getTrendingCelebrities()
+//    }
 
-    private fun getPopularCelebrities() {
+     fun getPopularCelebrities() {
         viewModelScope.launch {
             getCelebritiesUseCase.getPopularCelebrities().collect { response ->
                 when (response) {
@@ -49,7 +49,7 @@ class CelebritiesViewModel @Inject constructor(private val getCelebritiesUseCase
         }
     }
 
-    private fun getTrendingCelebrities() {
+     fun getTrendingCelebrities() {
         viewModelScope.launch {
             getCelebritiesUseCase.getTrendingCelebrities().collect { response ->
                 when (response) {

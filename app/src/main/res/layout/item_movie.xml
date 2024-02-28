@@ -3,16 +3,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:background="@color/app_background"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivMovieImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:importantForAccessibility="no"
-        android:scaleType="fitXY"
-        android:padding="0.5dp"
         android:background="@drawable/bg_stroke"
+        android:importantForAccessibility="no"
+        android:padding="0.5dp"
+        android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -21,12 +22,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/movie_title"
+        android:textColor="@color/white"
         android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvMovieCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movie Categories" />
+        android:text="Movie Categories"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

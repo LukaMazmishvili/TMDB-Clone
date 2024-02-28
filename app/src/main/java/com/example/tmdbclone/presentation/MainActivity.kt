@@ -1,52 +1,75 @@
 package com.example.tmdbclone.presentation
 
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import androidx.core.view.iterator
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.tmdbclone.R
 import com.example.tmdbclone.databinding.ActivityMainBinding
-import com.example.tmdbclone.presentation.movies.MoviesFragment
-import com.example.tmdbclone.presentation.search.SearchFragment
-import com.example.tmdbclone.presentation.tvShows.TvShowsFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
+import com.example.tmdbclone.presentation.celebrities.CelebritiesViewModel
+import com.example.tmdbclone.presentation.movies.MoviesViewModel
+import com.example.tmdbclone.presentation.tvShows.TvShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Stack
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val fragmentStacks: MutableMap<Int, Stack<Fragment>> = mutableMapOf()
 
     private lateinit var navController: NavController
+
+    private val moviesViewModel: MoviesViewModel by viewModels()
+    private val tvShowsViewModel: TvShowsViewModel by viewModels()
+    private val celebritiesViewModel: CelebritiesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         window.statusBarColor = getColor(R.color.app_dark)
-        titleColor = getColor(R.color.app_green)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolBar)
 
         setupBottomNavBar()
+        initViewModels()
 
+    }
+
+    private fun initViewModels() {
+
+        // todo check if same happens in release build
+
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            moviesViewModel.apply {
+//                fetchMovies()
+//                fetchNowPlayingMovies()
+//                fetchTrendingMovies()
+//                fetchTopRatedMovies()
+//                fetchUpcomingMovies()
+//            }
+//        }
+
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            tvShowsViewModel.apply {
+//                fetchAiringTodayTvShows()
+//                fetchTrendingTvShows()
+//                fetchTopRatedTvShows()
+//                fetchPopularTvShows()
+//            }
+//        }
+
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            celebritiesViewModel.apply {
+//                getPopularCelebrities()
+//                getTrendingCelebrities()
+//            }
+//        }
     }
 
     private fun setupBottomNavBar() {
@@ -57,28 +80,48 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigation = binding.bottomNavView
 
-//        bottomNavigation.setOnItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.moviesFragment -> {
-//                    navController.navigate(R.id.moviesFragment)
-//                    true
-//                }
-//
-//                R.id.tvShowsFragment -> {
-//                    navController.navigate(R.id.tvShowsFragment)
-//                    true
-//                }
-//
-//                R.id.searchFragment -> {
-//                    navController.navigate(R.id.searchFragment)
-//                    true
-//                }
-//
-//                else -> false
-//            }
-//        }
+        bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.moviesFragment -> {
+                    navController.navigate(R.id.action_global_moviesFragment)
+//                    binding.toolBar.title = "Movies"
+                    true
+                }
 
-        setupWithNavController(bottomNavigation, navController)
+                R.id.tvShowsFragment -> {
+                    navController.navigate(R.id.tvShowsFragment)
+//                    binding.toolBar.title = "Tv Shows"
+                    true
+                }
+
+                R.id.celebritiesFragment -> {
+                    navController.navigate(R.id.celebritiesFragment)
+//                    binding.toolBar.title = "Celebrities"
+                    true
+                }
+
+                R.id.searchFragment -> {
+                    navController.navigate(R.id.searchFragment)
+//                    binding.toolBar.title = "Search"
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+        // This prevents from adding new instance of already chosen fragment
+        bottomNavigation.setOnItemReselectedListener { /* do absolutely nothing :DDDD */ }
+
+        // Changing Selected Menu Item
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            bottomNavigation.menu.findItem(destination.id)?.isChecked = true
+        }
+
+    }
+
+    fun setToolBarTitle(title: String) {
+        supportActionBar?.title = title
     }
 
 }

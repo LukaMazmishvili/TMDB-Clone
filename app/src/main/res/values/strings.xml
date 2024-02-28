@@ -9,4 +9,6 @@
     <string name="tv_shows">Tv Shows</string>
     <string name="celebrities">Celebrities</string>
     <string name="movie_title">Movie Title</string>
+    <string name="tmdb">TMDB</string>
+    <string name="trending">Trending</string>
 </resources>

@@ -6,6 +6,7 @@ import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.domain.usecase.GetTvShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -38,8 +39,9 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
         fetchPopularTvShows()
     }
 
-    private fun fetchAiringTodayTvShows() {
-        viewModelScope.launch {
+
+    fun fetchAiringTodayTvShows() {
+        viewModelScope.launch(Dispatchers.IO) {
             getTvShowsUseCase.getAiringTodayTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {
@@ -59,8 +61,8 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
         }
     }
 
-    private fun fetchTrendingTvShows() {
-        viewModelScope.launch {
+    fun fetchTrendingTvShows() {
+        viewModelScope.launch(Dispatchers.IO) {
             getTvShowsUseCase.getTrendingTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {
@@ -80,8 +82,8 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
         }
     }
 
-    private fun fetchTopRatedTvShows() {
-        viewModelScope.launch {
+    fun fetchTopRatedTvShows() {
+        viewModelScope.launch(Dispatchers.IO) {
             getTvShowsUseCase.getTopRatedTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {
@@ -101,8 +103,8 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
         }
     }
 
-    private fun fetchPopularTvShows() {
-        viewModelScope.launch {
+    fun fetchPopularTvShows() {
+        viewModelScope.launch(Dispatchers.IO) {
             getTvShowsUseCase.getPopularTvShows().collect { response ->
                 when (response) {
                     is Resource.Success -> {

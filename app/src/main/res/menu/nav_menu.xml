@@ -29,6 +29,6 @@
         android:id="@+id/TMDBFragment"
         android:enabled="true"
         android:icon="@drawable/baseline_account_box_24"
-        android:title="@string/celebrities" />
+        android:title="@string/tmdb" />
 
 </menu>

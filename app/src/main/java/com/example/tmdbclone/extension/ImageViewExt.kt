@@ -31,7 +31,7 @@ fun ImageView.uploadImage350x450(url: Any, round: Boolean = false) {
             .into(this)
     } else {
 
-        // Set Round Stroke
+        // Set Cornered Stroke
         this.setBackgroundResource(R.drawable.bg_stroke_cornered)
 
         Glide.with(this)

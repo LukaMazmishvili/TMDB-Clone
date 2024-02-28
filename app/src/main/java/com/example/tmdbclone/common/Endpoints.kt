@@ -2,6 +2,7 @@ package com.example.tmdbclone.common
 
 object Endpoints {
 
+    // Base Endpoints
     const val BEARER_TOKEN =
         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMDFhZTg3ZjMyZmFlYzRkNzgzNzFiYjkzNDc1MTNiZiIsInN1YiI6IjY1ZDgzZmRhMTQ5NTY1MDE3YmY1YjYwNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QSLyzbWcFHJnHlYUQOVyJy-i4EW_Z7EEy8PFS-fJ2io"
     const val BASE_URL = "https://api.themoviedb.org/3/"
@@ -24,5 +25,14 @@ object Endpoints {
     // Celebrities Endpoints
     const val POPULAR_CELEBRITIES = "person/popular?language=en-US&page=1"
     const val TRENDING_CELEBRITIES = "trending/person/day?language=en-US"
+
+    // Genres Endpoints
+    const val MOVIE_GENRES = "genre/movie/list?language=en"
+    const val TV_SHOW_GENRES = "genre/movie/list?language=en"
+
+    // Search Endpoints
+    const val SEARCH_MOVIES = "search/movie?include_adult=false&language=en-US&page=1"
+    const val SEARCH_TV_SHOWS = "search/tv?include_adult=false&language=en-US&page=1"
+    const val SEARCH_PERSON = "search/person?include_adult=false&language=en-US&page=1"
 
 }
