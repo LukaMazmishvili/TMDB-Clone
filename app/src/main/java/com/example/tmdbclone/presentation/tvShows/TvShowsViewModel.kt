@@ -32,13 +32,12 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
         MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
     val popularTvShowsState = _popularTvShowsState.asStateFlow()
 
-    init {
-        fetchAiringTodayTvShows()
-        fetchTrendingTvShows()
-        fetchTopRatedTvShows()
-        fetchPopularTvShows()
-    }
-
+//    init {
+//        fetchAiringTodayTvShows()
+//        fetchTrendingTvShows()
+//        fetchTopRatedTvShows()
+//        fetchPopularTvShows()
+//    }
 
     fun fetchAiringTodayTvShows() {
         viewModelScope.launch(Dispatchers.IO) {

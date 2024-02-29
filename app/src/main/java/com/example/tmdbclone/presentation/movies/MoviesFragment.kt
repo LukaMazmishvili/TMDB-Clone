@@ -1,11 +1,13 @@
 package com.example.tmdbclone.presentation.movies
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,6 +18,7 @@ import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.common.Endpoints
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.databinding.FragmentMoviesBinding
+import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.GridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,9 +84,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        activity?.title = "Movies"
+        (activity as MainActivity).setToolBarTitle("Movies")
     }
 
     override fun observer() {

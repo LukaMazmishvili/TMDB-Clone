@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llStarsWrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_star"
+                android:tint="@color/app_green" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_star"
+                android:tint="@color/app_green" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_star"
+                android:tint="@color/app_green" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_star"
+                android:tint="@color/app_green" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_star"
+                android:tint="@color/app_green" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTotalVotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:text="( 000 )"
+            android:textColor="@color/app_green"
+            android:textSize="11sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOverallRatingIc"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="50dp"
+            android:src="@drawable/ic_star_filled"
+            android:tint="@color/app_green" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOverallRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="2.5dp"
+            android:text="0.0"
+            android:textColor="@color/app_green"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+</merge>

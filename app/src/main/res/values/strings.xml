@@ -4,11 +4,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
-    <string name="sign_in">SIGN IN</string>
+    <string name="sign_in">Sign in</string>
     <string name="movies">Movies</string>
     <string name="tv_shows">Tv Shows</string>
     <string name="celebrities">Celebrities</string>
     <string name="movie_title">Movie Title</string>
     <string name="tmdb">TMDB</string>
     <string name="trending">Trending</string>
+    <string name="username">Username</string>
+    <string name="favourite">Favourite</string>
+    <string name="your_favourites_movies_amp_tv_shows"><![CDATA[Your favourites Movies & Tv Shows]]></string>
+    <string name="watchlist">WatchList</string>
+    <string name="movies_and_tvshows_added_to_watchlist">Movies and TvShows Added to watchlist</string>
+    <string name="rated_movies_amp_tv_shows"><![CDATA[Rated Movies & Tv Shows]]></string>
+    <string name="ratings">Ratings</string>
+    <string name="appearances">Appearances</string>
+    <string name="set_lite_amp_dark_theme"><![CDATA[Set Lite & Dark Theme]]></string>
 </resources>

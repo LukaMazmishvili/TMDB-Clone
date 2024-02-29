@@ -7,6 +7,7 @@ data class CelebritiesModelDto(
     val results: List<Result>?,
 
     ) {
+
     data class Result(
         val adult: Boolean?,
         val id: Int?,
@@ -17,6 +18,12 @@ data class CelebritiesModelDto(
         val mediaType: String?,
         val popularity: Float?,
         val gender: Int?,
+        @SerializedName("cast_id")
+        val castId: Int?,
+        val character: String?,
+        @SerializedName("credit_id")
+        val creditId: String?,
+        val order: Int?,
         @SerializedName("known_for_department")
         val knownForDepartment: String?,
         @SerializedName("profile_path")

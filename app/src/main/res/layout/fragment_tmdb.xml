@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    tools:context=".presentation.tmdb.TMDBFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivUserImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/app_green"
+        android:src="@drawable/ic_person"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Mazmoo"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivUserImage"
+        app:layout_constraintStart_toEndOf="@id/ivUserImage"
+        app:layout_constraintTop_toTopOf="@id/ivUserImage" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcFav"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_favourite"
+        android:tint="@color/app_green"
+        app:layout_constraintEnd_toEndOf="@id/ivUserImage"
+        app:layout_constraintStart_toStartOf="@id/ivUserImage"
+        app:layout_constraintTop_toBottomOf="@id/ivUserImage" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/favourite"
+        android:textColor="@color/app_green"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivIcFav"
+        app:layout_constraintStart_toEndOf="@id/ivIcFav"
+        app:layout_constraintTop_toTopOf="@id/ivIcFav" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFavDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/your_favourites_movies_amp_tv_shows"
+        android:textColor="@color/app_gray"
+        app:layout_constraintStart_toEndOf="@id/ivIcFav"
+        app:layout_constraintTop_toBottomOf="@id/tvFav" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcWatchList"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_bookmark"
+        android:tint="@color/app_green"
+        app:layout_constraintEnd_toEndOf="@id/ivIcFav"
+        app:layout_constraintStart_toStartOf="@id/ivIcFav"
+        app:layout_constraintTop_toBottomOf="@id/ivIcFav" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWatchList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/watchlist"
+        android:textColor="@color/app_green"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivIcWatchList"
+        app:layout_constraintStart_toEndOf="@id/ivIcWatchList"
+        app:layout_constraintTop_toTopOf="@id/ivIcWatchList" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWatchListDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/movies_and_tvshows_added_to_watchlist"
+        android:textColor="@color/app_gray"
+        app:layout_constraintStart_toEndOf="@id/ivIcWatchList"
+        app:layout_constraintTop_toBottomOf="@id/tvWatchList" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcRatings"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_star"
+        android:tint="@color/app_green"
+        app:layout_constraintEnd_toEndOf="@id/ivIcWatchList"
+        app:layout_constraintStart_toStartOf="@id/ivIcWatchList"
+        app:layout_constraintTop_toBottomOf="@id/ivIcWatchList" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRatings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/ratings"
+        android:textColor="@color/app_green"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivIcRatings"
+        app:layout_constraintStart_toEndOf="@id/ivIcRatings"
+        app:layout_constraintTop_toTopOf="@id/ivIcRatings" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRatingsDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/rated_movies_amp_tv_shows"
+        android:textColor="@color/app_gray"
+        app:layout_constraintStart_toEndOf="@id/ivIcRatings"
+        app:layout_constraintTop_toBottomOf="@id/tvRatings" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcAppearance"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_brightness"
+        android:tint="@color/app_green"
+        app:layout_constraintEnd_toEndOf="@id/ivIcRatings"
+        app:layout_constraintStart_toStartOf="@id/ivIcRatings"
+        app:layout_constraintTop_toBottomOf="@id/ivIcRatings" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAppearance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/appearances"
+        android:textColor="@color/app_green"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivIcAppearance"
+        app:layout_constraintStart_toEndOf="@id/ivIcAppearance"
+        app:layout_constraintTop_toTopOf="@id/ivIcAppearance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAppearanceDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/set_lite_amp_dark_theme"
+        android:textColor="@color/app_gray"
+        app:layout_constraintStart_toEndOf="@id/ivIcAppearance"
+        app:layout_constraintTop_toBottomOf="@id/tvAppearance" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_button"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAppearanceDesc" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

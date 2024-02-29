@@ -35,4 +35,11 @@ object Endpoints {
     const val SEARCH_TV_SHOWS = "search/tv?include_adult=false&language=en-US&page=1"
     const val SEARCH_PERSON = "search/person?include_adult=false&language=en-US&page=1"
 
+    // Movie Detail Endpoints
+    const val MOVIE_DETAILS = "movie/{movieId}?language=en-US"
+    const val MOVIE_CAST = "movie/{movieId}/credits?language=en-US"
+    const val MOVIE_VIDEOS = "movie/{movieId}/videos?language=en-US"
+    const val MOVIE_RECOMMENDATION = "movie/{movieId}/recommendations?language=en-US&page=1"
+    const val MOVIE_SIMILAR = "movie/{movieId}/similar?language=en-US&page=1"
+
 }

@@ -39,5 +39,15 @@
         android:id="@+id/action_global_moviesFragment"
         app:destination="@id/moviesFragment"
         app:popUpTo="@id/nav_graph" />
+    <fragment
+        android:id="@+id/TMDBFragment"
+        android:name="com.example.tmdbclone.presentation.tmdb.TMDBFragment"
+        android:label="fragment_tmdb"
+        tools:layout="@layout/fragment_tmdb" />
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.tmdbclone.presentation.details.movie.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" />
 
 </navigation>

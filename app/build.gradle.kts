@@ -25,8 +25,19 @@ android {
         viewBinding = true
     }
 
+//    signingConfigs {
+//        release {
+//            storeFile =
+//                file("\"C:\\Users\\l.mazmishvili\\Documents\\KeyStores\\TMDB_key_store.jks\"")
+//            storePassword = "asdlasd123"
+//            keyAlias = "TMDB_Key"
+//            keyPassword = "asdlasd123"
+//        }
+//    }
+
     buildTypes {
         release {
+//            signingConfig = signingConfigs.release
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
