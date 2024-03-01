@@ -28,6 +28,7 @@ fun ImageView.uploadImage350x450(url: Any, round: Boolean = false) {
         Glide.with(this)
             .load(url)
             .override(350, 450)
+            .fitCenter()
             .into(this)
     } else {
 
@@ -36,7 +37,7 @@ fun ImageView.uploadImage350x450(url: Any, round: Boolean = false) {
 
         Glide.with(this)
             .load(url)
-            .override(350, 450)
+            .override(250, 350)
             .transform(RoundedCorners(50))
             .into(this)
     }
@@ -46,5 +47,14 @@ fun ImageView.uploadImage750x450(url: String) {
     Glide.with(this)
         .load(url)
         .override(850, 650)
+        .into(this)
+}
+
+
+// todo correct image size
+fun ImageView.uploadImage(url: String) {
+    Glide.with(this)
+        .load(url)
+        .override(650, 350)
         .into(this)
 }

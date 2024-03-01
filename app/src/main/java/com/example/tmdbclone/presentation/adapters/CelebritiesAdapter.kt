@@ -23,8 +23,8 @@ class CelebritiesAdapter :
             } else {
                 ivMovieImage.uploadImage350x450(R.drawable.placeholder_empty_person)
             }
-            ivMovieImage.minimumHeight = 550
-            ivMovieImage.minimumWidth = 350
+            ivMovieImage.minimumHeight = 400
+            ivMovieImage.minimumWidth = 265
             tvMovieTitle.text = item.name ?: item.originalName
             tvMovieCategories.text = item.knownForDepartment
         }

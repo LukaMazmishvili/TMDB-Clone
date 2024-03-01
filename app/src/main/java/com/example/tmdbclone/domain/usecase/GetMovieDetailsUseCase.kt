@@ -5,14 +5,14 @@ import javax.inject.Inject
 
 class GetMovieDetailsUseCase @Inject constructor(private val movieDetailRepository: MovieDetailRepository) {
 
-    suspend fun getMovieDetails() = movieDetailRepository.fetchMovieDetails()
+    suspend fun getMovieDetails(movieId: Int) = movieDetailRepository.fetchMovieDetails(movieId)
 
-    suspend fun getMovieCast() = movieDetailRepository.fetchMovieCast()
+    suspend fun getMovieCast(movieId: Int) = movieDetailRepository.fetchMovieCast(movieId)
 
-    suspend fun getMovieVideos() = movieDetailRepository.fetchMovieVideos()
+    suspend fun getMovieVideos(movieId: Int) = movieDetailRepository.fetchMovieVideos(movieId)
 
-    suspend fun getMovieRecommended() = movieDetailRepository.fetchMovieRecommend()
+    suspend fun getMovieRecommended(movieId: Int) = movieDetailRepository.fetchMovieRecommend(movieId)
 
-    suspend fun getMovieSimilar() = movieDetailRepository.fetchMovieSimilar()
+    suspend fun getMovieSimilar(movieId: Int) = movieDetailRepository.fetchMovieSimilar(movieId)
 
 }

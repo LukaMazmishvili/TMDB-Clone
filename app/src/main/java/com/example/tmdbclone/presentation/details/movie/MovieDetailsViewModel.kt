@@ -1,5 +1,6 @@
 package com.example.tmdbclone.presentation.details.movie
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
@@ -11,12 +12,15 @@ import com.example.tmdbclone.domain.usecase.GetMovieDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCase: GetMovieDetailsUseCase) :
     BaseViewModel() {
+
+    val movieIdState = MutableStateFlow<Int>(-1)
 
     private val _moviesDetailsState =
         MutableStateFlow<MovieDetailsModelDto?>(null)
@@ -27,7 +31,7 @@ class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCa
     val moviesCastState = _moviesCastState.asStateFlow()
 
     private val _moviesVideosState =
-        MutableStateFlow<List<VideoModelDto>>(emptyList())
+        MutableStateFlow<VideoModelDto?>(null)
     val moviesVideosState = _moviesVideosState.asStateFlow()
 
     private val _moviesRecommendedState =
@@ -48,20 +52,22 @@ class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCa
 
     private fun fetchMovieDetails() {
         viewModelScope.launch {
-            getMovieDetailsUseCase.getMovieDetails().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _moviesDetailsState.value = response.data!!
+            movieIdState.collect { movieId ->
+                getMovieDetailsUseCase.getMovieDetails(movieId).collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoading()
+                            _moviesDetailsState.value = response.data!!
+                        }
+
+                        is Resource.Error -> {
+                            hideLoading()
+                            setErrorMsg(response.errorMsg)
+                        }
+
+                        is Resource.Loading -> showLoading()
+
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
                 }
             }
         }
@@ -69,20 +75,22 @@ class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCa
 
     private fun fetchMovieCast() {
         viewModelScope.launch {
-            getMovieDetailsUseCase.getMovieCast().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _moviesCastState.value = response.data!!
+            movieIdState.collect { movieId ->
+                getMovieDetailsUseCase.getMovieCast(movieId).collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoading()
+                            _moviesCastState.value = response.data!!
+                        }
+
+                        is Resource.Error -> {
+                            hideLoading()
+                            setErrorMsg(response.errorMsg)
+                        }
+
+                        is Resource.Loading -> showLoading()
+
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
                 }
             }
         }
@@ -90,20 +98,22 @@ class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCa
 
     private fun fetchMovieVideos() {
         viewModelScope.launch {
-            getMovieDetailsUseCase.getMovieVideos().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _moviesVideosState.value = response.data!!
+            movieIdState.collect { movieId ->
+                getMovieDetailsUseCase.getMovieVideos(movieId).collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoading()
+                            _moviesVideosState.value = response.data!!
+                        }
+
+                        is Resource.Error -> {
+                            hideLoading()
+                            setErrorMsg(response.errorMsg)
+                        }
+
+                        is Resource.Loading -> showLoading()
+
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
                 }
             }
         }
@@ -111,20 +121,22 @@ class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCa
 
     private fun fetchMovieRecommended() {
         viewModelScope.launch {
-            getMovieDetailsUseCase.getMovieRecommended().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _moviesRecommendedState.value = response.data!!
+            movieIdState.collect { movieId ->
+                getMovieDetailsUseCase.getMovieRecommended(movieId).collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoading()
+                            _moviesRecommendedState.value = response.data!!
+                        }
+
+                        is Resource.Error -> {
+                            hideLoading()
+                            setErrorMsg(response.errorMsg)
+                        }
+
+                        is Resource.Loading -> showLoading()
+
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
                 }
             }
         }
@@ -132,20 +144,22 @@ class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCa
 
     private fun fetchMovieSimilar() {
         viewModelScope.launch {
-            getMovieDetailsUseCase.getMovieSimilar().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _moviesSimilarState.value = response.data!!
+            movieIdState.collect { movieId ->
+                getMovieDetailsUseCase.getMovieSimilar(movieId).collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoading()
+                            _moviesSimilarState.value = response.data!!
+                        }
+
+                        is Resource.Error -> {
+                            hideLoading()
+                            setErrorMsg(response.errorMsg)
+                        }
+
+                        is Resource.Loading -> showLoading()
+
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
                 }
             }
         }

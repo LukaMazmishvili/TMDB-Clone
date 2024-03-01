@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieDetailRepository {
 
-    suspend fun fetchMovieDetails(): Flow<Resource<MovieDetailsModelDto>>
+    suspend fun fetchMovieDetails(movieId: Int): Flow<Resource<MovieDetailsModelDto>>
 
-    suspend fun fetchMovieCast(): Flow<Resource<CelebritiesModelDto>>
+    suspend fun fetchMovieCast(movieId: Int): Flow<Resource<CelebritiesModelDto>>
 
-    suspend fun fetchMovieVideos(): Flow<Resource<List<VideoModelDto>>>
+    suspend fun fetchMovieVideos(movieId: Int): Flow<Resource<VideoModelDto>>
 
-    suspend fun fetchMovieRecommend(): Flow<Resource<PopularMovieDTO>>
+    suspend fun fetchMovieRecommend(movieId: Int): Flow<Resource<PopularMovieDTO>>
 
-    suspend fun fetchMovieSimilar(): Flow<Resource<PopularMovieDTO>>
+    suspend fun fetchMovieSimilar(movieId: Int): Flow<Resource<PopularMovieDTO>>
 }

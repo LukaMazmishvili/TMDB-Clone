@@ -14,7 +14,11 @@
         android:id="@+id/moviesFragment"
         android:name="com.example.tmdbclone.presentation.movies.MoviesFragment"
         android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" />
+        tools:layout="@layout/fragment_movies" >
+        <action
+            android:id="@+id/action_moviesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.tmdbclone.presentation.auth.RegistrationFragment"
@@ -48,6 +52,11 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.example.tmdbclone.presentation.details.movie.MovieDetailFragment"
         android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" />
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="movieId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
 </navigation>

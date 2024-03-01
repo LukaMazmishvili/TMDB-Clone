@@ -3,6 +3,7 @@ package com.example.tmdbclone.data.remote.service
 import com.example.tmdbclone.common.Endpoints
 import com.example.tmdbclone.common.Endpoints.BEARER_TOKEN
 import com.example.tmdbclone.common.Endpoints.SEARCH_MOVIES
+import com.example.tmdbclone.common.Endpoints.SEARCH_PERSON
 import com.example.tmdbclone.common.Endpoints.SEARCH_TV_SHOWS
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.SearchModelDto
@@ -28,7 +29,7 @@ interface SearchService {
         @Header("Authorization") bearer: String = BEARER_TOKEN
     ): Response<SearchModelDto> // todo search dto model
 
-    @GET(SEARCH_TV_SHOWS)
+    @GET(SEARCH_PERSON)
     suspend fun fetchSearchedPersons(
         @Query("query") query: String,
         @Header("accept") format: String = "Application/Json",

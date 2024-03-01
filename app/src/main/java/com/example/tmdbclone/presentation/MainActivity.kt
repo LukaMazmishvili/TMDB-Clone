@@ -88,70 +88,30 @@ class MainActivity : AppCompatActivity() {
                 R.id.moviesFragment -> {
                     navController.navigate(R.id.action_global_moviesFragment)
                     binding.toolBar.visibility = View.VISIBLE
-//                    (binding.clWrap.layoutParams as CoordinatorLayout.LayoutParams).setMargins(
-//                        0,
-//                        actionBarSize,
-//                        0,
-//                        0
-//                    )
-//                    binding.toolBar.title = "Movies"
                     true
                 }
 
                 R.id.tvShowsFragment -> {
                     navController.navigate(R.id.tvShowsFragment)
                     binding.toolBar.visibility = View.VISIBLE
-//                    (binding.clWrap.layoutParams as CoordinatorLayout.LayoutParams).setMargins(
-//                        0,
-//                        actionBarSize,
-//                        0,
-//                        0
-//                    )
-//                    binding.toolBar.title = "Tv Shows"
                     true
                 }
 
                 R.id.celebritiesFragment -> {
                     navController.navigate(R.id.celebritiesFragment)
                     binding.toolBar.visibility = View.VISIBLE
-//                    (binding.clWrap.layoutParams as CoordinatorLayout.LayoutParams).setMargins(
-//                        0,
-//                        actionBarSize,
-//                        0,
-//                        0
-//                    )
-//                    binding.toolBar.title = "Celebrities"
                     true
                 }
 
                 R.id.searchFragment -> {
                     navController.navigate(R.id.searchFragment)
                     binding.toolBar.visibility = View.VISIBLE
-//                    (binding.clWrap.layoutParams as CoordinatorLayout.LayoutParams).setMargins(
-//                        0,
-//                        actionBarSize,
-//                        0,
-//                        0
-//                    )
-//                    binding.toolBar.title = "Search"
                     true
                 }
 
                 R.id.TMDBFragment -> {
                     navController.navigate(R.id.TMDBFragment)
                     binding.toolBar.visibility = View.GONE
-//                    (binding.clWrap.layoutParams as CoordinatorLayout.LayoutParams).setMargins(
-//                        0,
-//                        0,
-//                        0,
-//                        0
-//                    )
-//                    = ViewGroup.MarginLayoutParams(
-//                        ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.MATCH_PARENT
-//                    ).apply {
-//                        setMargins(0, 0, 0, 0)
-//                    }
                     true
                 }
 

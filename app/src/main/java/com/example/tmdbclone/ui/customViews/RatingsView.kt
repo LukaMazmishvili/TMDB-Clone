@@ -30,7 +30,7 @@ class RatingsView @JvmOverloads constructor(
     }
 
     @SuppressLint("SetTextI18n")
-    fun setTotalVotes(totalVotes: Int) {
+    fun setTotalVotes(totalVotes: Long) {
         this.totalVotes.text = "( $totalVotes) "
     }
 

@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.common.Endpoints
@@ -51,11 +52,18 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
     }
 
     override fun started() {
+
         setupViews()
     }
 
     override fun listeners() {
-
+        adapterPopular.onItemClickedListener = {
+            findNavController().navigate(
+                MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(
+                    it.id!!
+                )
+            )
+        }
     }
 
     private fun setupViews() {

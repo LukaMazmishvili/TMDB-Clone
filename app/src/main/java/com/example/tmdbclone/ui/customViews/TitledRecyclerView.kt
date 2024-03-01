@@ -37,6 +37,10 @@ class TitledRecyclerView @JvmOverloads constructor(
         tvTitle.text = title
     }
 
+    fun setOnItemCLickListener(){
+
+    }
+
     fun setSeeAllButtonClickListener(listener: OnClickListener) {
         btnSeeAll.setOnClickListener(listener)
     }
@@ -52,10 +56,6 @@ class TitledRecyclerView @JvmOverloads constructor(
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = adapter
-        when (adapter.currentList.isNotEmpty()) {
-            true -> btnSeeAll.visibility = View.VISIBLE
-            false -> btnSeeAll.visibility = View.GONE
-        }
     }
 
 }

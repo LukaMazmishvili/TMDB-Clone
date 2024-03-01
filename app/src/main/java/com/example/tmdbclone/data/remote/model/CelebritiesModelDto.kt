@@ -3,10 +3,12 @@ package com.example.tmdbclone.data.remote.model
 import com.google.gson.annotations.SerializedName
 
 data class CelebritiesModelDto(
+    val id: Int?,
     val page: Int?,
     val results: List<Result>?,
+    val cast: List<Result>?
 
-    ) {
+) {
 
     data class Result(
         val adult: Boolean?,
