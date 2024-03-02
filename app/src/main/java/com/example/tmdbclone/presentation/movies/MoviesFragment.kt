@@ -23,6 +23,7 @@ import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.GridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -152,7 +153,19 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.isLoading.collect { isLoading ->
-                    Log.d("isLoading", "observer: $isLoading")
+
+//                    delay(1000)
+                    when (isLoading) {
+                        true -> {
+                            binding.shimmer.visibility = View.VISIBLE
+                            binding.dataLayout.visibility = View.GONE
+                        }
+
+                        false -> {
+                            binding.shimmer.visibility = View.GONE
+                            binding.dataLayout.visibility = View.VISIBLE
+                        }
+                    }
                 }
             }
         }

@@ -79,7 +79,7 @@ dependencies {
 
     // Lifecycle ktx
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.activity:activity-ktx:1.3.1")
+    implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
@@ -88,4 +88,7 @@ dependencies {
 
     // Logging Interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    // Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }
