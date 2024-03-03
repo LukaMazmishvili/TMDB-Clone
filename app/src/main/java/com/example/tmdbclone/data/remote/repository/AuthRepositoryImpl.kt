@@ -7,7 +7,12 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(private val authService: AuthService) :
     AuthRepository {
 
-    override fun logIn(userName: String, password: String) {
-        // TODO implement user login ( waiting for api )
+    override suspend fun logIn(userName: String, password: String) {
+
+    }
+
+    override suspend fun register(userName: String, password: String, email: String) {
+
+
     }
 }

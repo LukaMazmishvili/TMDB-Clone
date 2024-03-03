@@ -2,6 +2,7 @@ package com.example.tmdbclone.domain.repository
 
 interface AuthRepository {
 
-    fun logIn(userName: String, password: String)
+    suspend fun logIn(userName: String, password: String)
+    suspend fun register(userName: String, password: String, email: String)
 
 }
