@@ -58,14 +58,14 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            tvShowsViewModel.apply {
-                fetchAiringTodayTvShows()
-                fetchTrendingTvShows()
-                fetchTopRatedTvShows()
-                fetchPopularTvShows()
-            }
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            tvShowsViewModel.apply {
+//                fetchAiringTodayTvShows()
+//                fetchTrendingTvShows()
+//                fetchTopRatedTvShows()
+//                fetchPopularTvShows()
+//            }
+//        }
 
         lifecycleScope.launch(Dispatchers.IO) {
             celebritiesViewModel.apply {

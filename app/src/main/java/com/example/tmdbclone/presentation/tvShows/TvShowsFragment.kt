@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.util.SparseArray
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
@@ -19,6 +20,7 @@ import com.example.tmdbclone.presentation.adapters.GridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -123,7 +125,14 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                     viewModel.isLoading.collect { isLoading ->
-                        Log.d("isLoadingState", "observer: $isLoading")
+                        if (!isLoading) {
+                            delay(3000)
+                            binding.shimmer.visibility = View.INVISIBLE
+                            binding.dataLayout.visibility = View.VISIBLE
+                        } else {
+                            binding.shimmer.visibility = View.VISIBLE
+                            binding.dataLayout.visibility = View.INVISIBLE
+                        }
                     }
                 }
             }

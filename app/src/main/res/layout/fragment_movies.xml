@@ -15,6 +15,7 @@
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer"
             android:layout_width="match_parent"
+            android:visibility="invisible"
             android:layout_height="wrap_content"
             app:shimmer_duration="1000">
 
@@ -41,7 +42,7 @@
             android:id="@+id/dataLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible">
+            android:visibility="visible">
 
             <com.example.tmdbclone.ui.customViews.TitledRecyclerView
                 android:id="@+id/trvPopularMovies"

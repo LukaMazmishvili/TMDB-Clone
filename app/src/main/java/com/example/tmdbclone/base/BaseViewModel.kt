@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.asStateFlow
 
 abstract class BaseViewModel : ViewModel() {
 
-    private val _isLoading = MutableSharedFlow<Boolean>()
-    val isLoading = _isLoading.asSharedFlow()
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading = _isLoading.asStateFlow()
 
     private val _errorMsg = MutableStateFlow<String>("")
     val errorMsg = _errorMsg.asStateFlow()
@@ -21,12 +21,12 @@ abstract class BaseViewModel : ViewModel() {
         _errorMsg.value = errorMsg
     }
 
-    protected suspend fun showLoading() {
-        _isLoading.emit(true)
+    protected fun showLoading() {
+        _isLoading.value = true
     }
 
-    protected suspend fun hideLoading() {
-        _isLoading.emit(false)
+    protected fun hideLoading() {
+        _isLoading.value = false
     }
 
     fun setNetworkStatus(networkStatus: Boolean?) {

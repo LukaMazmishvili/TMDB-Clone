@@ -112,6 +112,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.playingNowMoviesState.collect { list ->
                     adapterPIT.submitList(list)
+
                 }
             }
         }
@@ -153,18 +154,13 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.isLoading.collect { isLoading ->
-
-//                    delay(1000)
-                    when (isLoading) {
-                        true -> {
-                            binding.shimmer.visibility = View.VISIBLE
-                            binding.dataLayout.visibility = View.GONE
-                        }
-
-                        false -> {
-                            binding.shimmer.visibility = View.GONE
-                            binding.dataLayout.visibility = View.VISIBLE
-                        }
+                    if (!isLoading) {
+                        delay(3000)
+                        binding.shimmer.visibility = View.INVISIBLE
+                        binding.dataLayout.visibility = View.VISIBLE
+                    } else {
+                        binding.shimmer.visibility = View.VISIBLE
+                        binding.dataLayout.visibility = View.INVISIBLE
                     }
                 }
             }
