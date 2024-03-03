@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.R.attr.actionBarSize
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -33,11 +34,12 @@ class MainActivity : AppCompatActivity() {
     private val celebritiesViewModel: CelebritiesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         window.statusBarColor = getColor(R.color.app_dark)
-        setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+        setContentView(binding.root)
 
         setupBottomNavBar()
         initViewModels()

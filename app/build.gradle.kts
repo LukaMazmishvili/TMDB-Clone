@@ -91,4 +91,8 @@ dependencies {
 
     // Shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+    // Splashscreen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
 }

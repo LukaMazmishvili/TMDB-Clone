@@ -6,11 +6,14 @@
     </style>
 
     <style name="Theme.TMDBClone" parent="Base.Theme.TMDBClone">
-        <!-- set bottom navigation style overlay-->
+        <!-- set bottom navigation style-->
         <item name="bottomNavigationStyle">@style/BottomNavigationOverLay</item>
 
+        <!-- set toolbar style -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
+
+    <!--  bottom navigation style  -->
 
     <style name="BottomNavigationOverLay" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="materialThemeOverlay">@style/BottomNavigation</item>
@@ -21,14 +24,24 @@
         <item name="colorOnSurface">@color/app_gray</item>
     </style>
 
+    <!--  tool bar style  -->
+
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/ActionBarStyle</item>
     </style>
 
-    <style name="ActionBarStyle" parent="">
+    <style name="ActionBarStyle" parent="Theme.TMDBClone">
         <item name="colorPrimary">@color/app_dark</item>
         <item name="colorPrimaryVariant">@color/app_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <!--  splashscreen style  -->
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/app_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen</item>
+        <item name="postSplashScreenTheme">@style/Theme.TMDBClone</item>
     </style>
 
 </resources>
