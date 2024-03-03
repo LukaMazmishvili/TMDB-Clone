@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.create
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -20,32 +21,32 @@ object ApiServiceModule {
 
     @Provides
     @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService =
+    fun provideAuthService(@Named("Our Api") retrofit: Retrofit): AuthService =
         retrofit.create(AuthService::class.java)
 
     @Provides
     @Singleton
-    fun provideMoviesService(retrofit: Retrofit): MoviesService =
+    fun provideMoviesService(@Named("official") retrofit: Retrofit): MoviesService =
         retrofit.create(MoviesService::class.java)
 
     @Provides
     @Singleton
-    fun provideTvShowsService(retrofit: Retrofit): TvShowsService =
+    fun provideTvShowsService(@Named("official") retrofit: Retrofit): TvShowsService =
         retrofit.create(TvShowsService::class.java)
 
     @Provides
     @Singleton
-    fun provideCelebritiesService(retrofit: Retrofit): CelebritiesService =
+    fun provideCelebritiesService(@Named("official") retrofit: Retrofit): CelebritiesService =
         retrofit.create(CelebritiesService::class.java)
 
     @Provides
     @Singleton
-    fun provideMovieDetailsService(retrofit: Retrofit): MovieDetailService =
+    fun provideMovieDetailsService(@Named("official") retrofit: Retrofit): MovieDetailService =
         retrofit.create(MovieDetailService::class.java)
 
     @Provides
     @Singleton
-    fun provideGenresService(retrofit: Retrofit): GenresService =
+    fun provideGenresService(@Named("official") retrofit: Retrofit): GenresService =
         retrofit.create(GenresService::class.java)
 
 }

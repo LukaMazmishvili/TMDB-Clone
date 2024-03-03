@@ -48,27 +48,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModels() {
 
-        // todo check if same happens in release build
-
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            moviesViewModel.apply {
-//                fetchMovies()
-//                fetchNowPlayingMovies()
-//                fetchTrendingMovies()
-//                fetchTopRatedMovies()
-//                fetchUpcomingMovies()
-//            }
-//        }
-
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            tvShowsViewModel.apply {
-//                fetchAiringTodayTvShows()
-//                fetchTrendingTvShows()
-//                fetchTopRatedTvShows()
-//                fetchPopularTvShows()
-//            }
-//        }
-
         lifecycleScope.launch(Dispatchers.IO) {
             celebritiesViewModel.apply {
                 getPopularCelebrities()
@@ -122,7 +101,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         // This prevents from adding new instance of already chosen fragment
-        bottomNavigation.setOnItemReselectedListener { /* do absolutely nothing :DDDD */ }
+        bottomNavigation.setOnItemReselectedListener {
+//            if (it.itemId != bottomNavigation.menu.findItem(R.id.moviesFragment).itemId) {
+            when (it.itemId) {
+                R.id.moviesFragment -> {
+
+//                        navController.popBackStack(R.id.moviesFragment, false, true)
+                    if (it.itemId == bottomNavigation.menu.findItem(R.id.moviesFragment).itemId) {
+                        navController.popBackStack(R.id.moviesFragment, false, true)
+                    }
+                    binding.toolBar.visibility = View.VISIBLE
+                }
+//                }
+            }
+
+        }
 
         // Changing Selected Menu Item
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -133,6 +126,14 @@ class MainActivity : AppCompatActivity() {
 
     fun setToolBarTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    fun hideToolBar() {
+        supportActionBar?.hide()
+    }
+
+    fun hideBottomNavigation() {
+        binding.bottomNavView.visibility = View.GONE
     }
 
 }

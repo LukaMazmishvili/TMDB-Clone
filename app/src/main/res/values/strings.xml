@@ -20,4 +20,5 @@
     <string name="ratings">Ratings</string>
     <string name="appearances">Appearances</string>
     <string name="set_lite_amp_dark_theme"><![CDATA[Set Lite & Dark Theme]]></string>
+    <string name="sign_out">Sign out</string>
 </resources>

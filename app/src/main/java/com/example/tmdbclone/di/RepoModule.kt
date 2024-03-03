@@ -1,14 +1,17 @@
 package com.example.tmdbclone.di
 
+import com.example.tmdbclone.data.remote.repository.AuthRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.CelebritiesRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.MovieDetailRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.MoviesRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.TvShowsRepositoryImpl
+import com.example.tmdbclone.data.remote.service.AuthService
 import com.example.tmdbclone.data.remote.service.CelebritiesService
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.data.remote.service.MoviesService
 import com.example.tmdbclone.data.remote.service.TvShowsService
+import com.example.tmdbclone.domain.repository.AuthRepository
 import com.example.tmdbclone.domain.repository.CelebritiesRepository
 import com.example.tmdbclone.domain.repository.MovieDetailRepository
 import com.example.tmdbclone.domain.repository.MoviesRepository
@@ -49,4 +52,8 @@ object RepoModule {
     ): MovieDetailRepository {
         return MovieDetailRepositoryImpl(apiService, genresApi)
     }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepo(apiService: AuthService): AuthRepository = AuthRepositoryImpl(apiService)
 }
