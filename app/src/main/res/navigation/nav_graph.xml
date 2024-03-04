@@ -5,16 +5,22 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/moviesFragment">
 
+<!--    <include app:graph="@navigation/nav_movies_fragment"/>-->
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.tmdbclone.presentation.auth.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/moviesFragment"
         android:name="com.example.tmdbclone.presentation.movies.MoviesFragment"
         android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" >
+        tools:layout="@layout/fragment_movies">
         <action
             android:id="@+id/action_moviesFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
@@ -47,16 +53,28 @@
         android:id="@+id/TMDBFragment"
         android:name="com.example.tmdbclone.presentation.tmdb.TMDBFragment"
         android:label="fragment_tmdb"
-        tools:layout="@layout/fragment_tmdb" />
+        tools:layout="@layout/fragment_tmdb">
+        <action
+            android:id="@+id/action_TMDBFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.tmdbclone.presentation.details.movie.MovieDetailFragment"
         android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" >
+        tools:layout="@layout/fragment_movie_detail">
         <argument
             android:name="movieId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
+    <action
+        android:id="@+id/action_global_movieDetailFragment"
+        app:destination="@id/movieDetailFragment" />
+    <action
+        android:id="@+id/action_global_nav_movies_fragment"
+        app:destination="@id/nav_movies_fragment" />
 
 </navigation>

@@ -51,15 +51,16 @@
         app:boxStrokeColor="@color/app_green"
         app:boxStrokeWidthFocused="1dp"
         app:hintTextColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/tilUsername"
-        app:passwordToggleEnabled="true">
+        app:layout_constraintTop_toBottomOf="@id/tilUsername">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tietEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,16 +83,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@color/app_green"
-        android:text="@string/sign_out"
+        android:text="@string/register"
         app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

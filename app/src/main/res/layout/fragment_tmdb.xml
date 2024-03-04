@@ -19,16 +19,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Mazmoo"
+        android:text="Username"
         android:textColor="@color/white"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="@id/ivUserImage"
         app:layout_constraintStart_toEndOf="@id/ivUserImage"
         app:layout_constraintTop_toTopOf="@id/ivUserImage" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLoginorRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_button"
+        android:padding="5dp"
+        android:text="@string/sign_in_sign_up"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUsername" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivIcFav"
@@ -39,7 +53,7 @@
         android:tint="@color/app_green"
         app:layout_constraintEnd_toEndOf="@id/ivUserImage"
         app:layout_constraintStart_toStartOf="@id/ivUserImage"
-        app:layout_constraintTop_toBottomOf="@id/ivUserImage" />
+        app:layout_constraintTop_toBottomOf="@id/btnLoginorRegister" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvFav"
@@ -167,12 +181,14 @@
         app:layout_constraintTop_toBottomOf="@id/tvAppearance" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignIn"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/bg_button"
-        android:text="@string/sign_in"
+        android:text="@string/sign_out"
         android:textAllCaps="false"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAppearanceDesc" />

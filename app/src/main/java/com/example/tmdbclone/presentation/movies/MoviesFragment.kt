@@ -59,8 +59,9 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     override fun listeners() {
         adapterPopular.onItemClickedListener = {
+            activity?.supportFragmentManager
             findNavController().navigate(
-                MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(
+                MoviesFragmentDirections.actionGlobalMovieDetailFragment(
                     it.id!!
                 )
             )

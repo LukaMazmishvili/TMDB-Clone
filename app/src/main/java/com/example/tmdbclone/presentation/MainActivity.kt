@@ -1,17 +1,18 @@
 package com.example.tmdbclone.presentation
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.R.attr.actionBarSize
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.tmdbclone.R
 import com.example.tmdbclone.databinding.ActivityMainBinding
 import com.example.tmdbclone.presentation.celebrities.CelebritiesViewModel
@@ -67,32 +68,33 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.moviesFragment -> {
-                    navController.navigate(R.id.action_global_moviesFragment)
-                    binding.toolBar.visibility = View.VISIBLE
+                    navController.navigate(R.id.moviesFragment)
+                    showViews()
                     true
                 }
 
                 R.id.tvShowsFragment -> {
                     navController.navigate(R.id.tvShowsFragment)
-                    binding.toolBar.visibility = View.VISIBLE
+                    showViews()
                     true
                 }
 
                 R.id.celebritiesFragment -> {
                     navController.navigate(R.id.celebritiesFragment)
-                    binding.toolBar.visibility = View.VISIBLE
+                    showViews()
                     true
                 }
 
                 R.id.searchFragment -> {
                     navController.navigate(R.id.searchFragment)
-                    binding.toolBar.visibility = View.VISIBLE
+                    showViews()
                     true
                 }
 
                 R.id.TMDBFragment -> {
                     navController.navigate(R.id.TMDBFragment)
                     binding.toolBar.visibility = View.GONE
+                    binding.bottomNavView.visibility = View.VISIBLE
                     true
                 }
 
@@ -100,21 +102,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // This prevents from adding new instance of already chosen fragment
+        // This prevents from adding new instance of already chosen fragment // todo delete comment
         bottomNavigation.setOnItemReselectedListener {
-//            if (it.itemId != bottomNavigation.menu.findItem(R.id.moviesFragment).itemId) {
             when (it.itemId) {
                 R.id.moviesFragment -> {
-
-//                        navController.popBackStack(R.id.moviesFragment, false, true)
                     if (it.itemId == bottomNavigation.menu.findItem(R.id.moviesFragment).itemId) {
-                        navController.popBackStack(R.id.moviesFragment, false, true)
+                        navController.popBackStack(R.id.moviesFragment, false)
                     }
                     binding.toolBar.visibility = View.VISIBLE
                 }
-//                }
             }
-
         }
 
         // Changing Selected Menu Item
@@ -122,6 +119,15 @@ class MainActivity : AppCompatActivity() {
             bottomNavigation.menu.findItem(destination.id)?.isChecked = true
         }
 
+    }
+
+    override fun navigateUpTo(upIntent: Intent?): Boolean {
+        return navController.navigateUp()
+    }
+
+    private fun showViews() {
+        binding.toolBar.visibility = View.VISIBLE
+        binding.bottomNavView.visibility = View.VISIBLE
     }
 
     fun setToolBarTitle(title: String) {
@@ -134,6 +140,10 @@ class MainActivity : AppCompatActivity() {
 
     fun hideBottomNavigation() {
         binding.bottomNavView.visibility = View.GONE
+    }
+
+    fun showBottomNavigation() {
+        binding.bottomNavView.visibility = View.VISIBLE
     }
 
 }

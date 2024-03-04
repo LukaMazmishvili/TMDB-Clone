@@ -104,9 +104,7 @@ class MovieDetailFragment :
                                 tvMovieDescription.text = it.overview
                                 tvMovieTitle.text = it.title
                             }
-
                         }
-
                     }
                 }
             }

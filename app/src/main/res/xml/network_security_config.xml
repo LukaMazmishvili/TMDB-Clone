@@ -4,6 +4,7 @@
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />
+            <domain includeSubdomains="true">http://10.15.10.85:5000</domain>
         </trust-anchors>
     </base-config>
 

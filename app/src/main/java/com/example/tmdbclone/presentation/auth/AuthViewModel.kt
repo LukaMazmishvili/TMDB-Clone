@@ -22,9 +22,9 @@ class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : 
         }
     }
 
-    fun register(username: String, password: String, email: String) {
+    fun register(username: String, email: String, password: String) {
         viewModelScope.launch {
-            authUseCase.execute(username, password, email)
+            authUseCase.execute(username, email, password)
         }
     }
 

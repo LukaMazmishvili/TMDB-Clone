@@ -1,5 +1,6 @@
 package com.example.tmdbclone.di
 
+import android.content.Context
 import com.example.tmdbclone.data.remote.repository.AuthRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.CelebritiesRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.MovieDetailRepositoryImpl
@@ -19,6 +20,7 @@ import com.example.tmdbclone.domain.repository.TvShowsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -55,5 +57,6 @@ object RepoModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepo(apiService: AuthService): AuthRepository = AuthRepositoryImpl(apiService)
+    fun provideAuthRepo(apiService: AuthService, @ApplicationContext context: Context): AuthRepository =
+        AuthRepositoryImpl(apiService, context)
 }

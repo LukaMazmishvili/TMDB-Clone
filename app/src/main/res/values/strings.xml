@@ -21,4 +21,8 @@
     <string name="appearances">Appearances</string>
     <string name="set_lite_amp_dark_theme"><![CDATA[Set Lite & Dark Theme]]></string>
     <string name="sign_out">Sign out</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="sign_in_sign_up">Sign in / Sign up</string>
+    <string name="don_t_have_a_account">Don\'t have a account?</string>
 </resources>
