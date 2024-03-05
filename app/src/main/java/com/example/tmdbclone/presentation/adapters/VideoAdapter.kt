@@ -16,6 +16,10 @@ class VideoAdapter : BaseAdapter<VideoModelDto.Video, ItemMovieBinding>(ItemMovi
             ivMovieImage.uploadImage("https://img.youtube.com/vi/${item.key}/mqdefault.jpg")
             tvMovieTitle.visibility = View.GONE
             tvMovieCategories.visibility = View.GONE
+
+            root.setOnClickListener {
+                onItemClickedListener?.invoke(item)
+            }
         }
     }
 }

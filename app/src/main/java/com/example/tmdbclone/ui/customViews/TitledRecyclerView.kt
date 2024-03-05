@@ -44,10 +44,6 @@ class TitledRecyclerView @JvmOverloads constructor(
         tvTitle.text = title
     }
 
-    fun setOnItemCLickListener() {
-
-    }
-
     fun isLoading(isLoading: Boolean) {
 
 //        if (isLoading) {

@@ -24,6 +24,7 @@ class AuthRepositoryImpl @Inject constructor(
 ) :
     AuthRepository {
 
+    // todo fix token reading and writing
     private val authTokenKey = stringPreferencesKey(AUTH_TOKEN)
 
     fun getAuthToken(): Flow<String?> {
@@ -56,7 +57,6 @@ class AuthRepositoryImpl @Inject constructor(
 
             }
 
-
             println(response.code())
         } catch (e: Exception) {
             return e.message.toString()
@@ -66,7 +66,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun register(userName: String, email: String, password: String): String {
         try {
-
             val response = authService.registerUser(UserModel.Register(userName, password, email))
 
             if (response.isSuccessful) {
@@ -76,7 +75,6 @@ class AuthRepositoryImpl @Inject constructor(
             } else {
                 println(response.code())
             }
-
         } catch (e: Exception) {
             return e.message.toString()
         }
