@@ -1,6 +1,6 @@
 package com.example.tmdbclone.di
 
-import com.example.tmdbclone.data.remote.service.AuthService
+import com.example.tmdbclone.data.remote.service.UserService
 import com.example.tmdbclone.data.remote.service.CelebritiesService
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
@@ -11,7 +11,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.create
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -21,8 +20,8 @@ object ApiServiceModule {
 
     @Provides
     @Singleton
-    fun provideAuthService(@Named("Our Api") retrofit: Retrofit): AuthService =
-        retrofit.create(AuthService::class.java)
+    fun provideAuthService(@Named("Our Api") retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 
     @Provides
     @Singleton

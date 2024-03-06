@@ -2,12 +2,15 @@ package com.example.tmdbclone.presentation.details.movie
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +23,7 @@ import com.example.tmdbclone.databinding.FragmentMovieDetailBinding
 import com.example.tmdbclone.extension.uploadImage
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
+import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import com.example.tmdbclone.presentation.adapters.VideoAdapter
@@ -49,22 +53,19 @@ class MovieDetailFragment :
         PopularAdapter(0)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun started() {
+        (activity as MainActivity).hideToolBar()
         setupViews()
     }
 
     override fun listeners() {
-        with(binding) {
-            videosAdapter.onItemClickedListener = {
-                val intent = Intent(Intent.ACTION_VIEW)
-
-                intent.data = Uri.parse("https://www.youtube.com/watch?v=${it.key}")
-
-                intent.setPackage("com.google.android.youtube")
-
-                startActivity(intent)
+        videosAdapter.onItemClickedListener = {
+            it.key?.let { it1 ->
+                openVideo(it1)
             }
         }
+
     }
 
     private fun setupViews() {
@@ -84,11 +85,32 @@ class MovieDetailFragment :
             // Similar
             trvSimilar.setTitle("Similar")
             trvSimilar.setRecyclerViewAdapter(similarAdapter)
+
+            heartIcon.setOnClickListener {
+                val isFavorite = heartIcon.drawable.constantState?.let {
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_favourite
+                    )?.constantState == it
+                } ?: false
+
+                if (!isFavorite) {
+                    viewModel.addToFavourites(args.movieId)
+                }
+            }
+
         }
     }
 
     private fun openVideo(videoId: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
 
+        intent.data = Uri.parse("https://www.youtube.com/watch?v=$videoId")
+
+        intent.setPackage("com.google.android.youtube")
+
+        // todo open link in web if youtube app is not installed
+        startActivity(intent)
     }
 
     override fun observer() {

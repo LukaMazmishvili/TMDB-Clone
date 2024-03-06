@@ -16,12 +16,14 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.tmdbclone.R
 import com.example.tmdbclone.databinding.ActivityMainBinding
+import com.example.tmdbclone.domain.SessionManager
 import com.example.tmdbclone.presentation.celebrities.CelebritiesViewModel
 import com.example.tmdbclone.presentation.movies.MoviesViewModel
 import com.example.tmdbclone.presentation.tvShows.TvShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 @RequiresApi(Build.VERSION_CODES.O)
@@ -31,8 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
-    private val moviesViewModel: MoviesViewModel by viewModels()
-    private val tvShowsViewModel: TvShowsViewModel by viewModels()
+    @Inject
+    lateinit var sessionManager: SessionManager
+
     private val celebritiesViewModel: CelebritiesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,13 +46,19 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolBar)
         setContentView(binding.root)
 
+        initSession()
         setupBottomNavBar()
         initViewModels()
 
     }
 
-    private fun initViewModels() {
+    private fun initSession() {
+        lifecycleScope.launch {
+            sessionManager.authorize()
+        }
+    }
 
+    private fun initViewModels() {
         lifecycleScope.launch(Dispatchers.IO) {
             celebritiesViewModel.apply {
                 getPopularCelebrities()
@@ -128,6 +137,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showViews() {
         binding.toolBar.visibility = View.VISIBLE
+        supportActionBar?.show()
         binding.bottomNavView.visibility = View.VISIBLE
     }
 

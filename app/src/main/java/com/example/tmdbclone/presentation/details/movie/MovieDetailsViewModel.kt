@@ -9,6 +9,7 @@ import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
 import com.example.tmdbclone.domain.usecase.GetMovieDetailsUseCase
+import com.example.tmdbclone.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCase: GetMovieDetailsUseCase) :
+class MovieDetailsViewModel @Inject constructor(
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val userUseCase: UserUseCase
+) :
     BaseViewModel() {
 
     val movieIdState = MutableStateFlow<Int>(-1)
@@ -48,6 +52,12 @@ class MovieDetailsViewModel @Inject constructor(private val getMovieDetailsUseCa
         fetchMovieVideos()
         fetchMovieRecommended()
         fetchMovieSimilar()
+    }
+
+    fun addToFavourites(movieId: Int) {
+        viewModelScope.launch {
+            userUseCase.addFavourite(movieId)
+        }
     }
 
     private fun fetchMovieDetails() {

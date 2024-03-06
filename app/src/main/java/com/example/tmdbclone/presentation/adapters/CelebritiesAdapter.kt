@@ -1,13 +1,11 @@
 package com.example.tmdbclone.presentation.adapters
 
-import android.util.Log
 import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.ItemMovieBinding
 import com.example.tmdbclone.extension.uploadImage350x450
-import com.example.tmdbclone.extension.uploadImage750x450
 
 class CelebritiesAdapter :
     BaseAdapter<CelebritiesModelDto.Result, ItemMovieBinding>(ItemMovieBinding::inflate) {

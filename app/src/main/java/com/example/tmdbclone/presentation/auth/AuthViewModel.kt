@@ -2,7 +2,7 @@ package com.example.tmdbclone.presentation.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tmdbclone.domain.usecase.AuthUseCase
+import com.example.tmdbclone.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : ViewModel() {
+class AuthViewModel @Inject constructor(private val userUseCase: UserUseCase) : ViewModel() {
 
     // todo change type
     private val _authState = MutableStateFlow<Boolean>(false)
@@ -18,13 +18,13 @@ class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : 
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
-            authUseCase.execute(username, password)
+            userUseCase.execute(username, password)
         }
     }
 
     fun register(username: String, email: String, password: String) {
         viewModelScope.launch {
-            authUseCase.execute(username, email, password)
+            userUseCase.execute(username, email, password)
         }
     }
 

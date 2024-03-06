@@ -1,10 +1,13 @@
 package com.example.tmdbclone.di
 
+import android.content.Context
 import com.example.tmdbclone.common.Endpoints.BASE_URL
 import com.example.tmdbclone.common.Endpoints.OUR_API_BASE_URL
+import com.example.tmdbclone.domain.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -28,13 +31,6 @@ object AppModule {
             .build()
     }
 
-    val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS) // Increase connection timeout to 30 seconds
-        .readTimeout(30, TimeUnit.SECONDS) // Increase read timeout to 30 seconds
-        .writeTimeout(30, TimeUnit.SECONDS) // Increase write timeout to 30 seconds
-        .build()
-
-
     @Provides
     @Singleton
     @Named("Our Api")
@@ -43,8 +39,13 @@ object AppModule {
             .Builder()
             .baseUrl(OUR_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
+        return SessionManager(context)
     }
 
 }

@@ -53,7 +53,6 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
     }
 
     override fun started() {
-
         setupViews()
     }
 
@@ -97,7 +96,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).setToolBarTitle("Movies")
+        (activity as MainActivity).apply {
+            setToolBarTitle("Movies")
+            supportActionBar?.show()
+        }
     }
 
     override fun observer() {
