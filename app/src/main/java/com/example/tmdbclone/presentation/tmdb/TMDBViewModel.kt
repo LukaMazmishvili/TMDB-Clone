@@ -12,11 +12,11 @@ import javax.inject.Inject
 @HiltViewModel
 class TMDBViewModel @Inject constructor(private val userUseCase: UserUseCase) : BaseViewModel() {
 
-    private val _isAuthorized = MutableStateFlow(false)
-    val isAuthorized = _isAuthorized.asStateFlow()
-
-    private val _currentUser = MutableStateFlow("")
-    val currentUser = _currentUser.asStateFlow()
+//    private val _isAuthorized = MutableStateFlow(false)
+//    val isAuthorized = _isAuthorized.asStateFlow()
+//
+//    private val _currentUser = MutableStateFlow("")
+//    val currentUser = _currentUser.asStateFlow()
 
     init {
         getCurrentUser()
@@ -29,19 +29,8 @@ class TMDBViewModel @Inject constructor(private val userUseCase: UserUseCase) : 
         }
     }
 
-    private fun getCurrentUser() {
-        viewModelScope.launch {
-            userUseCase.getCurrentUser().collect {
-                _currentUser.value = it
-            }
-        }
-    }
+    fun getCurrentUser() = userUseCase.getCurrentUser()
 
-    private fun isAuthorized() {
-        viewModelScope.launch {
-            userUseCase.isAuthorized().collect {
-                _isAuthorized.value = it
-            }
-        }
-    }
+    fun isAuthorized() = userUseCase.isAuthorized()
 }
+

@@ -32,13 +32,13 @@ class SessionManager @Inject constructor(private val context: Context) {
         getToken().collect { token ->
             token?.let {
                 _isAuthorized.value = token.isNotEmpty()
-                println(token)
-            }
 
-            getCurrentUserName().collect { username ->
-                isAuthorized.collect {
-                    username?.let {
-                        _currentUser.value = username
+                getCurrentUserName().collect { username ->
+                    isAuthorized.collect {
+                        if (it)
+                            username?.let {
+                                _currentUser.value = username
+                            }
                     }
                 }
             }
@@ -68,10 +68,11 @@ class SessionManager @Inject constructor(private val context: Context) {
         }
     }
 
-    private fun getCurrentUserName(): Flow<String?> {
-        return context.dataStore.data.map {
-            it[usernameKey]
-        }
+    private fun getCurrentUserName(): Flow<String?> = context.dataStore.data.map {
+//        it[usernameKey]?.let { username ->
+//            _currentUser.value = username
+//        }
+        it[usernameKey]
     }
-
 }
+
