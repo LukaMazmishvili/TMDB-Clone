@@ -12,15 +12,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TMDBViewModel @Inject constructor(private val userUseCase: UserUseCase) : BaseViewModel() {
 
-//    private val _isAuthorized = MutableStateFlow(false)
-//    val isAuthorized = _isAuthorized.asStateFlow()
-//
-//    private val _currentUser = MutableStateFlow("")
-//    val currentUser = _currentUser.asStateFlow()
-
     init {
         getCurrentUser()
-        isAuthorized()
     }
 
     fun logOut() {
@@ -31,6 +24,5 @@ class TMDBViewModel @Inject constructor(private val userUseCase: UserUseCase) : 
 
     fun getCurrentUser() = userUseCase.getCurrentUser()
 
-    fun isAuthorized() = userUseCase.isAuthorized()
 }
 

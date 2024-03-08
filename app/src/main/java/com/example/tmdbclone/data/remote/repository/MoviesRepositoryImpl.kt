@@ -6,6 +6,7 @@ import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.data.remote.service.MoviesService
 import com.example.tmdbclone.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import javax.inject.Inject

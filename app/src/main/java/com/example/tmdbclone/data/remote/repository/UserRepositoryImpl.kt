@@ -22,11 +22,13 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun logIn(userName: String, password: String): String {
         try {
 
+            saveUserToken("TestToken")
+            getCurrentUser("test")
             val response = userService.logInUser(UserModel.UserLoginModel(userName, password))
 
             if (response.isSuccessful) {
                 response.body()?.let { token ->
-                    sessionManager.saveToken(token)
+                    saveUserToken(token)
                     getCurrentUser(token)
                 }
 
@@ -77,6 +79,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getCurrentUser(userToken: String) {
         try {
 
+            sessionManager.saveUsername("test")
             val response = userService.getCurrentUser("Bearer $userToken")
 
             if (response.isSuccessful) {
@@ -89,5 +92,8 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun saveUserToken(token: String) {
+        sessionManager.saveToken(token)
+    }
 
 }

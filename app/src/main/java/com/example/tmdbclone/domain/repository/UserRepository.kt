@@ -9,4 +9,6 @@ interface UserRepository {
     suspend fun addToFavourite(movieId: Int, userToken: String = ""): Int
     suspend fun getCurrentUser(userToken: String)
 
+    suspend fun saveUserToken(token: String)
+
 }

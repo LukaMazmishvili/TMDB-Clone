@@ -31,7 +31,6 @@ class TMDBFragment : BaseFragment<FragmentTmdbBinding>(FragmentTmdbBinding::infl
 
         binding.btnSignOut.setOnClickListener {
             viewModel.logOut()
-//            updateUI()
             observer()
         }
     }
@@ -39,43 +38,26 @@ class TMDBFragment : BaseFragment<FragmentTmdbBinding>(FragmentTmdbBinding::infl
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.isAuthorized().collect { isAuthorized ->
-                    when (isAuthorized) {
-                        true -> viewModel.getCurrentUser().collect { currentUser ->
+                viewModel.getCurrentUser().collect { currentUser ->
+                    when (currentUser) {
+                        "Username" -> {
+                            binding.btnLoginorRegister.visibility = View.VISIBLE
+                            binding.btnSignOut.visibility = View.GONE
+                            binding.tvUsername.text = currentUser
+                        }
+
+                        "" -> {
+                            binding.btnLoginorRegister.visibility = View.VISIBLE
+                            binding.btnSignOut.visibility = View.GONE
+                            binding.tvUsername.text = "Username"
+                        }
+
+                        else -> {
                             binding.btnLoginorRegister.visibility = View.GONE
                             binding.btnSignOut.visibility = View.VISIBLE
                             binding.tvUsername.text = currentUser
                         }
 
-                        false -> {
-                            binding.btnLoginorRegister.visibility = View.VISIBLE
-                            binding.btnSignOut.visibility = View.GONE
-                            binding.tvUsername.text = "Username"
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun updateUI(currentUser: String = "") {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.isAuthorized().collect { isAuthorized ->
-                    when (isAuthorized) {
-                        true -> viewModel.getCurrentUser().collect {
-                            binding.btnLoginorRegister.visibility = View.GONE
-                            binding.btnSignOut.visibility = View.VISIBLE
-                            binding.tvUsername.text = currentUser.ifEmpty {
-                                "Username"
-                            }
-                        }
-
-                        false -> {
-                            binding.btnLoginorRegister.visibility = View.VISIBLE
-                            binding.btnSignOut.visibility = View.GONE
-                            binding.tvUsername.text = ""
-                        }
                     }
                 }
             }
