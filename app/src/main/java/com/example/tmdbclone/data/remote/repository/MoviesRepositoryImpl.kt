@@ -33,13 +33,13 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
         }
     }
 
-    override suspend fun fetchPopularMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchPopularMovies(page: Int): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
         flow {
             try {
 
                 emit(Resource.Loading(true))
 
-                val response = moviesService.fetchPopularMovies()
+                val response = moviesService.fetchPopularMovies(page)
 
                 if (response.isSuccessful) {
                     val body = response.body()

@@ -12,10 +12,10 @@ object Endpoints {
     // Movie Endpoints
     const val POPULAR_ENDPOINT =
         "discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc"
-    const val NOW_PLAYING = "movie/now_playing?language=en-US&page=1"
+    const val NOW_PLAYING = "movie/now_playing?language=en-US"
     const val TRENDING_ALL = "trending/all/day?language=en-US"
-    const val TOP_RATED = "movie/top_rated?language=en-US&page=1"
-    const val UPCOMING = "movie/upcoming?language=en-US&page=1"
+    const val TOP_RATED = "movie/top_rated?language=en-US"
+    const val UPCOMING = "movie/upcoming?language=en-US"
 
     // Tv Shows Endpoints
     const val AIRING_TODAY = "tv/airing_today?language=en-US&page=1"

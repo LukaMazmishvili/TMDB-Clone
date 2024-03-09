@@ -58,12 +58,25 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     override fun listeners() {
         adapterPopular.onItemClickedListener = {
-            activity?.supportFragmentManager
-            findNavController().navigate(
-                MoviesFragmentDirections.actionGlobalMovieDetailFragment(
-                    it.id!!
-                )
-            )
+            navigateToDetails(it.id!!, it.title!!)
+        }
+        adapterPIT.onItemClickedListener = {
+            navigateToDetails(it.id!!, it.title!!)
+        }
+        adapterTrending.onItemClickedListener = {
+            navigateToDetails(it.id!!, it.title!!)
+        }
+        adapterTopRated.onItemClickedListener = {
+            navigateToDetails(it.id!!, it.title!!)
+        }
+        adapterUpcoming.onItemClickedListener = {
+            navigateToDetails(it.id!!, it.title!!)
+        }
+
+        with(binding) {
+            trvPopularMovies.setSeeAllButtonClickListener {
+                findNavController().navigate(MoviesFragmentDirections.actionMoviesFragmentToSeeAllFragment())
+            }
         }
     }
 
@@ -168,6 +181,16 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
                 }
             }
         }
+    }
+
+    private fun navigateToDetails(movieId: Int, movieTitle: String) {
+        activity?.supportFragmentManager
+        findNavController().navigate(
+            MoviesFragmentDirections.actionGlobalMovieDetailFragment(
+                movieTitle,
+                movieId
+            )
+        )
     }
 
 }

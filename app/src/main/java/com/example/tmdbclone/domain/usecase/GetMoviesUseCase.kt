@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class GetMoviesUseCase @Inject constructor(private val moviesRepository: MoviesRepository) {
 
-    suspend fun getPopularMovies() = moviesRepository.fetchPopularMovies()
+    suspend fun getPopularMovies() = moviesRepository.fetchPopularMovies(1)
 
     suspend fun getNowPlayingMovies() = moviesRepository.fetchNowPlaying()
 

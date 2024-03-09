@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
@@ -25,9 +26,11 @@ import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
+import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import com.example.tmdbclone.presentation.adapters.VideoAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -38,7 +41,7 @@ class MovieDetailFragment :
     private val args: MovieDetailFragmentArgs by navArgs()
 
     private val castAdapter by lazy {
-        CelebritiesAdapter()
+        CelebritiesGridAdapter()
     }
 
     private val videosAdapter by lazy {
@@ -66,10 +69,17 @@ class MovieDetailFragment :
             }
         }
 
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
     }
 
     private fun setupViews() {
         with(binding) {
+
+            movieTitle.text = args.movieTitle
+
             // Cast & Crew
             trvCast.setTitle("Cast & Crew")
             trvCast.setRecyclerViewAdapter(castAdapter)
@@ -131,16 +141,15 @@ class MovieDetailFragment :
                                 rvRatings.setOverallRating(it.voteAverage!!)
                                 rvRatings.fillStars(it.voteAverage)
                                 rvRatings.setTotalVotes(it.voteCount!!)
-                                it.posterPath?.let { it1 ->
-                                    println(it1)
-                                    ivMovieImage.uploadImage350x450(IMAGE_BASE_URL + it1)
+                                it.posterPath?.let { path ->
+                                    ivMovieImage.uploadImage350x450(IMAGE_BASE_URL + path)
                                 }
-                                it.backdropPath?.let { it1 ->
-                                    println(it1)
-                                    ivMovieCover.uploadImage750x450(IMAGE_BASE_URL + it1)
+                                it.backdropPath?.let { path ->
+                                    ivMovieCover.uploadImage750x450(IMAGE_BASE_URL + path)
                                 }
                                 tvMovieDescription.text = it.overview
                                 tvMovieTitle.text = it.title
+                                movieTitle.text = it.title
                             }
                         }
                     }
@@ -184,6 +193,21 @@ class MovieDetailFragment :
                 viewModel.moviesSimilarState.collect { list ->
                     if (list != null) {
                         similarAdapter.submitList(list!!.results)
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.isLoading.collect { isLoading ->
+                    if (isLoading) {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.dataLayout.visibility = View.GONE
+                    } else {
+                        delay(1000)
+                        binding.progressBar.visibility = View.GONE
+                        binding.dataLayout.visibility = View.VISIBLE
                     }
                 }
             }
