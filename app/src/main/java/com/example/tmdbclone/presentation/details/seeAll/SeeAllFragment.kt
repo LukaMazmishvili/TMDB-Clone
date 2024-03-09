@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentSeeAllBinding
 import com.example.tmdbclone.presentation.MainActivity
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding::inflate) {
 
     private val viewModel: SeeAllViewModel by viewModels()
+    private val args: SeeAllFragmentArgs by navArgs()
 
     private val adapter by lazy {
         viewModel.getData()
@@ -28,6 +30,7 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
     override fun started() {
         (activity as MainActivity).hideToolBar()
 
+        binding.tvToolBarTitle.text = args.title
         setupViews()
     }
 
@@ -35,6 +38,14 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
         with(binding) {
             backButton.setOnClickListener {
                 findNavController().popBackStack()
+            }
+            adapter.onItemClickListener = {
+                findNavController().navigate(
+                    SeeAllFragmentDirections.actionGlobalMovieDetailFragment(
+                        it.title!!,
+                        it.id!!
+                    )
+                )
             }
         }
 

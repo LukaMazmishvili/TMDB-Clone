@@ -21,9 +21,6 @@ class PagingSource @Inject constructor(private val moviesService: MoviesService)
         return state.anchorPosition
     }
 
-    override val keyReuseSupported: Boolean
-        get() = true
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PopularMovieDTO.MovieModelDto> {
         return try {
 
@@ -32,8 +29,10 @@ class PagingSource @Inject constructor(private val moviesService: MoviesService)
             val response = moviesService.fetchPopularMovies(nextPage)
 
             if (response.isSuccessful) {
+
                 val data = response.body()!!.results
                 val page = response.body()!!.page!!
+
                 LoadResult.Page(
                     data = data,
                     prevKey = if (page == 1) null else page - 1,

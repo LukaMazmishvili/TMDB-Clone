@@ -39,6 +39,6 @@ data class PopularMovieDTO(
         @SerializedName("vote_average")
         val voteAverage: Float?,
         @SerializedName("vote_count")
-        val voteCount: Int?
+        val voteCount: Long?
     )
 }

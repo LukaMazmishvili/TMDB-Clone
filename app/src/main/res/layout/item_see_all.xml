@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     android:background="@color/app_background">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -10,19 +11,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
+        android:padding="1dp"
+        android:background="@drawable/bg_stroke"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginEnd="30dp"
         android:text="Title"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnOpen"
         app:layout_constraintStart_toEndOf="@id/ivImage"
         app:layout_constraintTop_toTopOf="@id/ivImage" />
 
@@ -30,12 +35,12 @@
         android:id="@+id/tvGenres"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintEnd_toStartOf="@id/btnOpen"
         android:layout_marginTop="3dp"
+        android:layout_marginEnd="30dp"
         android:text="genres"
         android:textColor="@color/app_gray"
         android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@id/btnOpen"
         app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -51,7 +56,6 @@
         android:id="@+id/btnOpen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"

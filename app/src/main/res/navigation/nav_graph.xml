@@ -84,10 +84,15 @@
     <action
         android:id="@+id/action_global_nav_movies_fragment"
         app:destination="@id/nav_movies_fragment" />
+
     <fragment
         android:id="@+id/seeAllFragment"
         android:name="com.example.tmdbclone.presentation.details.seeAll.SeeAllFragment"
         android:label="fragment_see_all"
-        tools:layout="@layout/fragment_see_all" />
+        tools:layout="@layout/fragment_see_all">
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

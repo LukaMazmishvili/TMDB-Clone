@@ -31,14 +31,16 @@
                     android:tint="@color/app_green" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvToolBarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="14dp"
                     android:layout_toEndOf="@id/backButton"
                     android:text="Title"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
             </RelativeLayout>
 
@@ -52,6 +54,6 @@
         tools:listitem="@layout/item_see_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_margin="5dp" />
 
 </LinearLayout>

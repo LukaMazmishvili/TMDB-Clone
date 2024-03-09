@@ -9,6 +9,8 @@ class GetMovieDetailsUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
+    suspend fun getGenres(movieId: Int) = movieDetailRepository.fetchMovieGenres()
+
     suspend fun getMovieDetails(movieId: Int) = movieDetailRepository.fetchMovieDetails(movieId)
 
     suspend fun getMovieCast(movieId: Int) = movieDetailRepository.fetchMovieCast(movieId)

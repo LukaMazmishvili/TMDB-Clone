@@ -7,7 +7,6 @@ import com.example.tmdbclone.R
 
 
 fun ImageView.uploadImage80x80(url: String, round: Boolean = false) {
-    this.setBackgroundResource(R.drawable.bg_stroke_round)
     if (!round) {
         Glide.with(this)
             .load(url)
@@ -15,10 +14,31 @@ fun ImageView.uploadImage80x80(url: String, round: Boolean = false) {
             .centerCrop()
             .into(this)
     } else {
+        this.setBackgroundResource(R.drawable.bg_stroke_round)
         Glide.with(this)
             .load(url)
             .override(250, 250)
             .circleCrop()
+            .into(this)
+    }
+}
+
+fun ImageView.uploadImage200x300(url: Any, round: Boolean = false) {
+    if (!round) {
+        Glide.with(this)
+            .load(url)
+            .override(200, 300)
+            .fitCenter()
+            .into(this)
+    } else {
+
+        // Set Cornered Stroke
+        this.setBackgroundResource(R.drawable.bg_stroke_cornered)
+
+        Glide.with(this)
+            .load(url)
+            .override(250, 350)
+            .transform(RoundedCorners(50))
             .into(this)
     }
 }

@@ -15,7 +15,7 @@ class GetPagingUseCase @Inject constructor(private val pagingSource: PagingSourc
 
     suspend operator fun invoke(): Flow<PagingData<PopularMovieDTO.MovieModelDto>> {
         return Pager(
-            config = PagingConfig(pageSize = 20, maxSize = Int.MAX_VALUE),
+            config = PagingConfig(pageSize = 20, maxSize = 200),
             pagingSourceFactory = { pagingSource }
         ).flow
     }

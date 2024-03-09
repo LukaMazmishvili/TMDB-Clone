@@ -31,46 +31,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     override fun started() {
 
-//        val menuHost: MenuHost = requireActivity()
-//
-//        menuHost.addMenuProvider(object : MenuProvider {
-//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                menuInflater.inflate(R.menu.toolbar_menu, menu)
-//            }
-//
-//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                val manager =
-//                    requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-//                (activity as MainActivity)
-//                if (menuItem.itemId == R.id.search) {
-//                    val searchView = menuItem.actionView as SearchView
-//                    if (query.isNotEmpty()) {
-//                        searchView.setQuery(query, false)
-//                    }
-//                    searchView.setBackgroundColor(requireActivity().getColor(R.color.app_green))
-//                    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                        override fun onQueryTextSubmit(query: String?): Boolean {
-//                            query?.let {
-//                                searchViewModel.getSearchSuggestions(it)
-//                            }
-//                            return true
-//                        }
-//
-//                        override fun onQueryTextChange(newText: String?): Boolean {
-//                            newText?.let {
-//                                searchViewModel.getSearchSuggestions(newText)
-//                            }
-//                            return true
-//                        }
-//
-//                    })
-////                    searchView.setSearchableInfo(manager.getSearchableInfo())
-//                }
-//                return true
-//            }
-//
-//        })
-
     }
 
     override fun observer() {
@@ -90,7 +50,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).setToolBarTitle("Search")
+        (activity as MainActivity).apply {
+            hideToolBar()
+        }
     }
 
     override fun listeners() {

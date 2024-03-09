@@ -19,6 +19,9 @@ class GridAdapter :
             Log.d("PosterPathInAdapter", "onBindViewHolder: ${IMAGE_BASE_URL + item.posterPath}")
             tvTitle.text = item.title ?: item.originalName
             tvGenres.text = item.genreIds.toString()
+            root.setOnClickListener {
+                onItemClickedListener?.invoke(item)
+            }
         }
     }
 }

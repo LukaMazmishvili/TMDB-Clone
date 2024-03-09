@@ -29,6 +29,7 @@ import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import com.example.tmdbclone.presentation.adapters.VideoAdapter
+import com.example.tmdbclone.presentation.movies.MoviesFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -69,8 +70,27 @@ class MovieDetailFragment :
             }
         }
 
-        binding.backButton.setOnClickListener {
-            findNavController().popBackStack()
+        with(binding) {
+            backButton.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            recommendedAdapter.onItemClickedListener = {
+                navigateToDetails(it.id!!, it.title!!)
+            }
+            similarAdapter.onItemClickedListener = {
+                navigateToDetails(it.id!!, it.title!!)
+            }
+
+            trvCast.setSeeAllButtonClickListener {
+                // todo
+            }
+            trvVideos.setSeeAllButtonClickListener {
+                // todo
+            }
+            trvRecommended.setSeeAllButtonClickListener {
+                // todo
+            }
         }
 
     }
@@ -116,7 +136,6 @@ class MovieDetailFragment :
         val intent = Intent(Intent.ACTION_VIEW)
 
         intent.data = Uri.parse("https://www.youtube.com/watch?v=$videoId")
-
         intent.setPackage("com.google.android.youtube")
 
         // todo open link in web if youtube app is not installed
@@ -213,6 +232,16 @@ class MovieDetailFragment :
             }
         }
 
+    }
+
+    private fun navigateToDetails(movieId: Int, movieTitle: String) {
+        activity?.supportFragmentManager
+        findNavController().navigate(
+            MoviesFragmentDirections.actionGlobalMovieDetailFragment(
+                movieTitle,
+                movieId
+            )
+        )
     }
 
 }

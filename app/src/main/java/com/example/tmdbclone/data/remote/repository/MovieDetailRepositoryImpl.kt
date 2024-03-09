@@ -11,6 +11,7 @@ import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.domain.repository.MovieDetailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.Response
 import javax.inject.Inject
 
 class MovieDetailRepositoryImpl @Inject constructor(
@@ -19,7 +20,26 @@ class MovieDetailRepositoryImpl @Inject constructor(
 ) :
     MovieDetailRepository {
 
-    private suspend fun fetchGenres(): Map<Int, String> {
+    private inline fun <reified T> fetchFlow(
+        crossinline block: suspend () -> Response<T>
+    ): Flow<Resource<T>> = flow {
+        try {
+            emit(Resource.Loading(true))
+            val response = block()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(Resource.Success(it))
+                }
+            } else {
+                emit(Resource.Error("Something Went Wrong !"))
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message.toString()))
+            Log.d("RequestBodyVideosExec", "fetchMovieDetails: ${e.message}")
+        }
+    }
+
+    override suspend fun fetchMovieGenres(): Map<Int, String> {
         try {
 
             val genresMap = mutableMapOf<Int, String>()
@@ -49,8 +69,6 @@ class MovieDetailRepositoryImpl @Inject constructor(
             try {
 
                 emit(Resource.Loading(true))
-
-                val genres = fetchGenres()
 
                 val response = movieDetailService.fetchMovieDetails(movieId)
 

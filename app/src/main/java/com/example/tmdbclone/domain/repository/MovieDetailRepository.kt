@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieDetailRepository {
 
+    suspend fun fetchMovieGenres(): Map<Int, String>
+
     suspend fun fetchMovieDetails(movieId: Int): Flow<Resource<MovieDetailsModelDto>>
 
     suspend fun fetchMovieCast(movieId: Int): Flow<Resource<CelebritiesModelDto>>
