@@ -5,12 +5,14 @@ import com.example.tmdbclone.data.remote.service.CelebritiesService
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.data.remote.service.MoviesService
+import com.example.tmdbclone.data.remote.service.SearchService
 import com.example.tmdbclone.data.remote.service.TvShowsService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.create
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -47,5 +49,10 @@ object ApiServiceModule {
     @Singleton
     fun provideGenresService(@Named("official") retrofit: Retrofit): GenresService =
         retrofit.create(GenresService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSearchService(@Named("official") retrofit: Retrofit): SearchService =
+        retrofit.create(SearchService::class.java)
 
 }

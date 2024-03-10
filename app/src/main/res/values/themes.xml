@@ -44,4 +44,13 @@
         <item name="postSplashScreenTheme">@style/Theme.TMDBClone</item>
     </style>
 
+    <!--  search view style  -->
+
+    <style name="Theme.App.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="colorOnPrimary">@color/app_green</item>
+        <item name="colorPrimary">@color/app_green</item>
+        <item name="colorPrimaryVariant">@color/app_green</item>
+        <item name="colorSurface">@color/app_green</item>
+    </style>
+
 </resources>

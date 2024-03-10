@@ -5,18 +5,21 @@ import com.example.tmdbclone.data.remote.repository.UserRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.CelebritiesRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.MovieDetailRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.MoviesRepositoryImpl
+import com.example.tmdbclone.data.remote.repository.SearchRepositoryImpl
 import com.example.tmdbclone.data.remote.repository.TvShowsRepositoryImpl
 import com.example.tmdbclone.data.remote.service.UserService
 import com.example.tmdbclone.data.remote.service.CelebritiesService
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.data.remote.service.MoviesService
+import com.example.tmdbclone.data.remote.service.SearchService
 import com.example.tmdbclone.data.remote.service.TvShowsService
 import com.example.tmdbclone.domain.SessionManager
 import com.example.tmdbclone.domain.repository.UserRepository
 import com.example.tmdbclone.domain.repository.CelebritiesRepository
 import com.example.tmdbclone.domain.repository.MovieDetailRepository
 import com.example.tmdbclone.domain.repository.MoviesRepository
+import com.example.tmdbclone.domain.repository.SearchRepository
 import com.example.tmdbclone.domain.repository.TvShowsRepository
 import dagger.Module
 import dagger.Provides
@@ -63,4 +66,10 @@ object RepoModule {
         sessionManager: SessionManager
     ): UserRepository =
         UserRepositoryImpl(apiService, sessionManager)
+
+    @Provides
+    @Singleton
+
+    fun provideSearchRepo(apiService: SearchService): SearchRepository =
+        SearchRepositoryImpl(apiService)
 }

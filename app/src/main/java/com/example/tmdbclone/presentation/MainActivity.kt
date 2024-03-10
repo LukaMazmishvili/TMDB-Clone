@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        window.statusBarColor = getColor(R.color.app_dark)
+        window.statusBarColor = getColor(R.color.app_darker)
         setSupportActionBar(binding.toolBar)
         setContentView(binding.root)
 
