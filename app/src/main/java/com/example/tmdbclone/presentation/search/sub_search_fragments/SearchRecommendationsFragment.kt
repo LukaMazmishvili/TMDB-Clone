@@ -1,10 +1,13 @@
 package com.example.tmdbclone.presentation.search.sub_search_fragments
 
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.data.remote.model.SearchSimilarModelDto
@@ -30,10 +33,22 @@ class SearchRecommendationsFragment :
         binding.etTitle.setText(args.query)
 
         setupViews()
+        search()
 
     }
 
     override fun listeners() {
+        with(binding) {
+
+            backButton.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            adapterSimilarSearches.onItemClickListener = { item ->
+                viewModel.getSearchedData(item.title ?: item.name!!)
+            }
+
+        }
 
     }
 
@@ -53,9 +68,23 @@ class SearchRecommendationsFragment :
     }
 
     private fun search() {
-        binding.etTitle.addTextChangedListener {
+        binding.etTitle.addTextChangedListener(object : TextWatcher {
 
-        }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val query = s.toString()
+
+                viewModel.getSimilarSearches(query)
+            }
+
+        })
     }
 
 }

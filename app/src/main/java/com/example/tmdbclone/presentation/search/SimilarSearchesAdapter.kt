@@ -9,12 +9,16 @@ class SimilarSearchesAdapter :
         ItemSimilarSearchBinding::inflate
     ) {
 
+    var onItemClickListener: ((SearchSimilarModelDto.SimilarSearches) -> Unit)? = null
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
 
         with(holder.binding) {
             root.text = item.title ?: item.name
+            root.setOnClickListener {
+                onItemClickListener?.invoke(item)
+            }
         }
     }
 }

@@ -2,6 +2,8 @@ package com.example.tmdbclone.data.remote.repository
 
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.fetchFlow
+import com.example.tmdbclone.data.remote.model.SearchModelDto
+import com.example.tmdbclone.data.remote.model.SearchPersonModelDto
 import com.example.tmdbclone.data.remote.model.SearchSimilarModelDto
 import com.example.tmdbclone.data.remote.service.SearchService
 import com.example.tmdbclone.domain.repository.SearchRepository
@@ -13,24 +15,23 @@ class SearchRepositoryImpl @Inject constructor(private val searchService: Search
     SearchRepository {
 
     override suspend fun fetchSimilarSearches(query: String): Flow<Resource<SearchSimilarModelDto>> =
-        flow {
-            try {
-
-                emit(Resource.Loading(true))
-
-                val response = searchService.fetchSimilarSearches(query)
-
-                val body = response.code()
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    body?.let {
-                        emit(Resource.Success(body))
-                    }
-                } else {
-                    emit(Resource.Error("Something Went Wrong !"))
-                }
-            } catch (e: Exception) {
-                emit(Resource.Error("Something Went Wrong !"))
-            }
+        fetchFlow {
+            searchService.fetchSimilarSearches(query)
         }
+
+    override suspend fun fetchSearchedMovies(query: String): Flow<Resource<SearchModelDto>> =
+        fetchFlow {
+            searchService.fetchSearchedMovies(query)
+        }
+
+    override suspend fun fetchSearchedTvShows(query: String): Flow<Resource<SearchModelDto>> =
+        fetchFlow {
+            searchService.fetchSearchedTvShows(query)
+        }
+
+    override suspend fun fetchSearchedCelebrities(query: String): Flow<Resource<SearchPersonModelDto>> =
+        fetchFlow {
+            searchService.fetchSearchedPersons(query)
+        }
+
 }
