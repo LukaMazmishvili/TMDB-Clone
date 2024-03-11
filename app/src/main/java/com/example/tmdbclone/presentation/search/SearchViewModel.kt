@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,15 +27,15 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
 
     private val _searchedMoviesState =
         MutableStateFlow<List<PopularMovieDTO>>(emptyList())
-    val searchedMoviesState = _searchedMoviesState.asSharedFlow()
+    val searchedMoviesState = _searchedMoviesState.asStateFlow()
 
     private val _searchedTvShowsState =
         MutableStateFlow<List<PopularMovieDTO>>(emptyList())
-    val searchedTvShowsState = _searchedTvShowsState.asSharedFlow()
+    val searchedTvShowsState = _searchedTvShowsState.asStateFlow()
 
     private val _searchedCelebritiesState =
         MutableStateFlow<List<CelebritiesModelDto>>(emptyList())
-    val searchedCelebritiesState = _searchedCelebritiesState.asSharedFlow()
+    val searchedCelebritiesState = _searchedCelebritiesState.asStateFlow()
 
     fun getSimilarSearches(query: String) {
         viewModelScope.launch {

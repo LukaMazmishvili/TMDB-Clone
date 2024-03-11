@@ -101,4 +101,7 @@ dependencies {
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
 
+    // View Pager 2
+    implementation("androidx.viewpager2:viewpager2:1.1.0-beta02")
+
 }

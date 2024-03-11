@@ -33,27 +33,5 @@ data class CelebritiesModelDto(
         @SerializedName("known_for")
         val knownFor: List<PopularMovieDTO>?, // todo change model into something global or separate models
     )
+
 }
-
-
-/*
-* "adult" : false,
-    "backdrop_path": "/8XyX5Us7uzwQdXtAdnhCB9Gquek.jpg",
-"id": 297761,
-"title": "Suicide Squad",
-"original_language": "en",
-"original_title": "Suicide Squad",
-"overview": "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.",
-"poster_path": "/xFw9RXKZDvevAGocgBK0zteto4U.jpg",
-"media_type": "movie",
-"genre_ids": [
-28,
-12,
-14
-],
-"popularity": 55.062,
-"release_date": "2016-08-03",
-"video": false,
-"vote_average": 5.911,
-"vote_count": 20478
-* */

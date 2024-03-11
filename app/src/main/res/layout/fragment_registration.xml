@@ -25,7 +25,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/app_green"
+        app:boxStrokeColor="@color/color_selector"
         app:boxStrokeWidthFocused="1dp"
         app:hintTextColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/ivLogo">
@@ -48,7 +48,7 @@
         android:layout_margin="20dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        app:boxStrokeColor="@color/app_green"
+        app:boxStrokeColor="@color/color_selector"
         app:boxStrokeWidthFocused="1dp"
         app:hintTextColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tilUsername">
@@ -72,7 +72,7 @@
         android:layout_margin="20dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        app:boxStrokeColor="@color/app_green"
+        app:boxStrokeColor="@color/color_selector"
         app:boxStrokeWidthFocused="1dp"
         app:hintTextColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tilEmail"
