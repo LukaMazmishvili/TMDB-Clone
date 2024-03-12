@@ -1,41 +1,35 @@
 package com.example.tmdbclone.presentation.search.sub_search_fragments
 
+import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.base.BaseFragment
-import com.example.tmdbclone.data.remote.model.SearchSimilarModelDto
 import com.example.tmdbclone.databinding.FragmentSearchRecommendationsBinding
 import com.example.tmdbclone.presentation.auth.LoginFragment
 import com.example.tmdbclone.presentation.auth.RegistrationFragment
-import com.example.tmdbclone.presentation.details.seeAll.SeeAllFragment
-import com.example.tmdbclone.presentation.movies.MoviesFragment
 import com.example.tmdbclone.presentation.search.SearchPagerAdapter
 import com.example.tmdbclone.presentation.search.SearchViewModel
 import com.example.tmdbclone.presentation.search.SimilarSearchesAdapter
 import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.AllPageFragment
 import com.example.tmdbclone.presentation.tmdb.TMDBFragment
-import com.example.tmdbclone.presentation.tvShows.TvShowsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchRecommendationsFragment :
     BaseFragment<FragmentSearchRecommendationsBinding>(FragmentSearchRecommendationsBinding::inflate) {
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by activityViewModels()
 
     private val args: SearchRecommendationsFragmentArgs by navArgs()
 
@@ -86,20 +80,18 @@ class SearchRecommendationsFragment :
 
     }
 
-    private fun updateFragmentList(pos: Int, fragment: Fragment) {
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateFragmentList(pos: Int, fragment: Fragment?) {
         fragmentList[pos] = fragment
-        val nonNullList = mutableListOf<Fragment>()
-        val tempList = listOf<Fragment>(AllPageFragment())
-        fragmentList.forEach {
-            if (it != null) {
-                nonNullList.add(it)
-            }
-        }
+        val nonNullList = fragmentList.filterNotNull()
+        val constList = listOf(AllPageFragment())
         if (nonNullList.size == 3) {
-            nonNullList.add(0, AllPageFragment())
-            pagerAdapter.count = nonNullList
+            val finalList = constList + nonNullList
+            pagerAdapter.updateList(finalList)
+            pagerAdapter.notifyDataSetChanged()
         } else {
-            pagerAdapter.count = nonNullList
+            pagerAdapter.updateList(nonNullList)
+            pagerAdapter.notifyDataSetChanged()
         }
         pagerAdapter.notifyDataSetChanged()
     }
@@ -120,11 +112,12 @@ class SearchRecommendationsFragment :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.similarSearchesState.collect { list ->
+                viewModel.searchedMoviesState.collect { list ->
+                    println(list)
                     if (list.isNotEmpty()) {
                         updateFragmentList(0, RegistrationFragment())
                     } else {
-//                        fragmentList.add(1, null)
+                        updateFragmentList(0, null)
                     }
                 }
             }
@@ -132,12 +125,12 @@ class SearchRecommendationsFragment :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.similarSearchesState.collect { list ->
+                viewModel.searchedTvShowsState.collect { list ->
+                    println(list)
                     if (list.isNotEmpty()) {
-//                        fragmentList.add(2, SeeAllFragment())
                         updateFragmentList(1, TMDBFragment())
                     } else {
-//                        fragmentList.add(2, null)
+                        updateFragmentList(1, null)
                     }
                 }
             }
@@ -145,12 +138,12 @@ class SearchRecommendationsFragment :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.similarSearchesState.collect { list ->
+                viewModel.searchedCelebritiesState.collect { list ->
+                    println(list)
                     if (list.isNotEmpty()) {
-//                        countList.add(3, SeeAllFragment())
                         updateFragmentList(2, LoginFragment())
                     } else {
-//                        countList.add(3, null)
+                        updateFragmentList(2, null)
                     }
                 }
             }
@@ -176,8 +169,8 @@ class SearchRecommendationsFragment :
 
             override fun afterTextChanged(s: Editable?) {
                 val query = s.toString()
-//                pagerAdapter.clearList()
                 viewModel.getSimilarSearches(query)
+                viewModel.getSearchedData(query)
             }
 
         })

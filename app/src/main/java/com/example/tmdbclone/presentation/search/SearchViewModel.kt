@@ -26,15 +26,15 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
     val similarSearchesState = _similarSearchesState.asSharedFlow()
 
     private val _searchedMoviesState =
-        MutableStateFlow<List<PopularMovieDTO>>(emptyList())
+        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
     val searchedMoviesState = _searchedMoviesState.asStateFlow()
 
     private val _searchedTvShowsState =
-        MutableStateFlow<List<PopularMovieDTO>>(emptyList())
+        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
     val searchedTvShowsState = _searchedTvShowsState.asStateFlow()
 
     private val _searchedCelebritiesState =
-        MutableStateFlow<List<CelebritiesModelDto>>(emptyList())
+        MutableStateFlow<List<CelebritiesModelDto.Result>>(emptyList())
     val searchedCelebritiesState = _searchedCelebritiesState.asStateFlow()
 
     fun getSimilarSearches(query: String) {
@@ -64,7 +64,7 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _searchedMoviesState.emit(response.data!!.results)
+                        _searchedMoviesState.value = response.data!!.results
                     }
 
                     is Resource.Error -> {
@@ -83,7 +83,7 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _searchedTvShowsState.emit(response.data!!.results)
+                        _searchedTvShowsState.value = response.data!!.results
                     }
 
                     is Resource.Error -> {
@@ -102,7 +102,7 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _searchedCelebritiesState.emit(response.data!!.result)
+                        _searchedCelebritiesState.value = response.data!!.results
                     }
 
                     is Resource.Error -> {
@@ -115,6 +115,7 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
                 }
             }
         }
+
     }
 
 }
