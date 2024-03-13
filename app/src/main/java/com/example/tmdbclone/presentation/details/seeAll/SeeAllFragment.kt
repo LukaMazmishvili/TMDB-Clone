@@ -30,7 +30,7 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
     override fun started() {
         (activity as MainActivity).hideToolBar()
 
-        binding.tvToolBarTitle.text = args.title
+        binding.tvToolBarTitle.text = args.title ?: ""
         setupViews()
     }
 

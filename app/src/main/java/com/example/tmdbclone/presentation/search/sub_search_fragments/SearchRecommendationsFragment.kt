@@ -16,6 +16,7 @@ import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentSearchRecommendationsBinding
 import com.example.tmdbclone.presentation.auth.LoginFragment
 import com.example.tmdbclone.presentation.auth.RegistrationFragment
+import com.example.tmdbclone.presentation.details.seeAll.SeeAllFragment
 import com.example.tmdbclone.presentation.search.SearchPagerAdapter
 import com.example.tmdbclone.presentation.search.SearchViewModel
 import com.example.tmdbclone.presentation.search.SimilarSearchesAdapter
@@ -39,26 +40,24 @@ class SearchRecommendationsFragment :
         SimilarSearchesAdapter()
     }
 
-    private val pagerAdapter by lazy {
-        SearchPagerAdapter(this)
-    }
-
     override fun started() {
-        binding.etTitle.setText(args.query)
-
-        binding.viewPager.adapter = pagerAdapter
+//        binding.etTitle.setText(args.query)
 
         setupViews()
         search()
-        setupTabLayout()
 
     }
 
-    private fun setupTabLayout() {
+    private fun setupTabLayout(finalList: List<Fragment>) {
+
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            for (each in fragmentList) {
-                if (each != null) {
-                    tab.text = each.id.toString()
+            finalList[position].let { fragment ->
+                when (fragment) {
+                    is AllPageFragment -> tab.text = "All"
+                    is RegistrationFragment -> tab.text = "Movies"
+                    is TMDBFragment -> tab.text = "Tv Shows"
+                    is LoginFragment -> tab.text = "Celebrities"
+                    else -> tab.text = "null"
                 }
             }
         }.attach()
@@ -82,18 +81,19 @@ class SearchRecommendationsFragment :
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateFragmentList(pos: Int, fragment: Fragment?) {
+        var pagerAdapter = SearchPagerAdapter(this, emptyList())
+        binding.viewPager.adapter = pagerAdapter
         fragmentList[pos] = fragment
         val nonNullList = fragmentList.filterNotNull()
         val constList = listOf(AllPageFragment())
-        if (nonNullList.size == 3) {
-            val finalList = constList + nonNullList
-            pagerAdapter.updateList(finalList)
-            pagerAdapter.notifyDataSetChanged()
+        val finalList = if (nonNullList.size == 3) {
+            constList + nonNullList
         } else {
-            pagerAdapter.updateList(nonNullList)
-            pagerAdapter.notifyDataSetChanged()
+            nonNullList
         }
-        pagerAdapter.notifyDataSetChanged()
+        pagerAdapter = SearchPagerAdapter(this, finalList)
+        binding.viewPager.adapter = pagerAdapter
+        setupTabLayout(finalList)
     }
 
     private fun setupViews() {
@@ -103,7 +103,7 @@ class SearchRecommendationsFragment :
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.getSimilarSearches(binding.etTitle.text.toString())
+                viewModel.getSimilarSearches(binding.etTitle.query.toString())
                 viewModel.similarSearchesState.collect { list ->
                     adapterSimilarSearches.submitList(list)
                 }
@@ -152,27 +152,30 @@ class SearchRecommendationsFragment :
 
 
     private fun search() {
-        binding.etTitle.addTextChangedListener(object : TextWatcher {
-
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val query = s.toString()
-                viewModel.getSimilarSearches(query)
-                viewModel.getSearchedData(query)
-            }
-
-        })
+//        binding.etTitle.setOnQueryTextListener(
+//            object :
+//        )
+//            .addTextChangedListener(object : TextWatcher {
+//
+//            override fun beforeTextChanged(
+//                s: CharSequence?,
+//                start: Int,
+//                count: Int,
+//                after: Int
+//            ) {
+//
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                val query = s.toString()
+//                viewModel.getSimilarSearches(query)
+//                viewModel.getSearchedData(query)
+//            }
+//
+//        })
     }
 }

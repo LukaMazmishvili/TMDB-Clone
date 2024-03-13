@@ -11,6 +11,8 @@
 
         <!-- set toolbar style -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="searchViewStyle">@style/Widget.App.SearchView</item>
+        <item name="tabStyle">@style/Widget.App.TabLayout</item>
     </style>
 
     <!--  bottom navigation style  -->
@@ -46,11 +48,26 @@
 
     <!--  search view style  -->
 
-    <style name="Theme.App.SearchView" parent="Widget.AppCompat.SearchView">
+    <style name="Widget.App.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.SearchView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.SearchView" parent="">
         <item name="colorOnPrimary">@color/app_green</item>
         <item name="colorPrimary">@color/app_green</item>
         <item name="colorPrimaryVariant">@color/app_green</item>
         <item name="colorSurface">@color/app_green</item>
+    </style>
+
+    <!--  tab style  -->
+
+    <style name="Widget.App.TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="materialThemeOverlay">@style/TabLayoutStyle</item>
+    </style>
+
+    <style name="TabLayoutStyle">
+        <item name="colorPrimary">@color/app_green</item>
+        <item name="tabTextColor">@color/app_gray</item>
     </style>
 
 </resources>
