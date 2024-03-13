@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -24,6 +27,7 @@ import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_frag
 import com.example.tmdbclone.presentation.tmdb.TMDBFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -41,7 +45,7 @@ class SearchRecommendationsFragment :
     }
 
     override fun started() {
-//        binding.etTitle.setText(args.query)
+        binding.etTitle.setText(args.query)
 
         setupViews()
         search()
@@ -71,8 +75,11 @@ class SearchRecommendationsFragment :
             }
 
             adapterSimilarSearches.onItemClickListener = { item ->
+                binding.etTitle.clearFocus()
                 viewModel.getSearchedData(item.title ?: item.name!!)
-                binding.rvSimilarSearches.visibility = View.GONE
+//                viewPager.visibility = View.VISIBLE
+//                rvSimilarSearches.visibility = View.GONE
+//                tabLayout.visibility = View.VISIBLE
             }
 
         }
@@ -81,8 +88,7 @@ class SearchRecommendationsFragment :
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateFragmentList(pos: Int, fragment: Fragment?) {
-        var pagerAdapter = SearchPagerAdapter(this, emptyList())
-        binding.viewPager.adapter = pagerAdapter
+        val pagerAdapter: SearchPagerAdapter?
         fragmentList[pos] = fragment
         val nonNullList = fragmentList.filterNotNull()
         val constList = listOf(AllPageFragment())
@@ -97,13 +103,36 @@ class SearchRecommendationsFragment :
     }
 
     private fun setupViews() {
-        binding.rvSimilarSearches.adapter = adapterSimilarSearches
+        with(binding) {
+            rvSimilarSearches.adapter = adapterSimilarSearches
+            etTitle.apply {
+                imeOptions = EditorInfo.IME_ACTION_SEARCH
+                maxLines = 1
+            }
+        }
+    }
+
+    private fun updateUi(isSearchOptionClicked: Boolean = false) {
+        with(binding) {
+
+            etTitle.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    viewPager.visibility = View.GONE
+                    rvSimilarSearches.visibility = View.VISIBLE
+                    tabLayout.visibility = View.GONE
+                } else {
+                    viewPager.visibility = View.VISIBLE
+                    rvSimilarSearches.visibility = View.GONE
+                    tabLayout.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.getSimilarSearches(binding.etTitle.query.toString())
+                viewModel.getSimilarSearches(binding.etTitle.text.toString())
                 viewModel.similarSearchesState.collect { list ->
                     adapterSimilarSearches.submitList(list)
                 }
@@ -148,34 +177,82 @@ class SearchRecommendationsFragment :
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.isLoading.collect { isLoading ->
+                    if (isLoading) {
+                        binding.progressBarWrapper.visibility = View.VISIBLE
+                    } else {
+                        delay(200)
+                        binding.progressBarWrapper.visibility = View.GONE
+                    }
+                }
+            }
+        }
+
     }
 
 
     private fun search() {
-//        binding.etTitle.setOnQueryTextListener(
-//            object :
-//        )
-//            .addTextChangedListener(object : TextWatcher {
-//
-//            override fun beforeTextChanged(
-//                s: CharSequence?,
-//                start: Int,
-//                count: Int,
-//                after: Int
-//            ) {
-//
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//                val query = s.toString()
-//                viewModel.getSimilarSearches(query)
-//                viewModel.getSearchedData(query)
-//            }
-//
-//        })
+        with(binding) {
+            etTitle.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    viewPager.visibility = View.GONE
+                    rvSimilarSearches.visibility = View.VISIBLE
+                    tabLayout.visibility = View.GONE
+                } else {
+                    viewPager.visibility = View.VISIBLE
+                    rvSimilarSearches.visibility = View.GONE
+                    tabLayout.visibility = View.VISIBLE
+                }
+            }
+
+            etTitle.addTextChangedListener(object : TextWatcher {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+//                    viewPager.visibility = View.GONE
+//                    rvSimilarSearches.visibility = View.VISIBLE
+//                    tabLayout.visibility = View.GONE
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    val query = s.toString()
+                    viewModel.getSimilarSearches(query)
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+//                    viewPager.visibility = View.GONE
+//                    rvSimilarSearches.visibility = View.VISIBLE
+//                    tabLayout.visibility = View.GONE
+                }
+
+            })
+
+
+            etTitle.setOnEditorActionListener { _, actionId, _ ->
+                when (actionId) {
+                    EditorInfo.IME_ACTION_SEARCH -> {
+                        viewModel.getSearchedData(binding.etTitle.text.toString())
+                        viewPager.visibility = View.VISIBLE
+                        rvSimilarSearches.visibility = View.GONE
+                        tabLayout.visibility = View.VISIBLE
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
     }
 }

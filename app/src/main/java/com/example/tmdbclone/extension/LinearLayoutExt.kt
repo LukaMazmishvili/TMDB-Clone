@@ -10,7 +10,8 @@ import com.example.tmdbclone.R
 fun LinearLayout.insertTextViews(listOfText: List<String>, onClick: View.OnClickListener? = null) {
     for (i in 0..7) {
         val textView = TextView(this.context)
-        textView.text = listOfText[i]
+        if (listOfText.isNotEmpty())
+            textView.text = listOfText[i]
         textView.setTextColor(this.context.getColor(R.color.app_green))
         textView.textSize = 20f
         textView.setOnClickListener(onClick)

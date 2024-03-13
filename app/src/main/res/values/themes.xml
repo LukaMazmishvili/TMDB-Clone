@@ -56,18 +56,19 @@
         <item name="colorOnPrimary">@color/app_green</item>
         <item name="colorPrimary">@color/app_green</item>
         <item name="colorPrimaryVariant">@color/app_green</item>
-        <item name="colorSurface">@color/app_green</item>
+        <item name="colorOnSurface">@color/app_green</item>
     </style>
 
     <!--  tab style  -->
 
-    <style name="Widget.App.TabLayout" parent="Widget.Material3.TabLayout">
+    <style name="Widget.App.TabLayout" parent="Widget.Material3.TabLayout.OnSurface">
         <item name="materialThemeOverlay">@style/TabLayoutStyle</item>
     </style>
 
     <style name="TabLayoutStyle">
         <item name="colorPrimary">@color/app_green</item>
-        <item name="tabTextColor">@color/app_gray</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="tabTextColor">@color/white</item>
     </style>
 
 </resources>
