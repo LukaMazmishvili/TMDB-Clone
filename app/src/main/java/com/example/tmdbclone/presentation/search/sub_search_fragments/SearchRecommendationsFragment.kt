@@ -70,6 +70,10 @@ class SearchRecommendationsFragment :
     override fun listeners() {
         with(binding) {
 
+            btnClearText.setOnClickListener {
+                etTitle.setText("")
+            }
+
             backButton.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -77,9 +81,6 @@ class SearchRecommendationsFragment :
             adapterSimilarSearches.onItemClickListener = { item ->
                 binding.etTitle.clearFocus()
                 viewModel.getSearchedData(item.title ?: item.name!!)
-//                viewPager.visibility = View.VISIBLE
-//                rvSimilarSearches.visibility = View.GONE
-//                tabLayout.visibility = View.VISIBLE
             }
 
         }
@@ -108,23 +109,6 @@ class SearchRecommendationsFragment :
             etTitle.apply {
                 imeOptions = EditorInfo.IME_ACTION_SEARCH
                 maxLines = 1
-            }
-        }
-    }
-
-    private fun updateUi(isSearchOptionClicked: Boolean = false) {
-        with(binding) {
-
-            etTitle.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    viewPager.visibility = View.GONE
-                    rvSimilarSearches.visibility = View.VISIBLE
-                    tabLayout.visibility = View.GONE
-                } else {
-                    viewPager.visibility = View.VISIBLE
-                    rvSimilarSearches.visibility = View.GONE
-                    tabLayout.visibility = View.VISIBLE
-                }
             }
         }
     }
