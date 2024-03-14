@@ -21,6 +21,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearchUseCase) :
     BaseViewModel() {
 
+    private var query: String = ""
+
     private val _similarSearchesState =
         MutableSharedFlow<List<SearchSimilarModelDto.SimilarSearches>>()
     val similarSearchesState = _similarSearchesState.asSharedFlow()
@@ -36,6 +38,17 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
     private val _searchedCelebritiesState =
         MutableStateFlow<List<CelebritiesModelDto.Result>>(emptyList())
     val searchedCelebritiesState = _searchedCelebritiesState.asStateFlow()
+
+    init {
+    }
+
+    fun setQuery(query: String) {
+        this.query = query
+    }
+
+    fun getQuery(): String {
+        return query
+    }
 
     fun getSimilarSearches(query: String) {
         viewModelScope.launch {
@@ -58,9 +71,9 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
         }
     }
 
-    fun getSearchedData(query: String) {
+    fun getSearchedMovies(query: String, page: Int = 1) {
         viewModelScope.launch {
-            getSearchUseCase.getSearchedMovies(query).collect { response ->
+            getSearchUseCase.getSearchedMovies(query, page).collect { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
@@ -77,9 +90,11 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
                 }
             }
         }
+    }
 
+    fun getSearchedTvShows(query: String, page: Int = 1) {
         viewModelScope.launch {
-            getSearchUseCase.getSearchedTvShows(query).collect { response ->
+            getSearchUseCase.getSearchedTvShows(query, page).collect { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
@@ -96,9 +111,11 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
                 }
             }
         }
+    }
 
+    fun getSearchedCelebrities(query: String, page: Int = 1) {
         viewModelScope.launch {
-            getSearchUseCase.getSearchedCelebrities(query).collect { response ->
+            getSearchUseCase.getSearchedCelebrities(query, page).collect { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()

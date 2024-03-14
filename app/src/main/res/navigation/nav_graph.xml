@@ -100,8 +100,8 @@
         tools:layout="@layout/fragment_see_all">
         <argument
             android:name="title"
-            app:argType="string"
-            android:defaultValue="dd"/>
+            android:defaultValue="dd"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/searchRecommendationsFragment"

@@ -51,7 +51,9 @@ class RatingsView @JvmOverloads constructor(
         if (full == 0) {
             starWrapper[0].setBackgroundResource(R.drawable.ic_star_half_filled)
         } else {
-            starWrapper[lastIndex + 1].setBackgroundResource(R.drawable.ic_star_half_filled)
+            if (lastIndex != 4) {
+                starWrapper[lastIndex + 1].setBackgroundResource(R.drawable.ic_star_half_filled)
+            }
         }
     }
 

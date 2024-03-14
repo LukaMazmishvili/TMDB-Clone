@@ -11,10 +11,13 @@ interface SearchRepository {
 
     suspend fun fetchSimilarSearches(query: String): Flow<Resource<SearchSimilarModelDto>>
 
-    suspend fun fetchSearchedMovies(query: String): Flow<Resource<SearchModelDto>>
+    suspend fun fetchSearchedMovies(query: String, page: Int): Flow<Resource<SearchModelDto>>
 
-    suspend fun fetchSearchedTvShows(query: String): Flow<Resource<SearchModelDto>>
+    suspend fun fetchSearchedTvShows(query: String, page: Int): Flow<Resource<SearchModelDto>>
 
-    suspend fun fetchSearchedCelebrities(query: String): Flow<Resource<SearchPersonModelDto>>
+    suspend fun fetchSearchedCelebrities(
+        query: String,
+        page: Int
+    ): Flow<Resource<SearchPersonModelDto>>
 
 }

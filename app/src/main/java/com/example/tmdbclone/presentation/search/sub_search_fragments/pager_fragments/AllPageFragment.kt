@@ -68,9 +68,7 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedMoviesState.collect { list ->
-//                    if (list.isNotEmpty()) {
                     moviesAdapter.submitList(list)
-//                    }
                 }
             }
         }
@@ -78,9 +76,7 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedTvShowsState.collect { list ->
-//                    if (list.isNotEmpty()) {
                     tvShowsAdapter.submitList(list)
-//                    }
                 }
             }
         }
@@ -88,9 +84,7 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedCelebritiesState.collect { list ->
-//                    if (list.isNotEmpty()) {
                     celebritiesAdapter.submitList(list)
-//                    }
                 }
             }
         }

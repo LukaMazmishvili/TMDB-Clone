@@ -28,8 +28,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     private val moviesViewModel: MoviesViewModel by activityViewModels()
 
-    private val searchViewModel: SearchViewModel by viewModels()
-
     override fun started() {
 
     }

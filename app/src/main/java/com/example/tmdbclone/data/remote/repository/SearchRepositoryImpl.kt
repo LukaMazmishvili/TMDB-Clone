@@ -19,19 +19,19 @@ class SearchRepositoryImpl @Inject constructor(private val searchService: Search
             searchService.fetchSimilarSearches(query)
         }
 
-    override suspend fun fetchSearchedMovies(query: String): Flow<Resource<SearchModelDto>> =
+    override suspend fun fetchSearchedMovies(query: String, page:Int): Flow<Resource<SearchModelDto>> =
         fetchFlow {
-            searchService.fetchSearchedMovies(query)
+            searchService.fetchSearchedMovies(query, page)
         }
 
-    override suspend fun fetchSearchedTvShows(query: String): Flow<Resource<SearchModelDto>> =
+    override suspend fun fetchSearchedTvShows(query: String, page:Int): Flow<Resource<SearchModelDto>> =
         fetchFlow {
-            searchService.fetchSearchedTvShows(query)
+            searchService.fetchSearchedTvShows(query, page)
         }
 
-    override suspend fun fetchSearchedCelebrities(query: String): Flow<Resource<SearchPersonModelDto>> =
+    override suspend fun fetchSearchedCelebrities(query: String, page:Int): Flow<Resource<SearchPersonModelDto>> =
         fetchFlow {
-            searchService.fetchSearchedPersons(query)
+            searchService.fetchSearchedPersons(query, page)
         }
 
 }

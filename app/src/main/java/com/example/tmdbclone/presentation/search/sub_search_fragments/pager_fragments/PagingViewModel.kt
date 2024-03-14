@@ -1,19 +1,20 @@
-package com.example.tmdbclone.presentation.details.seeAll
+package com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.domain.usecase.GetPagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SeeAllViewModel @Inject constructor(private val getPagingUseCase: GetPagingUseCase) :
+class PagingViewModel @Inject constructor(private val getSearPagingUseCase: GetPagingUseCase) :
     BaseViewModel() {
 
     private val _dataState = MutableStateFlow<PagingData<PopularMovieDTO.MovieModelDto>>(
@@ -21,9 +22,9 @@ class SeeAllViewModel @Inject constructor(private val getPagingUseCase: GetPagin
     )
     val dataState = _dataState.asStateFlow()
 
-    fun getData() {
+    fun getData(query: String) {
         viewModelScope.launch {
-            getPagingUseCase.invoke().collect {
+            getSearPagingUseCase.getSearchedMovies(query).cachedIn(viewModelScope).collect {
                 _dataState.value = it
             }
         }

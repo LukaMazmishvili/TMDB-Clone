@@ -23,7 +23,10 @@ import com.example.tmdbclone.presentation.details.seeAll.SeeAllFragment
 import com.example.tmdbclone.presentation.search.SearchPagerAdapter
 import com.example.tmdbclone.presentation.search.SearchViewModel
 import com.example.tmdbclone.presentation.search.SimilarSearchesAdapter
+import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.AllCelebritiesFragment
+import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.AllMoviesFragment
 import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.AllPageFragment
+import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.AllTvShowsFragment
 import com.example.tmdbclone.presentation.tmdb.TMDBFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +49,7 @@ class SearchRecommendationsFragment :
 
     override fun started() {
         binding.etTitle.setText(args.query)
+        viewModel.setQuery(args.query)
 
         setupViews()
         search()
@@ -53,15 +57,19 @@ class SearchRecommendationsFragment :
     }
 
     private fun setupTabLayout(finalList: List<Fragment>) {
-
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            finalList[position].let { fragment ->
-                when (fragment) {
-                    is AllPageFragment -> tab.text = "All"
-                    is RegistrationFragment -> tab.text = "Movies"
-                    is TMDBFragment -> tab.text = "Tv Shows"
-                    is LoginFragment -> tab.text = "Celebrities"
-                    else -> tab.text = "null"
+            if (finalList.size == 1) {
+                binding.tabLayout.visibility = View.GONE
+            } else {
+                binding.tabLayout.visibility = View.VISIBLE
+                finalList[position].let { fragment ->
+                    when (fragment) {
+                        is AllPageFragment -> tab.text = "All"
+                        is AllMoviesFragment -> tab.text = "Movies"
+                        is AllTvShowsFragment -> tab.text = "Tv Shows"
+                        is AllCelebritiesFragment -> tab.text = "Celebrities"
+                        else -> tab.text = "null"
+                    }
                 }
             }
         }.attach()
@@ -79,15 +87,21 @@ class SearchRecommendationsFragment :
             }
 
             adapterSimilarSearches.onItemClickListener = { item ->
-                binding.etTitle.clearFocus()
-                viewModel.getSearchedData(item.title ?: item.name!!)
+                val query = item.title ?: item.name!!
+                binding.etTitle.apply {
+                    setText(query)
+                    clearFocus()
+                }
+                viewModel.apply {
+                    getSearchedMovies(query)
+                    getSearchedTvShows(query)
+                    getSearchedCelebrities(query)
+                }
             }
 
         }
-
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun updateFragmentList(pos: Int, fragment: Fragment?) {
         val pagerAdapter: SearchPagerAdapter?
         fragmentList[pos] = fragment
@@ -128,7 +142,7 @@ class SearchRecommendationsFragment :
                 viewModel.searchedMoviesState.collect { list ->
                     println(list)
                     if (list.isNotEmpty()) {
-                        updateFragmentList(0, RegistrationFragment())
+                        updateFragmentList(0, AllMoviesFragment())
                     } else {
                         updateFragmentList(0, null)
                     }
@@ -141,7 +155,7 @@ class SearchRecommendationsFragment :
                 viewModel.searchedTvShowsState.collect { list ->
                     println(list)
                     if (list.isNotEmpty()) {
-                        updateFragmentList(1, TMDBFragment())
+                        updateFragmentList(1, AllTvShowsFragment())
                     } else {
                         updateFragmentList(1, null)
                     }
@@ -154,7 +168,7 @@ class SearchRecommendationsFragment :
                 viewModel.searchedCelebritiesState.collect { list ->
                     println(list)
                     if (list.isNotEmpty()) {
-                        updateFragmentList(2, LoginFragment())
+                        updateFragmentList(2, AllCelebritiesFragment())
                     } else {
                         updateFragmentList(2, null)
                     }
@@ -200,9 +214,6 @@ class SearchRecommendationsFragment :
                     count: Int,
                     after: Int
                 ) {
-//                    viewPager.visibility = View.GONE
-//                    rvSimilarSearches.visibility = View.VISIBLE
-//                    tabLayout.visibility = View.GONE
                 }
 
                 override fun onTextChanged(
@@ -215,19 +226,20 @@ class SearchRecommendationsFragment :
                     viewModel.getSimilarSearches(query)
                 }
 
-                override fun afterTextChanged(s: Editable?) {
-//                    viewPager.visibility = View.GONE
-//                    rvSimilarSearches.visibility = View.VISIBLE
-//                    tabLayout.visibility = View.GONE
-                }
+                override fun afterTextChanged(s: Editable?) {}
 
             })
-
 
             etTitle.setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_SEARCH -> {
-                        viewModel.getSearchedData(binding.etTitle.text.toString())
+                        binding.etTitle.clearFocus()
+                        val query = binding.etTitle.text.toString()
+                        viewModel.getSearchedMovies(query)
+                        viewModel.getSearchedTvShows(query)
+                        viewModel.getSearchedCelebrities(query)
+
+
                         viewPager.visibility = View.VISIBLE
                         rvSimilarSearches.visibility = View.GONE
                         tabLayout.visibility = View.VISIBLE
