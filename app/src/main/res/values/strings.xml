@@ -27,4 +27,5 @@
     <string name="don_t_have_a_account">Don\'t have a account?</string>
     <string name="search">Search</string>
     <string name="similar_search">Similar Search</string>
+    <string name="collection">Collection</string>
 </resources>

@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_stroke"
-    android:text="Adventure"
+    android:text="Genre"
     android:layout_marginEnd="5dp"
     android:textSize="12sp"
     android:textColor="@color/app_gray"

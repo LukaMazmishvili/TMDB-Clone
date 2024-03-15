@@ -27,6 +27,7 @@ import com.example.tmdbclone.extension.uploadImage750x450
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
+import com.example.tmdbclone.presentation.adapters.GenresAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import com.example.tmdbclone.presentation.adapters.VideoAdapter
 import com.example.tmdbclone.presentation.movies.MoviesFragmentDirections
@@ -40,6 +41,10 @@ class MovieDetailFragment :
 
     private val viewModel: MovieDetailsViewModel by viewModels()
     private val args: MovieDetailFragmentArgs by navArgs()
+
+    private val genresAdapter by lazy {
+        GenresAdapter()
+    }
 
     private val castAdapter by lazy {
         CelebritiesGridAdapter()
@@ -99,6 +104,9 @@ class MovieDetailFragment :
         with(binding) {
 
             movieTitle.text = args.movieTitle
+
+            // Genres
+            rvGenres.adapter = genresAdapter
 
             // Cast & Crew
             trvCast.setTitle("Cast & Crew")
@@ -169,6 +177,20 @@ class MovieDetailFragment :
                                 tvMovieDescription.text = it.overview
                                 tvMovieTitle.text = it.title
                                 movieTitle.text = it.title
+                                genresAdapter.submitList(it.genres)
+                                it.belongsToCollection?.let { collection ->
+                                    itemCollection.tvTitle.text = collection.name
+                                    itemCollection.tvGenres.text =
+                                        it.genres.toString().replace("[", "")
+                                    it.posterPath?.let { backDropPath ->
+                                        itemCollection.ivCollectionImage.uploadImage350x450(
+                                            backDropPath
+                                        )
+                                    }
+                                } ?: run {
+                                    itemCollectionWrapper.visibility = View.GONE
+                                }
+
                             }
                         }
                     }
@@ -181,7 +203,14 @@ class MovieDetailFragment :
                 viewModel.moviesCastState.collect { list ->
                     when (list) {
                         null -> {}
-                        else -> castAdapter.submitList(list.cast)
+
+                        else -> {
+                            if (!list.results.isNullOrEmpty()) {
+                                castAdapter.submitList(list.cast)
+                            } else {
+                                binding.trvCast.visibility = View.GONE
+                            }
+                        }
                     }
                 }
             }

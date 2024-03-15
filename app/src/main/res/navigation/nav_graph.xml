@@ -87,8 +87,7 @@
     <action
         android:id="@+id/action_global_movieDetailFragment"
         app:destination="@id/movieDetailFragment"
-        app:enterAnim="@anim/scale_up"
-        app:exitAnim="@anim/scale_up" />
+        app:enterAnim="@anim/scale_up"/>
     <action
         android:id="@+id/action_global_nav_movies_fragment"
         app:destination="@id/nav_movies_fragment" />
@@ -113,5 +112,10 @@
             android:defaultValue=""
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/allMoviesFragment"
+        android:name="com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.AllMoviesFragment"
+        android:label="fragment_all_movies"
+        tools:layout="@layout/fragment_all_movies" />
 
 </navigation>

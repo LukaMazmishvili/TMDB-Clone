@@ -14,6 +14,7 @@ import com.example.tmdbclone.databinding.FragmentAllTvShowsBinding
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import com.example.tmdbclone.presentation.details.seeAll.adapter.SeeAllAdapter
 import com.example.tmdbclone.presentation.search.SearchViewModel
+import com.example.tmdbclone.presentation.search.sub_search_fragments.SearchRecommendationsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -34,8 +35,11 @@ class AllTvShowsFragment :
     }
 
     override fun started() {
+        val query = (parentFragment as SearchRecommendationsFragment).getQuery()
 
-        searchViewModel.getSearchedTvShows("superman")
+        if (currentFinalList.isEmpty()) {
+            searchViewModel.getSearchedTvShows((parentFragment as SearchRecommendationsFragment).getQuery())
+        }
 
         binding.rvTvShows.adapter = adapter
         binding.rvTvShows.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -49,7 +53,7 @@ class AllTvShowsFragment :
                 if (!isLoading && !isLastPage && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                     && firstVisibleItemPosition >= 0 && totalItemCount >= 20
                 ) {
-                    searchViewModel.getSearchedTvShows("superman", ++currentPage)
+                    searchViewModel.getSearchedTvShows(query, ++currentPage)
                 }
             }
         })
@@ -62,14 +66,11 @@ class AllTvShowsFragment :
 
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                searchViewModel.searchedTvShowsState.collect {
-                    val tempList = currentFinalList + it
-                    currentFinalList = tempList.toMutableList()
-                    adapter.submitList(tempList)
-                }
+            searchViewModel.searchedTvShowsState.collect {
+                val tempList = currentFinalList + it
+                currentFinalList = tempList.toMutableList()
+                adapter.submitList(tempList)
             }
         }
     }
-
 }

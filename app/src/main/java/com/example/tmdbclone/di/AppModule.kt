@@ -3,6 +3,9 @@ package com.example.tmdbclone.di
 import android.content.Context
 import com.example.tmdbclone.common.Endpoints.BASE_URL
 import com.example.tmdbclone.common.Endpoints.OUR_API_BASE_URL
+import com.example.tmdbclone.data.remote.paging.PagingSource
+import com.example.tmdbclone.data.remote.paging.PagingSourceFactory
+import com.example.tmdbclone.data.remote.paging.PagingSourceFactoryImpl
 import com.example.tmdbclone.domain.SessionManager
 import dagger.Module
 import dagger.Provides
@@ -48,4 +51,9 @@ object AppModule {
         return SessionManager(context)
     }
 
+    @Provides
+    @Singleton
+    fun providePagingSourceFactory(pagingSource: PagingSource): PagingSourceFactory {
+        return PagingSourceFactoryImpl(pagingSource)
+    }
 }

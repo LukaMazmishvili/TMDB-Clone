@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Movie Categories"
-        android:textColor="@color/white"
+        android:textColor="@color/app_gray"
         android:textSize="12sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -39,9 +39,6 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
         MutableStateFlow<List<CelebritiesModelDto.Result>>(emptyList())
     val searchedCelebritiesState = _searchedCelebritiesState.asStateFlow()
 
-    init {
-    }
-
     fun setQuery(query: String) {
         this.query = query
     }

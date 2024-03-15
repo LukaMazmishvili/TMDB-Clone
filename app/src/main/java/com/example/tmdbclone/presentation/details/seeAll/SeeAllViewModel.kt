@@ -3,6 +3,7 @@ package com.example.tmdbclone.presentation.details.seeAll
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.example.tmdbclone.base.BaseViewModel
+import com.example.tmdbclone.common.Headings
 import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.domain.usecase.GetPagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,9 +22,9 @@ class SeeAllViewModel @Inject constructor(private val getPagingUseCase: GetPagin
     )
     val dataState = _dataState.asStateFlow()
 
-    fun getData() {
+    fun getData(heading: Headings) {
         viewModelScope.launch {
-            getPagingUseCase.invoke().collect {
+            getPagingUseCase.invoke(heading).collect {
                 _dataState.value = it
             }
         }

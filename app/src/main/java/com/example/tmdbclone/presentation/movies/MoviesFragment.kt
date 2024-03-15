@@ -81,6 +81,38 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
                     )
                 )
             }
+
+            trvPlayingInTheater.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    MoviesFragmentDirections.actionMoviesFragmentToSeeAllFragment(
+                        "Playing In Theater"
+                    )
+                )
+            }
+
+            trvTrendingMovies.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    MoviesFragmentDirections.actionMoviesFragmentToSeeAllFragment(
+                        "Trending"
+                    )
+                )
+            }
+
+            trvTopRatedMovies.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    MoviesFragmentDirections.actionMoviesFragmentToSeeAllFragment(
+                        "Top Rated"
+                    )
+                )
+            }
+
+            trvUpcomingMovies.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    MoviesFragmentDirections.actionMoviesFragmentToSeeAllFragment(
+                        "Upcoming"
+                    )
+                )
+            }
         }
     }
 

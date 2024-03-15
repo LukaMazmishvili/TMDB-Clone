@@ -17,32 +17,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="20dp"
-        android:text="Title"
-        android:textColor="@color/white"
-        android:textSize="15sp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/ivImage"
         app:layout_constraintEnd_toStartOf="@id/btnDetail"
         app:layout_constraintStart_toEndOf="@id/ivImage"
-        app:layout_constraintTop_toTopOf="@id/ivImage" />
+        app:layout_constraintTop_toTopOf="@id/ivImage">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvGenres"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
-        android:text="Genres"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@id/btnDetail"
-        app:layout_constraintStart_toEndOf="@id/ivImage"
-        app:layout_constraintTop_toTopOf="@id/ivImage" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="Title"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvGenres"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="Genres"
+            android:textColor="@color/app_gray"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btnDetail"

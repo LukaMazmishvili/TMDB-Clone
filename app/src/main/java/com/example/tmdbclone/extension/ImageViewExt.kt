@@ -66,7 +66,8 @@ fun ImageView.uploadImage350x450(url: Any, round: Boolean = false) {
 fun ImageView.uploadImage750x450(url: String) {
     Glide.with(this)
         .load(url)
-        .override(850, 650)
+        .override(850, 700)
+        .centerInside()
         .into(this)
 }
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.base.BaseFragment
+import com.example.tmdbclone.common.Headings
 import com.example.tmdbclone.databinding.FragmentSeeAllBinding
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.details.seeAll.adapter.SeeAllAdapter
@@ -22,7 +23,7 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
     private val args: SeeAllFragmentArgs by navArgs()
 
     private val adapter by lazy {
-        viewModel.getData()
+        viewModel.getData(args.title.toHeading())
         SeeAllAdapter()
     }
 
@@ -64,6 +65,17 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
                     adapter.submitData(it)
                 }
             }
+        }
+    }
+
+    private fun String.toHeading(): Headings {
+        return when (this) {
+            "Popular" -> Headings.Popular
+            "Playing In Theater" -> Headings.PlayingInTheater
+            "Trending" -> Headings.Trending
+            "Top Rated" -> Headings.TopRated
+            "Upcoming" -> Headings.Upcoming
+            else -> Headings.ELSE
         }
     }
 

@@ -41,6 +41,8 @@ class SearchRecommendationsFragment :
 
     private val args: SearchRecommendationsFragmentArgs by navArgs()
 
+    private var firstTime: Boolean = true
+
     private val fragmentList = mutableListOf<Fragment?>(null, null, null)
 
     private val adapterSimilarSearches by lazy {
@@ -50,6 +52,12 @@ class SearchRecommendationsFragment :
     override fun started() {
         binding.etTitle.setText(args.query)
         viewModel.setQuery(args.query)
+        viewModel.getSimilarSearches(args.query)
+        viewModel.apply {
+            getSearchedMovies(args.query)
+            getSearchedTvShows(args.query)
+            getSearchedCelebrities(args.query)
+        }
 
         setupViews()
         search()
@@ -117,6 +125,15 @@ class SearchRecommendationsFragment :
         setupTabLayout(finalList)
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.etTitle.clearFocus()
+    }
+
+    fun getQuery(): String {
+        return binding.etTitle.text.toString()
+    }
+
     private fun setupViews() {
         with(binding) {
             rvSimilarSearches.adapter = adapterSimilarSearches
@@ -130,7 +147,6 @@ class SearchRecommendationsFragment :
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.getSimilarSearches(binding.etTitle.text.toString())
                 viewModel.similarSearchesState.collect { list ->
                     adapterSimilarSearches.submitList(list)
                 }
@@ -140,7 +156,6 @@ class SearchRecommendationsFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedMoviesState.collect { list ->
-                    println(list)
                     if (list.isNotEmpty()) {
                         updateFragmentList(0, AllMoviesFragment())
                     } else {
@@ -153,7 +168,6 @@ class SearchRecommendationsFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedTvShowsState.collect { list ->
-                    println(list)
                     if (list.isNotEmpty()) {
                         updateFragmentList(1, AllTvShowsFragment())
                     } else {
@@ -166,7 +180,6 @@ class SearchRecommendationsFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedCelebritiesState.collect { list ->
-                    println(list)
                     if (list.isNotEmpty()) {
                         updateFragmentList(2, AllCelebritiesFragment())
                     } else {
@@ -191,14 +204,14 @@ class SearchRecommendationsFragment :
 
     }
 
-
     private fun search() {
         with(binding) {
             etTitle.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
+                if (hasFocus || firstTime) {
                     viewPager.visibility = View.GONE
                     rvSimilarSearches.visibility = View.VISIBLE
                     tabLayout.visibility = View.GONE
+                    firstTime = false
                 } else {
                     viewPager.visibility = View.VISIBLE
                     rvSimilarSearches.visibility = View.GONE
