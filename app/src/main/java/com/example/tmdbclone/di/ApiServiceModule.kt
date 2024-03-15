@@ -55,4 +55,9 @@ object ApiServiceModule {
     fun provideSearchService(@Named("official") retrofit: Retrofit): SearchService =
         retrofit.create(SearchService::class.java)
 
+    @Provides
+    @Singleton
+    fun provideCelebrityDetailsService(@Named("official") retrofit: Retrofit): CelebritiesService =
+        retrofit.create(CelebritiesService::class.java)
+
 }

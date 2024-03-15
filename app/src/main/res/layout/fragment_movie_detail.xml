@@ -196,6 +196,7 @@
                 <include
                     android:id="@+id/itemCollection"
                     layout="@layout/item_collection" />
+
             </LinearLayout>
 
             <com.example.tmdbclone.ui.customViews.TitledRecyclerView

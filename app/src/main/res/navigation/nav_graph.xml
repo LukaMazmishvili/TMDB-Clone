@@ -87,7 +87,7 @@
     <action
         android:id="@+id/action_global_movieDetailFragment"
         app:destination="@id/movieDetailFragment"
-        app:enterAnim="@anim/scale_up"/>
+        app:enterAnim="@anim/scale_up" />
     <action
         android:id="@+id/action_global_nav_movies_fragment"
         app:destination="@id/nav_movies_fragment" />
@@ -117,5 +117,22 @@
         android:name="com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.AllMoviesFragment"
         android:label="fragment_all_movies"
         tools:layout="@layout/fragment_all_movies" />
+    <fragment
+        android:id="@+id/celebrityDetailsFragment"
+        android:name="com.example.tmdbclone.presentation.details.celebrities.CelebrityDetailsFragment"
+        android:label="fragment_celebrity_details"
+        tools:layout="@layout/fragment_celebrity_details">
+        <argument
+            android:name="movieId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_celebrityDetailsFragment"
+        app:destination="@id/celebrityDetailsFragment" />
 
 </navigation>

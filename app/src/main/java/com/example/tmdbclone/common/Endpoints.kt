@@ -27,6 +27,11 @@ object Endpoints {
     const val POPULAR_CELEBRITIES = "person/popular?language=en-US&page=1"
     const val TRENDING_CELEBRITIES = "trending/person/day?language=en-US"
 
+    // Celebrity Details Endpoints
+    const val CELEBRITY_DETAILS = "person/{personID}?language=en-US"
+    const val CELEBRITY_MOVIE_CREDITS = "person/{personID}/movie_credits?language=en-US"
+    const val CELEBRITY_TV_SHOWS_CREDITS = "person/{personID}/tv_credits?language=en-US"
+
     // Genres Endpoints
     const val MOVIE_GENRES = "genre/movie/list?language=en"
     const val TV_SHOW_GENRES = "genre/movie/list?language=en"
