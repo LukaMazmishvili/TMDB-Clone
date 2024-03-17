@@ -3,7 +3,7 @@ package com.example.tmdbclone.presentation.movies
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.domain.usecase.GetMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,23 +15,23 @@ import javax.inject.Inject
 class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMoviesUseCase) :
     BaseViewModel() {
 
-    private val _moviesState = MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+    private val _moviesState = MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val moviesState = _moviesState.asStateFlow()
 
     private val _playingNowMoviesState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val playingNowMoviesState = _playingNowMoviesState.asStateFlow()
 
     private val _trendingMoviesState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val trendingMoviesState = _trendingMoviesState.asStateFlow()
 
     private val _topRatedMoviesState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val topRatedMoviesState = _topRatedMoviesState.asStateFlow()
 
     private val _upcomingMoviesState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val upcomingMoviesState = _upcomingMoviesState.asStateFlow()
 
     init {

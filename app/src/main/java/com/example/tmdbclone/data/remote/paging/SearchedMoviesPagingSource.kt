@@ -3,22 +3,22 @@ package com.example.tmdbclone.data.remote.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.service.SearchService
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SearchedMoviesPagingSource @Inject constructor(private val searchService: SearchService) :
-    PagingSource<Int, PopularMovieDTO.MovieModelDto>() {
+    PagingSource<Int, MoviesDTO.MovieModelDto>() {
 
     var query = ""
 
-    override fun getRefreshKey(state: PagingState<Int, PopularMovieDTO.MovieModelDto>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, MoviesDTO.MovieModelDto>): Int? {
         return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PopularMovieDTO.MovieModelDto> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesDTO.MovieModelDto> {
         return try {
 
             val nextPage: Int = params.key ?: 1

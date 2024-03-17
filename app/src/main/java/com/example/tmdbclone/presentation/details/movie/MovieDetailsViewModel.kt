@@ -1,19 +1,17 @@
 package com.example.tmdbclone.presentation.details.movie
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
 import com.example.tmdbclone.domain.usecase.GetMovieDetailsUseCase
 import com.example.tmdbclone.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,11 +37,11 @@ class MovieDetailsViewModel @Inject constructor(
     val moviesVideosState = _moviesVideosState.asStateFlow()
 
     private val _moviesRecommendedState =
-        MutableStateFlow<PopularMovieDTO?>(null)
+        MutableStateFlow<MoviesDTO?>(null)
     val moviesRecommendedState = _moviesRecommendedState.asStateFlow()
 
     private val _moviesSimilarState =
-        MutableStateFlow<PopularMovieDTO?>(null)
+        MutableStateFlow<MoviesDTO?>(null)
     val moviesSimilarState = _moviesSimilarState.asStateFlow()
 
     init {

@@ -19,6 +19,9 @@ class CelebritiesGridAdapter :
             ivImage.uploadImage80x80(Endpoints.IMAGE_BASE_URL + item.profilePath, true)
             tvTitle.text = item.name ?: item.originalName
             tvGenres.text = item.knownForDepartment
+            root.setOnClickListener {
+                onItemClickedListener?.invoke(item)
+            }
         }
     }
 }

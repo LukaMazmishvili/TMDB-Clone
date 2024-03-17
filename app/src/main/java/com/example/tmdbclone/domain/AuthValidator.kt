@@ -1,4 +1,4 @@
-package com.example.tmdbclone.data.remote
+package com.example.tmdbclone.domain
 
 class AuthValidator {
 

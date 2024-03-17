@@ -7,150 +7,220 @@
     android:background="@color/app_background"
     tools:context=".presentation.details.celebrities.CelebrityDetailsFragment">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivCelebImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_stroke_cornered"
-        android:src="@drawable/placeholder_empty_person"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/llDetailsWrapper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivCelebImage"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCelebTitle"
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/movie_title"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:background="@color/app_dark">
 
-        <LinearLayout
-            android:id="@+id/llKnownFor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Known For"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvKnownFor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Known For"
-                android:textColor="@color/app_gray"
-                android:textSize="20p" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    android:tint="@color/app_green" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/celebrityName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/backButton"
+                    android:text="Celebrity Name"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
 
-        <LinearLayout
-            android:id="@+id/llBirthplace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
+            </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Birthplace"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+        </androidx.appcompat.widget.Toolbar>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvBirthplace"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Birthplace"
-                android:textColor="@color/app_gray"
-                android:textSize="20p" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/app_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar" />
 
-        <LinearLayout
-            android:id="@+id/llDateOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Date Of Birth"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDateOfBirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="DateOfBirth"
-                android:textColor="@color/app_gray"
-                android:textSize="20p" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llDeathDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Death Day"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDeathDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="DateOfBirth"
-                android:textColor="@color/app_gray"
-                android:textSize="20p" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDescription"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:layout_constraintTop_toBottomOf="@id/llDetailsWrapper" />
+        app:layout_constraintTop_toBottomOf="@id/appbar">
 
-    <com.example.tmdbclone.ui.customViews.TitledRecyclerView
-        android:id="@+id/trvMovies"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dataLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <com.example.tmdbclone.ui.customViews.TitledRecyclerView
-        android:id="@+id/trvTvShows"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:layout_constraintTop_toBottomOf="@id/trvMovies" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCelebImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_stroke_cornered"
+                android:padding="2dp"
+                android:src="@drawable/placeholder_empty_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llDetailsWrapper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivCelebImage"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCelebTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_title"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/llKnownFor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Known For"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvKnownFor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Known For"
+                        android:textColor="@color/app_gray"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBirthplace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Birthplace"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBirthplace"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Birthplace"
+                        android:textColor="@color/app_gray"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDateOfBirth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Date Of Birth"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDateOfBirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="DateOfBirth"
+                        android:textColor="@color/app_gray"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDeathDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Death Day"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDeathDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="DateOfBirth"
+                        android:textColor="@color/app_gray"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/app_gray"
+                app:layout_constraintTop_toBottomOf="@id/llDetailsWrapper" />
+
+            <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+                android:id="@+id/trvMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+            <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+                android:id="@+id/trvTvShows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:layout_constraintTop_toBottomOf="@id/trvMovies" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

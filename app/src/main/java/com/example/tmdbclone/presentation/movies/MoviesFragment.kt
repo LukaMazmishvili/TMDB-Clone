@@ -1,31 +1,24 @@
 package com.example.tmdbclone.presentation.movies
 
 import android.os.Build
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.example.tmdbclone.base.BaseFragment
-import com.example.tmdbclone.common.Endpoints
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.databinding.FragmentMoviesBinding
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.GridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 @AndroidEntryPoint
 class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding::inflate) {
@@ -147,7 +140,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         super.onResume()
         (activity as MainActivity).apply {
             setToolBarTitle("Movies")
-            supportActionBar?.show()
+            showToolBar()
         }
     }
 

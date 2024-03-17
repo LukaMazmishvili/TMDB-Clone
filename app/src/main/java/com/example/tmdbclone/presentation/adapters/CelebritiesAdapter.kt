@@ -17,14 +17,25 @@ class CelebritiesAdapter :
         with(holder.binding) {
             if (item.profilePath != null) {
 
-                ivMovieImage.uploadImage350x450(Endpoints.IMAGE_BASE_URL + item.profilePath, true)
+                ivMovieImage.uploadImage350x450(
+                    Endpoints.IMAGE_BASE_URL + item.profilePath,
+                    true,
+                    R.drawable.ic_person
+                )
             } else {
-                ivMovieImage.uploadImage350x450(R.drawable.placeholder_empty_person)
+                ivMovieImage.uploadImage350x450(
+                    R.drawable.placeholder_empty_person,
+                    false,
+                    R.drawable.ic_person
+                )
             }
             ivMovieImage.minimumHeight = 400
             ivMovieImage.minimumWidth = 265
             tvMovieTitle.text = item.name ?: item.originalName
             tvMovieCategories.text = item.knownForDepartment
+            root.setOnClickListener {
+                onItemClickedListener?.invoke(item)
+            }
         }
 
     }

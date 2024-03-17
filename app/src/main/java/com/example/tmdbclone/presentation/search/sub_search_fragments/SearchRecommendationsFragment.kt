@@ -49,6 +49,10 @@ class SearchRecommendationsFragment :
         SimilarSearchesAdapter()
     }
 
+    fun changeViewPagerItem(position: Int) {
+        binding.viewPager.currentItem = position
+    }
+
     override fun started() {
         binding.etTitle.setText(args.query)
         viewModel.setQuery(args.query)

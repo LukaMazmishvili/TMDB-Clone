@@ -8,7 +8,7 @@ import com.example.tmdbclone.common.Endpoints.MOVIE_SIMILAR
 import com.example.tmdbclone.common.Endpoints.MOVIE_VIDEOS
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -43,12 +43,12 @@ interface MovieDetailService {
         @Path("movieId") movieId: Int,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<PopularMovieDTO>
+    ): Response<MoviesDTO>
 
     @GET(MOVIE_SIMILAR)
     suspend fun fetchMovieSimilar(
         @Path("movieId") movieId: Int,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<PopularMovieDTO>
+    ): Response<MoviesDTO>
 }

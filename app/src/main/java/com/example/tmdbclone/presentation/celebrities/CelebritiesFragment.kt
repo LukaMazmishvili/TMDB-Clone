@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.FragmentCelebritiesBinding
@@ -41,8 +42,33 @@ class CelebritiesFragment :
         setupViews()
     }
 
-    override fun listeners() {
 
+    override fun listeners() {
+        adapterPopular.onItemClickedListener = {
+            navigateToDetails(
+                it.id!!, it.name!!
+            )
+        }
+
+        adapterPopular1.onItemClickedListener = {
+            navigateToDetails(
+                it.id!!, it.name!!
+            )
+        }
+
+        adapterTrending.onItemClickedListener = {
+            navigateToDetails(
+                it.id!!, it.name!!
+            )
+        }
+    }
+
+    private fun navigateToDetails(celebrityId: Int, celebrityName: String) {
+        findNavController().navigate(
+            CelebritiesFragmentDirections.actionGlobalCelebrityDetailsFragment(
+                celebrityId = celebrityId, celebrityName = celebrityName
+            )
+        )
     }
 
     private fun setupViews() {
@@ -118,6 +144,7 @@ class CelebritiesFragment :
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).setToolBarTitle("Celebrities")
+        (activity as MainActivity).showToolBar()
     }
 
 }

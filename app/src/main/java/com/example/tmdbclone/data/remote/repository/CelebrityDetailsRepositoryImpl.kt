@@ -3,7 +3,7 @@ package com.example.tmdbclone.data.remote.repository
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.fetchFlow
 import com.example.tmdbclone.data.remote.model.CelebrityDetailsModelDto
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.service.CelebrityDetailsService
 import com.example.tmdbclone.domain.repository.CelebrityDetailsRepository
 import kotlinx.coroutines.flow.Flow
@@ -17,12 +17,12 @@ class CelebrityDetailsRepositoryImpl @Inject constructor(private val celebrityDe
             celebrityDetailsService.fetchCelebrityDetails(personId)
         }
 
-    override suspend fun fetchCelebrityMovieCredits(personId: Int): Flow<Resource<List<PopularMovieDTO>>> =
+    override suspend fun fetchCelebrityMovieCredits(personId: Int): Flow<Resource<List<MoviesDTO>>> =
         fetchFlow {
             celebrityDetailsService.fetchCelebrityMovieCredits(personId)
         }
 
-    override suspend fun fetchCelebrityTvShowCredits(personId: Int): Flow<Resource<List<PopularMovieDTO>>> =
+    override suspend fun fetchCelebrityTvShowCredits(personId: Int): Flow<Resource<List<MoviesDTO>>> =
         fetchFlow {
             celebrityDetailsService.fetchCelebrityTvShowsCredits(personId)
         }

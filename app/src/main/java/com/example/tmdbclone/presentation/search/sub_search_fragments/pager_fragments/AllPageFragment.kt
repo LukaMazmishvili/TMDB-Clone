@@ -17,6 +17,7 @@ import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import com.example.tmdbclone.presentation.auth.LoginFragment
 import com.example.tmdbclone.presentation.auth.RegistrationFragment
 import com.example.tmdbclone.presentation.search.SearchViewModel
+import com.example.tmdbclone.presentation.search.sub_search_fragments.SearchRecommendationsFragment
 import com.example.tmdbclone.presentation.tmdb.TMDBFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,14 +54,23 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
             // Movies
             trvMovies.setTitle("Movies")
             trvMovies.setRecyclerViewAdapter(moviesAdapter)
+            trvMovies.setSeeAllButtonClickListener {
+                (parentFragment as SearchRecommendationsFragment).changeViewPagerItem(1)
+            }
 
             // Tv Shows
             trvTvShows.setTitle("Tv Shows")
             trvTvShows.setRecyclerViewAdapter(tvShowsAdapter)
+            trvTvShows.setSeeAllButtonClickListener {
+                (parentFragment as SearchRecommendationsFragment).changeViewPagerItem(2)
+            }
 
             // Celebrities
             trvCelebrities.setTitle("Celebrities")
             trvCelebrities.setRecyclerViewAdapter(celebritiesAdapter)
+            trvCelebrities.setSeeAllButtonClickListener {
+                (parentFragment as SearchRecommendationsFragment).changeViewPagerItem(3)
+            }
         }
     }
 
@@ -68,7 +78,7 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedMoviesState.collect { list ->
-                    moviesAdapter.submitList(list)
+//                    moviesAdapter.submitList(list)
                 }
             }
         }
@@ -76,7 +86,7 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedTvShowsState.collect { list ->
-                    tvShowsAdapter.submitList(list)
+//                    tvShowsAdapter.submitList(list)
                 }
             }
         }

@@ -3,12 +3,12 @@ package com.example.tmdbclone.presentation.adapters
 import android.util.Log
 import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.databinding.ItemTopRatedBinding
 import com.example.tmdbclone.extension.uploadImage80x80
 
 class GridAdapter :
-    BaseAdapter<PopularMovieDTO.MovieModelDto, ItemTopRatedBinding>(ItemTopRatedBinding::inflate) {
+    BaseAdapter<MoviesDTO.MovieModelDto, ItemTopRatedBinding>(ItemTopRatedBinding::inflate) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)

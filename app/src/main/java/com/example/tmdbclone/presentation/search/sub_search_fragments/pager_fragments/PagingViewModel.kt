@@ -1,11 +1,10 @@
 package com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.tmdbclone.base.BaseViewModel
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.domain.usecase.GetPagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class PagingViewModel @Inject constructor(private val getSearPagingUseCase: GetPagingUseCase) :
     BaseViewModel() {
 
-    private val _dataState = MutableStateFlow<PagingData<PopularMovieDTO.MovieModelDto>>(
+    private val _dataState = MutableStateFlow<PagingData<MoviesDTO.MovieModelDto>>(
         PagingData.empty()
     )
     val dataState = _dataState.asStateFlow()

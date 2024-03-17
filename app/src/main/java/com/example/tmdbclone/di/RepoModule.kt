@@ -37,8 +37,8 @@ object RepoModule {
 
     @Provides
     @Singleton
-    fun provideMoviesRepo(apiService: MoviesService): MoviesRepository {
-        return MoviesRepositoryImpl(apiService)
+    fun provideMoviesRepo(apiService: MoviesService, genresApi: GenresService): MoviesRepository {
+        return MoviesRepositoryImpl(apiService, genresApi)
     }
 
     @Provides

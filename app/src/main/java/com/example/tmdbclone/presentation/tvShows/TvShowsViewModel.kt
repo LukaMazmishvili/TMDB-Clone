@@ -3,7 +3,7 @@ package com.example.tmdbclone.presentation.tvShows
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.domain.usecase.GetTvShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,19 +17,19 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
     BaseViewModel() {
 
     private val _airingTodayTvShowsState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val airingTodayTvShowsState = _airingTodayTvShowsState.asStateFlow()
 
     private val _trendingTvShowsState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val trendingTvShowsState = _trendingTvShowsState.asStateFlow()
 
     private val _topRatedTvShowsState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val topRatedTvShowsState = _topRatedTvShowsState.asStateFlow()
 
     private val _popularTvShowsState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val popularTvShowsState = _popularTvShowsState.asStateFlow()
 
     init {

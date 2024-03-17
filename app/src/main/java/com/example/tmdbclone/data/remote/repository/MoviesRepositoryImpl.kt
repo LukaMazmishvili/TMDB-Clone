@@ -2,19 +2,23 @@ package com.example.tmdbclone.data.remote.repository
 
 import android.util.Log
 import com.example.tmdbclone.common.Resource
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.mapper.toMovieModel
+import com.example.tmdbclone.data.remote.model.MoviesDTO
+import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MoviesService
+import com.example.tmdbclone.domain.model.MovieModel
+import com.example.tmdbclone.domain.model.MovieModel.Movie
 import com.example.tmdbclone.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import retrofit2.Response
 import javax.inject.Inject
 
-class MoviesRepositoryImpl @Inject constructor(private val moviesService: MoviesService) :
+class MoviesRepositoryImpl @Inject constructor(
+    private val moviesService: MoviesService,
+    private val genresService: GenresService
+) :
     MoviesRepository {
-
-    override suspend fun fetchPopularMovies(page: Int): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchPopularMovies(page: Int): Flow<Resource<List<MoviesDTO.MovieModelDto>>> =
         flow {
             try {
 
@@ -28,7 +32,7 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
                         emit(Resource.Success(body.results))
                     }
                 } else {
-                    emit(Resource.Error("Something Went Wrong !"))
+                    emit(Resource.Error(response.errorBody()!!.string()))
                 }
             } catch (e: Exception) {
 
@@ -37,7 +41,7 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
             }
         }
 
-    override suspend fun fetchNowPlaying(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchNowPlaying(): Flow<Resource<List<MoviesDTO.MovieModelDto>>> =
         flow {
             try {
 
@@ -61,7 +65,7 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
             }
         }
 
-    override suspend fun fetchTrendingMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchTrendingMovies(): Flow<Resource<List<MoviesDTO.MovieModelDto>>> =
         flow {
             try {
 
@@ -86,7 +90,7 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
         }
 
 
-    override suspend fun fetchTopRatedMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchTopRatedMovies(): Flow<Resource<List<MoviesDTO.MovieModelDto>>> =
         flow {
             try {
 
@@ -110,7 +114,7 @@ class MoviesRepositoryImpl @Inject constructor(private val moviesService: Movies
             }
         }
 
-    override suspend fun fetchUpcomingMovies(): Flow<Resource<List<PopularMovieDTO.MovieModelDto>>> =
+    override suspend fun fetchUpcomingMovies(): Flow<Resource<List<MoviesDTO.MovieModelDto>>> =
         flow {
             try {
 

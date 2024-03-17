@@ -4,9 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
-import com.example.tmdbclone.data.remote.model.SearchModelDto
-import com.example.tmdbclone.data.remote.model.SearchPersonModelDto
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.SearchSimilarModelDto
 import com.example.tmdbclone.domain.usecase.GetSearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,11 +26,11 @@ class SearchViewModel @Inject constructor(private val getSearchUseCase: GetSearc
     val similarSearchesState = _similarSearchesState.asSharedFlow()
 
     private val _searchedMoviesState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val searchedMoviesState = _searchedMoviesState.asStateFlow()
 
     private val _searchedTvShowsState =
-        MutableStateFlow<List<PopularMovieDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
     val searchedTvShowsState = _searchedTvShowsState.asStateFlow()
 
     private val _searchedCelebritiesState =

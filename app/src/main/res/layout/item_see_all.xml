@@ -27,6 +27,7 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:maxLines="2"
         app:layout_constraintEnd_toStartOf="@+id/btnOpen"
         app:layout_constraintStart_toEndOf="@id/ivImage"
         app:layout_constraintTop_toTopOf="@id/ivImage" />

@@ -149,6 +149,10 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
+    fun showToolBar() {
+        supportActionBar?.show()
+    }
+
     fun hideBottomNavigation() {
         binding.bottomNavView.visibility = View.GONE
     }

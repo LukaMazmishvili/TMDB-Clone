@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.common.Headings
 import com.example.tmdbclone.databinding.FragmentSeeAllBinding
+import com.example.tmdbclone.extension.toHeading
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.details.seeAll.adapter.SeeAllAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,11 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
     override fun started() {
         (activity as MainActivity).hideToolBar()
 
-        binding.tvToolBarTitle.text = args.title ?: ""
+        if (args.title.startsWith("Tv-")) {
+            binding.tvToolBarTitle.text = args.title.drop(3)
+        } else {
+            binding.tvToolBarTitle.text = args.title
+        }
         setupViews()
     }
 
@@ -65,17 +70,6 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
                     adapter.submitData(it)
                 }
             }
-        }
-    }
-
-    private fun String.toHeading(): Headings {
-        return when (this) {
-            "Popular" -> Headings.Popular
-            "Playing In Theater" -> Headings.PlayingInTheater
-            "Trending" -> Headings.Trending
-            "Top Rated" -> Headings.TopRated
-            "Upcoming" -> Headings.Upcoming
-            else -> Headings.ELSE
         }
     }
 

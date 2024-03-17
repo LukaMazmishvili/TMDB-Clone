@@ -18,10 +18,10 @@ object Endpoints {
     const val UPCOMING = "movie/upcoming?language=en-US"
 
     // Tv Shows Endpoints
-    const val AIRING_TODAY = "tv/airing_today?language=en-US&page=1"
+    const val AIRING_TODAY = "tv/airing_today?language=en-US"
     const val TRENDING_TV_SHOWS = "trending/tv/day?language=en-US"
-    const val TOP_RATED_TV_SHOWS = "tv/top_rated?language=en-US&page=1"
-    const val POPULAR_TV_SHOWS = "tv/popular?language=en-US&page=1"
+    const val TOP_RATED_TV_SHOWS = "tv/top_rated?language=en-US"
+    const val POPULAR_TV_SHOWS = "tv/popular?language=en-US"
 
     // Celebrities Endpoints
     const val POPULAR_CELEBRITIES = "person/popular?language=en-US&page=1"

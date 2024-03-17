@@ -1,7 +1,6 @@
 package com.example.tmdbclone.domain.repository
 
 import com.example.tmdbclone.common.Resource
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
 import com.example.tmdbclone.data.remote.model.SearchModelDto
 import com.example.tmdbclone.data.remote.model.SearchPersonModelDto
 import com.example.tmdbclone.data.remote.model.SearchSimilarModelDto

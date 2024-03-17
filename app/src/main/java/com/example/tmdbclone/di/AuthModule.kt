@@ -1,10 +1,9 @@
 package com.example.tmdbclone.di
 
-import com.example.tmdbclone.data.remote.AuthValidator
+import com.example.tmdbclone.domain.AuthValidator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 

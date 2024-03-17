@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentTvShowsBinding
 import com.example.tmdbclone.presentation.MainActivity
@@ -61,18 +62,46 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
             // Airing Today
             trvAiringTodayTvShows.setTitle("Airing Today")
             trvAiringTodayTvShows.setRecyclerViewAdapter(adapterAiringToday)
+            trvAiringTodayTvShows.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    TvShowsFragmentDirections.actionTvShowsFragmentToSeeAllFragment(
+                        "Tv-Airing Today"
+                    )
+                )
+            }
 
             // Trending
             trvTrendingTvShows.setTitle("Trending")
             trvTrendingTvShows.setRecyclerViewAdapter(adapterTrending)
+            trvTrendingTvShows.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    TvShowsFragmentDirections.actionTvShowsFragmentToSeeAllFragment(
+                        "Tv-Trending"
+                    )
+                )
+            }
 
             // Top Rated
             trvTopRatedTvShows.setTitle("Top Rated")
             trvTopRatedTvShows.setGridRecyclerAdapter(adapterTopRated, 4)
+            trvTopRatedTvShows.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    TvShowsFragmentDirections.actionTvShowsFragmentToSeeAllFragment(
+                        "Tv-Top Rated"
+                    )
+                )
+            }
 
             // Popular
             trvPopularTvShows.setTitle("Popular")
             trvPopularTvShows.setRecyclerViewAdapter(adapterPopular)
+            trvPopularTvShows.setSeeAllButtonClickListener {
+                findNavController().navigate(
+                    TvShowsFragmentDirections.actionTvShowsFragmentToSeeAllFragment(
+                        "Tv-Popular"
+                    )
+                )
+            }
         }
     }
 
@@ -144,5 +173,6 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).setToolBarTitle("Tv Shows")
+        (activity as MainActivity).showToolBar()
     }
 }

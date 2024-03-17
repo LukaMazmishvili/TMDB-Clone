@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.tmdbclone.common.Constants.AUTH_TOKEN
+import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.UserModel
 import com.example.tmdbclone.data.remote.service.UserService
 import com.example.tmdbclone.domain.SessionManager
@@ -19,11 +20,9 @@ class UserRepositoryImpl @Inject constructor(
     private val sessionManager: SessionManager,
 ) : UserRepository {
 
-    override suspend fun logIn(userName: String, password: String): String {
-        try {
-
-            saveUserToken("TestToken")
-            getCurrentUser("test")
+    override suspend fun logIn(userName: String, password: String): Resource<String> {
+        return try {
+            // todo test if works corectly
             val response = userService.logInUser(UserModel.UserLoginModel(userName, password))
 
             if (response.isSuccessful) {
@@ -32,14 +31,15 @@ class UserRepositoryImpl @Inject constructor(
                     getCurrentUser(token)
                 }
 
-                return response.body() ?: ""
+                Resource.Success(response.body())
 
+            } else {
+                Resource.Error(response.errorBody()!!.string(), response.code())
             }
 
         } catch (e: Exception) {
-            return e.message.toString()
+            Resource.Error(e.message.toString())
         }
-        return ""
     }
 
     override suspend fun register(userName: String, email: String, password: String): String {

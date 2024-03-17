@@ -49,7 +49,11 @@
         android:id="@+id/tvShowsFragment"
         android:name="com.example.tmdbclone.presentation.tvShows.TvShowsFragment"
         android:label="fragment_tv_shows"
-        tools:layout="@layout/fragment_tv_shows" />
+        tools:layout="@layout/fragment_tv_shows" >
+        <action
+            android:id="@+id/action_tvShowsFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
+    </fragment>
     <fragment
         android:id="@+id/celebritiesFragment"
         android:name="com.example.tmdbclone.presentation.celebrities.CelebritiesFragment"
@@ -123,12 +127,12 @@
         android:label="fragment_celebrity_details"
         tools:layout="@layout/fragment_celebrity_details">
         <argument
-            android:name="movieId"
+            android:name="celebrityId"
             android:defaultValue="-1"
             app:argType="integer" />
 
         <argument
-            android:name="movieTitle"
+            android:name="celebrityName"
             app:argType="string" />
     </fragment>
     <action

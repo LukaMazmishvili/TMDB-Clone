@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebrityDetailsModelDto
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.domain.usecase.GetCelebrityDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,10 +22,10 @@ class CelebrityDetailsViewModel @Inject constructor(private val celebrityDetails
     private val _celebrityDetailsState = MutableStateFlow<CelebrityDetailsModelDto?>(null)
     val celebrityDetailsState = _celebrityDetailsState.asStateFlow()
 
-    private val _celebrityMovieCreditsState = MutableStateFlow<List<PopularMovieDTO>>(emptyList())
+    private val _celebrityMovieCreditsState = MutableStateFlow<List<MoviesDTO>>(emptyList())
     val celebrityMovieCreditsState = _celebrityMovieCreditsState.asStateFlow()
 
-    private val _celebrityTvShowsCreditsState = MutableStateFlow<List<PopularMovieDTO>>(emptyList())
+    private val _celebrityTvShowsCreditsState = MutableStateFlow<List<MoviesDTO>>(emptyList())
     val celebrityTvShowsCreditsState = _celebrityTvShowsCreditsState.asStateFlow()
 
     init {

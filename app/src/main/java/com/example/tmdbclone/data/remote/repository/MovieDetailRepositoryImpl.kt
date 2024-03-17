@@ -4,14 +4,13 @@ import android.util.Log
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
-import com.example.tmdbclone.data.remote.model.PopularMovieDTO
+import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.domain.repository.MovieDetailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import retrofit2.Response
 import javax.inject.Inject
 
 class MovieDetailRepositoryImpl @Inject constructor(
@@ -115,7 +114,7 @@ class MovieDetailRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun fetchMovieRecommend(movieId: Int): Flow<Resource<PopularMovieDTO>> =
+    override suspend fun fetchMovieRecommend(movieId: Int): Flow<Resource<MoviesDTO>> =
         flow {
             try {
 
@@ -138,7 +137,7 @@ class MovieDetailRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun fetchMovieSimilar(movieId: Int): Flow<Resource<PopularMovieDTO>> =
+    override suspend fun fetchMovieSimilar(movieId: Int): Flow<Resource<MoviesDTO>> =
         flow {
             try {
 

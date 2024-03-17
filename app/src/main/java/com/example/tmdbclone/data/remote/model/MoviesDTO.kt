@@ -2,11 +2,20 @@ package com.example.tmdbclone.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchSimilarModelDto(
+
+// This model is combination of Movies and Tv Shows models
+data class MoviesDTO(
+    val dates: Dates,
     val page: Int?,
-    val results: List<SimilarSearches>
+    val results: List<MovieModelDto>
 ) {
-    data class SimilarSearches(
+
+    data class Dates(
+        val maximum: String,
+        val minimum: String
+    )
+
+    data class MovieModelDto(
         val adult: Boolean?,
         @SerializedName("backdrop_path")
         val backdropPath: String?,
@@ -32,20 +41,6 @@ data class SearchSimilarModelDto(
         @SerializedName("vote_average")
         val voteAverage: Float?,
         @SerializedName("vote_count")
-        val voteCount: Long?,
-        val name: String?,
-        val gender: Int?,
-        @SerializedName("cast_id")
-        val castId: Int?,
-        val character: String?,
-        @SerializedName("credit_id")
-        val creditId: String?,
-        val order: Int?,
-        @SerializedName("known_for_department")
-        val knownForDepartment: String?,
-        @SerializedName("profile_path")
-        val profilePath: String?,
-        @SerializedName("known_for")
-        val knownFor: List<MoviesDTO>?
+        val voteCount: Long?
     )
 }

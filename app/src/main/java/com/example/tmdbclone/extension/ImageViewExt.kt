@@ -23,11 +23,12 @@ fun ImageView.uploadImage80x80(url: String, round: Boolean = false) {
     }
 }
 
-fun ImageView.uploadImage200x300(url: Any, round: Boolean = false) {
+fun ImageView.uploadImage200x300(url: Any, round: Boolean = false, placeHolder: Int = 0) {
     if (!round) {
         Glide.with(this)
             .load(url)
             .override(200, 300)
+            .placeholder(placeHolder)
             .fitCenter()
             .into(this)
     } else {
@@ -43,10 +44,11 @@ fun ImageView.uploadImage200x300(url: Any, round: Boolean = false) {
     }
 }
 
-fun ImageView.uploadImage350x450(url: Any, round: Boolean = false) {
+fun ImageView.uploadImage350x450(url: Any, round: Boolean = false, placeHolder: Int = 0) {
     if (!round) {
         Glide.with(this)
             .load(url)
+            .placeholder(placeHolder)
             .override(350, 450)
             .fitCenter()
             .into(this)
@@ -58,6 +60,7 @@ fun ImageView.uploadImage350x450(url: Any, round: Boolean = false) {
         Glide.with(this)
             .load(url)
             .override(250, 350)
+            .placeholder(placeHolder)
             .transform(RoundedCorners(50))
             .into(this)
     }

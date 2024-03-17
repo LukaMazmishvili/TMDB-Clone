@@ -1,11 +1,11 @@
-package com.example.tmdbclone.data.remote.model
+package com.example.tmdbclone.domain.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PopularMovieDTO(
+data class MovieModel(
     val dates: Dates,
     val page: Int?,
-    val results: List<MovieModelDto>
+    val results: List<Movie>
 ) {
 
     data class Dates(
@@ -13,12 +13,12 @@ data class PopularMovieDTO(
         val minimum: String
     )
 
-    data class MovieModelDto(
+    data class Movie(
         val adult: Boolean?,
         @SerializedName("backdrop_path")
         val backdropPath: String?,
         @SerializedName("genre_ids")
-        val genreIds: List<Int?>?,
+        val genreIds: List<String>?,
         val id: Int?,
         @SerializedName("original_language")
         val originalLanguage: String?,

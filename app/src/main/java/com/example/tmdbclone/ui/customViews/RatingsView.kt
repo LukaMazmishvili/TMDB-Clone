@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,12 +22,14 @@ class RatingsView @JvmOverloads constructor(
     private val starWrapper: LinearLayout
     private val totalVotes: TextView
     private val overallRating: TextView
+    private val overallRatingIc: ImageView
 
     init {
         LayoutInflater.from(context).inflate(R.layout.cv_ratings_view, this, true)
         starWrapper = findViewById(R.id.llStarsWrapper)
         totalVotes = findViewById(R.id.tvTotalVotes)
         overallRating = findViewById(R.id.tvOverallRating)
+        overallRatingIc = findViewById(R.id.ivOverallRatingIc)
     }
 
     @SuppressLint("SetTextI18n")
@@ -36,6 +39,11 @@ class RatingsView @JvmOverloads constructor(
 
     fun setOverallRating(overallRating: Float) {
         this.overallRating.text = overallRating.toString()
+    }
+
+    fun hideOverallRating() {
+        this.overallRatingIc.visibility = View.GONE
+        this.overallRating.visibility = View.GONE
     }
 
     fun fillStars(overallRating: Float) {

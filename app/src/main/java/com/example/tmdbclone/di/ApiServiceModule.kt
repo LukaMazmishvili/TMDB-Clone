@@ -2,6 +2,7 @@ package com.example.tmdbclone.di
 
 import com.example.tmdbclone.data.remote.service.UserService
 import com.example.tmdbclone.data.remote.service.CelebritiesService
+import com.example.tmdbclone.data.remote.service.CelebrityDetailsService
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.data.remote.service.MoviesService
@@ -57,7 +58,7 @@ object ApiServiceModule {
 
     @Provides
     @Singleton
-    fun provideCelebrityDetailsService(@Named("official") retrofit: Retrofit): CelebritiesService =
-        retrofit.create(CelebritiesService::class.java)
+    fun provideCelebrityDetailsService(@Named("official") retrofit: Retrofit): CelebrityDetailsService =
+        retrofit.create(CelebrityDetailsService::class.java)
 
 }
