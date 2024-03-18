@@ -20,6 +20,6 @@ interface GenresService {
     suspend fun fetchTvShowGenres(
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<List<GenresModelDto>>
+    ): Response<GenresModelDto>
 
 }

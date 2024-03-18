@@ -34,7 +34,7 @@ object Endpoints {
 
     // Genres Endpoints
     const val MOVIE_GENRES = "genre/movie/list?language=en"
-    const val TV_SHOW_GENRES = "genre/movie/list?language=en"
+    const val TV_SHOW_GENRES = "genre/tv/list?language=en"
 
     // Search Endpoints
     const val SEARCH_MOVIES = "search/movie?&include_adult=false&language=en-US"

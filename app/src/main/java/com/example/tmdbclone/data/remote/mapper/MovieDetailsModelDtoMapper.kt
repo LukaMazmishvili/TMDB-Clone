@@ -16,7 +16,7 @@ fun MovieDetailsModelDto.toMovieDetailsModel(genresList: Map<Int, String>): Movi
             this.belongsToCollection?.backdropPath
         ),
         budget = this.budget,
-        genres = genresList.toGenre(this.genres),
+        genres = this.genres,
         homePage = this.homePage,
         id = this.id,
         imdbId = this.imdbId,

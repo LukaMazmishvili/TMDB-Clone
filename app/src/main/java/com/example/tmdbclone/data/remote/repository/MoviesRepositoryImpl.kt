@@ -33,12 +33,21 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    suspend fun genres(): Map<Int, String> {
-        val response = genresService.fetchMovieGenres()
+    suspend fun genres() {
+        val responseMovieGenres = genresService.fetchMovieGenres()
+        val responseTvShowGenres = genresService.fetchTvShowGenres()
 
-        if (response.isSuccessful) {
-            val body = response.body()
-            body?.genres?.forEach {
+        if (responseMovieGenres.isSuccessful && responseTvShowGenres.isSuccessful) {
+            val bodyMovieGenres = responseMovieGenres.body()
+            val bodyTvShowsGenres = responseTvShowGenres.body()
+            bodyMovieGenres?.genres?.forEach {
+                it.id?.let { id ->
+                    it.name?.let { name ->
+                        genres[id] = name
+                    }
+                }
+            }
+            bodyTvShowsGenres?.genres?.forEach {
                 it.id?.let { id ->
                     it.name?.let { name ->
                         genres[id] = name
@@ -46,7 +55,6 @@ class MoviesRepositoryImpl @Inject constructor(
                 }
             }
         }
-        return genres
     }
 
     override suspend fun fetchPopularMovies(page: Int): Flow<Resource<MovieModel>> {

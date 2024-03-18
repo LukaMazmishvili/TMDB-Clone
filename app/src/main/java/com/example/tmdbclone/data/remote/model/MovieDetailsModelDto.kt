@@ -9,7 +9,7 @@ data class MovieDetailsModelDto(
     @SerializedName("belongs_to_collection")
     val belongsToCollection: Collection?,
     val budget: Long?,
-    val genres: List<Int>?,
+    val genres: List<GenresModelDto.Genre>?,
     val homePage: String?,
     val id: Int?,
     @SerializedName("imdb_id")

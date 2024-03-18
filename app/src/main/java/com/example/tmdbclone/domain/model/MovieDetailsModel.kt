@@ -1,11 +1,13 @@
 package com.example.tmdbclone.domain.model
 
+import com.example.tmdbclone.data.remote.model.GenresModelDto
+
 data class MovieDetailsModel(
     val adult: Boolean?,
     val backdropPath: String?,
     val belongsToCollection: Collection?,
     val budget: Long?,
-    val genres: List<String>?,
+    val genres: List<GenresModelDto.Genre>?,
     val homePage: String?,
     val id: Int?,
     val imdbId: String?,
