@@ -5,6 +5,8 @@ import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebrityDetailsModelDto
 import com.example.tmdbclone.data.remote.model.MoviesDTO
+import com.example.tmdbclone.domain.model.CelebrityDetailsModel
+import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.domain.usecase.GetCelebrityDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +21,13 @@ class CelebrityDetailsViewModel @Inject constructor(private val celebrityDetails
 
     val personIdState = MutableStateFlow<Int>(-1)
 
-    private val _celebrityDetailsState = MutableStateFlow<CelebrityDetailsModelDto?>(null)
+    private val _celebrityDetailsState = MutableStateFlow<CelebrityDetailsModel?>(null)
     val celebrityDetailsState = _celebrityDetailsState.asStateFlow()
 
-    private val _celebrityMovieCreditsState = MutableStateFlow<List<MoviesDTO>>(emptyList())
+    private val _celebrityMovieCreditsState = MutableStateFlow<MovieModel?>(null)
     val celebrityMovieCreditsState = _celebrityMovieCreditsState.asStateFlow()
 
-    private val _celebrityTvShowsCreditsState = MutableStateFlow<List<MoviesDTO>>(emptyList())
+    private val _celebrityTvShowsCreditsState = MutableStateFlow<MovieModel?>(null)
     val celebrityTvShowsCreditsState = _celebrityTvShowsCreditsState.asStateFlow()
 
     init {

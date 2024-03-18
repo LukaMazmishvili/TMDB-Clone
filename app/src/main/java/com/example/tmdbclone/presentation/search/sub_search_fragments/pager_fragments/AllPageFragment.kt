@@ -78,7 +78,7 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedMoviesState.collect { list ->
-//                    moviesAdapter.submitList(list)
+                    moviesAdapter.submitList(list)
                 }
             }
         }
@@ -86,7 +86,7 @@ class AllPageFragment : BaseFragment<FragmentAllPageBinding>(FragmentAllPageBind
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.searchedTvShowsState.collect { list ->
-//                    tvShowsAdapter.submitList(list)
+                    tvShowsAdapter.submitList(list)
                 }
             }
         }

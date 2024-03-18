@@ -5,10 +5,11 @@ import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.ItemTopRatedBinding
+import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.extension.uploadImage80x80
 
 class CelebritiesGridAdapter :
-    BaseAdapter<CelebritiesModelDto.Result, ItemTopRatedBinding>(ItemTopRatedBinding::inflate) {
+    BaseAdapter<CelebritiesModel.Result, ItemTopRatedBinding>(ItemTopRatedBinding::inflate) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)

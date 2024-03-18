@@ -2,12 +2,19 @@ package com.example.tmdbclone.data.remote.repository
 
 import android.util.Log
 import com.example.tmdbclone.common.Resource
+import com.example.tmdbclone.data.remote.fetchFlow
+import com.example.tmdbclone.data.remote.mapper.toCelebritiesModel
+import com.example.tmdbclone.data.remote.mapper.toMovieDetailsModel
+import com.example.tmdbclone.data.remote.mapper.toMovieModel
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
 import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
+import com.example.tmdbclone.domain.model.CelebritiesModel
+import com.example.tmdbclone.domain.model.MovieDetailsModel
+import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.domain.repository.MovieDetailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,7 +36,7 @@ class MovieDetailRepositoryImpl @Inject constructor(
             if (response.isSuccessful) {
 
                 val body = response.body()!!
-                for (i in body) {
+                for (i in body.genres) {
                     if (i.id != null && i.name != null)
                         genresMap[i.id] = i.name
                 }
@@ -44,51 +51,23 @@ class MovieDetailRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun fetchMovieDetails(movieId: Int): Flow<Resource<MovieDetailsModelDto>> =
-        flow {
-            try {
+    override suspend fun fetchMovieDetails(movieId: Int): Flow<Resource<MovieDetailsModel>> =
 
-                emit(Resource.Loading(true))
-
-                val response = movieDetailService.fetchMovieDetails(movieId)
-
-                Log.d("RequestBody", "fetchMovieDetails: ${response.code()}")
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    body?.let {
-                        emit(Resource.Success(body))
-                    }
-                } else {
-                    emit(Resource.Error("Something Went Wrong !"))
-                }
-            } catch (e: Exception) {
-                emit(Resource.Error("Something Went Wrong !"))
-
-//                Log.d("RequestBody", "fetchMovieDetails: ${e.message}")
+        fetchFlow<MovieDetailsModelDto, MovieDetailsModel>(
+            block = { movieDetailService.fetchMovieDetails(movieId) },
+            mapper = {
+                it.toMovieDetailsModel(genres)
             }
-        }
+        )
 
-    override suspend fun fetchMovieCast(movieId: Int): Flow<Resource<CelebritiesModelDto>> =
-        flow {
-            try {
+    override suspend fun fetchMovieCast(movieId: Int): Flow<Resource<CelebritiesModel>> =
 
-                emit(Resource.Loading(true))
-
-                val response = movieDetailService.fetchMovieCast(movieId)
-
-                if (response.isSuccessful) {
-                    val body = response.body()
-
-                    body?.let {
-                        emit(Resource.Success(body))
-                    }
-                } else {
-                    emit(Resource.Error("Something Went Wrong !"))
-                }
-            } catch (e: Exception) {
-                emit(Resource.Error(e.message.toString()))
+        fetchFlow<CelebritiesModelDto, CelebritiesModel>(
+            block = { movieDetailService.fetchMovieCast(movieId) },
+            mapper = {
+                it.toCelebritiesModel()
             }
-        }
+        )
 
     override suspend fun fetchMovieVideos(movieId: Int): Flow<Resource<VideoModelDto>> =
         flow {
@@ -114,49 +93,21 @@ class MovieDetailRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun fetchMovieRecommend(movieId: Int): Flow<Resource<MoviesDTO>> =
-        flow {
-            try {
+    override suspend fun fetchMovieRecommend(movieId: Int): Flow<Resource<MovieModel>> =
 
-                emit(Resource.Loading(true))
-
-                val response = movieDetailService.fetchMovieRecommendation(movieId)
-
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    body?.let {
-                        emit(Resource.Success(body))
-                    }
-                } else {
-                    emit(Resource.Error("Something Went Wrong !"))
-                }
-            } catch (e: Exception) {
-
-                emit(Resource.Error("Something Went Wrong !"))
-
+        fetchFlow<MoviesDTO, MovieModel>(
+            block = { movieDetailService.fetchMovieRecommendation(movieId) },
+            mapper = {
+                it.toMovieModel(genres)
             }
-        }
+        )
 
-    override suspend fun fetchMovieSimilar(movieId: Int): Flow<Resource<MoviesDTO>> =
-        flow {
-            try {
+    override suspend fun fetchMovieSimilar(movieId: Int): Flow<Resource<MovieModel>> =
 
-                emit(Resource.Loading(true))
-
-                val response = movieDetailService.fetchMovieSimilar(movieId)
-
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    body?.let {
-                        emit(Resource.Success(body))
-                    }
-                } else {
-                    emit(Resource.Error("Something Went Wrong !"))
-                }
-            } catch (e: Exception) {
-
-                emit(Resource.Error("Something Went Wrong !"))
-
+        fetchFlow<MoviesDTO, MovieModel>(
+            block = { movieDetailService.fetchMovieSimilar(movieId) },
+            mapper = {
+                it.toMovieModel(genres)
             }
-        }
+        )
 }

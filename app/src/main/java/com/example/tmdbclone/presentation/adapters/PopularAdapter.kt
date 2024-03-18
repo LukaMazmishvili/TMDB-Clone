@@ -5,12 +5,13 @@ import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
 import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.databinding.ItemMovieBinding
+import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
 
 // todo create enum class data type
 class PopularAdapter(private val type: Int) :
-    BaseAdapter<MoviesDTO.MovieModelDto, ItemMovieBinding>(ItemMovieBinding::inflate) {
+    BaseAdapter<MovieModel.Movie, ItemMovieBinding>(ItemMovieBinding::inflate) {
 
 
     // todo create another view holder for grid recycler item

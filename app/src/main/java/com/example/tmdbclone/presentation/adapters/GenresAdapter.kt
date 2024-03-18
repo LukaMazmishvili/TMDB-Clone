@@ -4,10 +4,10 @@ import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.data.remote.model.GenresModelDto
 import com.example.tmdbclone.databinding.ItemGenreBinding
 
-class GenresAdapter : BaseAdapter<GenresModelDto, ItemGenreBinding>(ItemGenreBinding::inflate) {
+class GenresAdapter : BaseAdapter<String, ItemGenreBinding>(ItemGenreBinding::inflate) {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
 
-        holder.binding.root.text = item.name
+        holder.binding.root.text = item
     }
 }

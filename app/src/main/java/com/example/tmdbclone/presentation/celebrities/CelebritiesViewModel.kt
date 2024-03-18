@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
+import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.domain.usecase.GetCelebritiesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,11 +17,11 @@ class CelebritiesViewModel @Inject constructor(private val getCelebritiesUseCase
     BaseViewModel() {
 
     private val _popularCelebritiesState =
-        MutableStateFlow<List<CelebritiesModelDto.Result>>(emptyList())
+        MutableStateFlow<CelebritiesModel?>(null)
     val popularCelebritiesState = _popularCelebritiesState.asStateFlow()
 
     private val _trendingCelebritiesState =
-        MutableStateFlow<List<CelebritiesModelDto.Result>>(emptyList())
+        MutableStateFlow<CelebritiesModel?>(null)
     val trendingCelebritiesState = _trendingCelebritiesState.asStateFlow()
 
 //    init {
@@ -28,7 +29,7 @@ class CelebritiesViewModel @Inject constructor(private val getCelebritiesUseCase
 //        getTrendingCelebrities()
 //    }
 
-     fun getPopularCelebrities() {
+    fun getPopularCelebrities() {
         viewModelScope.launch {
             getCelebritiesUseCase.getPopularCelebrities().collect { response ->
                 when (response) {
@@ -49,7 +50,7 @@ class CelebritiesViewModel @Inject constructor(private val getCelebritiesUseCase
         }
     }
 
-     fun getTrendingCelebrities() {
+    fun getTrendingCelebrities() {
         viewModelScope.launch {
             getCelebritiesUseCase.getTrendingCelebrities().collect { response ->
                 when (response) {

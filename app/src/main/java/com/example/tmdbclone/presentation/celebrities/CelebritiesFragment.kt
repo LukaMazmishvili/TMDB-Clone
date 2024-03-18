@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.FragmentCelebritiesBinding
+import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
@@ -91,14 +92,16 @@ class CelebritiesFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.popularCelebritiesState.collect { list ->
-                    when (list.isNotEmpty()) {
-                        true -> {
-                            val splitList = splitList(list)
-                            adapterPopular.submitList(splitList[0])
-                            adapterPopular1.submitList(splitList[1])
-                        }
+                    list?.let {
+                        when (it.results?.isNotEmpty()) {
+                            true -> {
+                                val splitList = splitList(it.results)
+                                adapterPopular.submitList(splitList[0])
+                                adapterPopular1.submitList(splitList[1])
+                            }
 
-                        else -> {}
+                            else -> {}
+                        }
                     }
                 }
             }
@@ -107,7 +110,7 @@ class CelebritiesFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.trendingCelebritiesState.collect { list ->
-                    adapterTrending.submitList(list)
+                    adapterTrending.submitList(list?.results)
                 }
             }
         }
@@ -131,7 +134,7 @@ class CelebritiesFragment :
         }
     }
 
-    private fun splitList(list: List<CelebritiesModelDto.Result>): List<List<CelebritiesModelDto.Result>> {
+    private fun splitList(list: List<CelebritiesModel.Result>): List<List<CelebritiesModel.Result>> {
         val listSize = list.size
         val middle = listSize / 2
         val list1 = list.subList(0, middle)

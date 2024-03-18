@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 
 // This model is combination of Movies and Tv Shows models
 data class MoviesDTO(
-    val dates: Dates,
+    val dates: Dates?,
     val page: Int?,
     val results: List<MovieModelDto>
 ) {
 
     data class Dates(
-        val maximum: String,
-        val minimum: String
+        val maximum: String?,
+        val minimum: String?
     )
 
     data class MovieModelDto(
@@ -20,7 +20,7 @@ data class MoviesDTO(
         @SerializedName("backdrop_path")
         val backdropPath: String?,
         @SerializedName("genre_ids")
-        val genreIds: List<Int?>?,
+        val genreIds: List<Int>?,
         val id: Int?,
         @SerializedName("original_language")
         val originalLanguage: String?,

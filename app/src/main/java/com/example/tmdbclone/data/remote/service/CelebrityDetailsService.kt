@@ -25,13 +25,13 @@ interface CelebrityDetailsService {
         @Path("personID") personId: Int,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = Endpoints.BEARER_TOKEN
-    ): Response<List<MoviesDTO>>
+    ): Response<MoviesDTO>
 
     @GET(CELEBRITY_TV_SHOWS_CREDITS)
     suspend fun fetchCelebrityTvShowsCredits(
         @Path("personID") personId: Int,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = Endpoints.BEARER_TOKEN
-    ): Response<List<MoviesDTO>>
+    ): Response<MoviesDTO>
 
 }

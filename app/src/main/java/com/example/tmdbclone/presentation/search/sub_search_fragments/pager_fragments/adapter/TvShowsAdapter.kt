@@ -5,10 +5,11 @@ import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
 import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.databinding.ItemSeeAllBinding
+import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.extension.uploadImage200x300
 
 class TvShowsAdapter :
-    BaseAdapter<MoviesDTO.MovieModelDto, ItemSeeAllBinding>(ItemSeeAllBinding::inflate) {
+    BaseAdapter<MovieModel.Movie, ItemSeeAllBinding>(ItemSeeAllBinding::inflate) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)

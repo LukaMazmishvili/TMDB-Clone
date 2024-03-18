@@ -5,10 +5,11 @@ import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.ItemSearchedCelebrityBinding
+import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.extension.uploadImage200x300
 import com.example.tmdbclone.extension.uploadImage350x450
 
-class CelebsAdapter : BaseAdapter<CelebritiesModelDto.Result, ItemSearchedCelebrityBinding>(
+class CelebsAdapter : BaseAdapter<CelebritiesModel.Result, ItemSearchedCelebrityBinding>(
     ItemSearchedCelebrityBinding::inflate
 ) {
 

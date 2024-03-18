@@ -7,6 +7,9 @@ import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
 import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
+import com.example.tmdbclone.domain.model.CelebritiesModel
+import com.example.tmdbclone.domain.model.MovieDetailsModel
+import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.domain.usecase.GetMovieDetailsUseCase
 import com.example.tmdbclone.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,11 +28,11 @@ class MovieDetailsViewModel @Inject constructor(
     val movieIdState = MutableStateFlow<Int>(-1)
 
     private val _moviesDetailsState =
-        MutableStateFlow<MovieDetailsModelDto?>(null)
+        MutableStateFlow<MovieDetailsModel?>(null)
     val moviesDetailsState = _moviesDetailsState.asStateFlow()
 
     private val _moviesCastState =
-        MutableStateFlow<CelebritiesModelDto?>(null)
+        MutableStateFlow<CelebritiesModel?>(null)
     val moviesCastState = _moviesCastState.asStateFlow()
 
     private val _moviesVideosState =
@@ -37,11 +40,11 @@ class MovieDetailsViewModel @Inject constructor(
     val moviesVideosState = _moviesVideosState.asStateFlow()
 
     private val _moviesRecommendedState =
-        MutableStateFlow<MoviesDTO?>(null)
+        MutableStateFlow<MovieModel?>(null)
     val moviesRecommendedState = _moviesRecommendedState.asStateFlow()
 
     private val _moviesSimilarState =
-        MutableStateFlow<MoviesDTO?>(null)
+        MutableStateFlow<MovieModel?>(null)
     val moviesSimilarState = _moviesSimilarState.asStateFlow()
 
     init {

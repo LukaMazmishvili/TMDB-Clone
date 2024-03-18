@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.databinding.FragmentAllTvShowsBinding
+import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.presentation.search.SearchViewModel
 import com.example.tmdbclone.presentation.search.sub_search_fragments.SearchRecommendationsFragment
 import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.adapter.TvShowsAdapter
@@ -23,7 +24,7 @@ class AllTvShowsFragment :
     private var isLastPage = false
     private var isLoading = false
 
-    private var currentFinalList = mutableListOf<MoviesDTO.MovieModelDto>()
+    private var currentFinalList = mutableListOf<MovieModel.Movie>()
 
     private val adapter by lazy {
         TvShowsAdapter()

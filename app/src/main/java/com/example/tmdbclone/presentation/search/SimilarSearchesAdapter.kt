@@ -1,15 +1,15 @@
 package com.example.tmdbclone.presentation.search
 
 import com.example.tmdbclone.base.BaseAdapter
-import com.example.tmdbclone.data.remote.model.SearchSimilarModelDto
 import com.example.tmdbclone.databinding.ItemSimilarSearchBinding
+import com.example.tmdbclone.domain.model.SearchSimilarModel
 
 class SimilarSearchesAdapter :
-    BaseAdapter<SearchSimilarModelDto.SimilarSearches, ItemSimilarSearchBinding>(
+    BaseAdapter<SearchSimilarModel.SimilarSearches, ItemSimilarSearchBinding>(
         ItemSimilarSearchBinding::inflate
     ) {
 
-    var onItemClickListener: ((SearchSimilarModelDto.SimilarSearches) -> Unit)? = null
+    var onItemClickListener: ((SearchSimilarModel.SimilarSearches) -> Unit)? = null
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.FragmentAllCelebritiesBinding
+import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.presentation.search.SearchViewModel
 import com.example.tmdbclone.presentation.search.sub_search_fragments.SearchRecommendationsFragment
 import com.example.tmdbclone.presentation.search.sub_search_fragments.pager_fragments.adapter.CelebsAdapter
@@ -23,7 +24,7 @@ class AllCelebritiesFragment :
     private var isLastPage = false
     private var isLoading = false
 
-    private var currentFinalList = mutableListOf<CelebritiesModelDto.Result>()
+    private var currentFinalList = mutableListOf<CelebritiesModel.Result>()
 
     private val adapter by lazy {
         CelebsAdapter()

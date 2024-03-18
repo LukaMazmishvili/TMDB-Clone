@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.MoviesDTO
+import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.domain.usecase.GetMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,23 +16,23 @@ import javax.inject.Inject
 class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMoviesUseCase) :
     BaseViewModel() {
 
-    private val _moviesState = MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
+    private val _moviesState = MutableStateFlow<List<MovieModel.Movie>>(emptyList())
     val moviesState = _moviesState.asStateFlow()
 
     private val _playingNowMoviesState =
-        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MovieModel.Movie>>(emptyList())
     val playingNowMoviesState = _playingNowMoviesState.asStateFlow()
 
     private val _trendingMoviesState =
-        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MovieModel.Movie>>(emptyList())
     val trendingMoviesState = _trendingMoviesState.asStateFlow()
 
     private val _topRatedMoviesState =
-        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MovieModel.Movie>>(emptyList())
     val topRatedMoviesState = _topRatedMoviesState.asStateFlow()
 
     private val _upcomingMoviesState =
-        MutableStateFlow<List<MoviesDTO.MovieModelDto>>(emptyList())
+        MutableStateFlow<List<MovieModel.Movie>>(emptyList())
     val upcomingMoviesState = _upcomingMoviesState.asStateFlow()
 
     init {
@@ -48,7 +49,7 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _moviesState.value = response.data!!
+                        _moviesState.value = response.data!!.results!!
                     }
 
                     is Resource.Error -> {
@@ -69,7 +70,7 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _playingNowMoviesState.value = response.data!!
+                        _playingNowMoviesState.value = response.data!!.results!!
                     }
 
                     is Resource.Error -> {
@@ -90,7 +91,7 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _trendingMoviesState.value = response.data!!
+                        _trendingMoviesState.value = response.data!!.results!!
                     }
 
                     is Resource.Error -> {
@@ -111,7 +112,7 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _topRatedMoviesState.value = response.data!!
+                        _topRatedMoviesState.value = response.data!!.results!!
                     }
 
                     is Resource.Error -> {
@@ -132,7 +133,7 @@ class MoviesViewModel @Inject constructor(private val getMoviesUseCase: GetMovie
                 when (response) {
                     is Resource.Success -> {
                         hideLoading()
-                        _upcomingMoviesState.value = response.data!!
+                        _upcomingMoviesState.value = response.data!!.results!!
                     }
 
                     is Resource.Error -> {

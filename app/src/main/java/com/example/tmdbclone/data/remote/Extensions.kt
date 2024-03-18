@@ -6,15 +6,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 
-inline fun <reified T> fetchFlow(
-    crossinline block: suspend () -> Response<T>
-): Flow<Resource<T>> = flow {
+inline fun <reified T, reified R> fetchFlow(
+    crossinline block: suspend () -> Response<T>,
+    crossinline mapper: (T) -> R
+): Flow<Resource<R>> = flow {
     try {
         emit(Resource.Loading(true))
         val response = block()
         if (response.isSuccessful) {
-            response.body()?.let {
-                emit(Resource.Success(it))
+            response.body()?.let { data ->
+                val mappedData = mapper(data)
+                emit(Resource.Success(mappedData))
             }
         } else {
             emit(Resource.Error("Something Went Wrong !"))

@@ -5,10 +5,11 @@ import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.ItemMovieBinding
+import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.extension.uploadImage350x450
 
 class CelebritiesAdapter :
-    BaseAdapter<CelebritiesModelDto.Result, ItemMovieBinding>(ItemMovieBinding::inflate) {
+    BaseAdapter<CelebritiesModel.Result, ItemMovieBinding>(ItemMovieBinding::inflate) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
