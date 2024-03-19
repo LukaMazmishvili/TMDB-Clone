@@ -22,6 +22,7 @@ import com.example.tmdbclone.presentation.movies.MoviesViewModel
 import com.example.tmdbclone.presentation.tvShows.TvShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolBar)
         setContentView(binding.root)
 
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
+        navController = navHostFragment.navController
+
         initSession()
         setupBottomNavBar()
         initViewModels()
@@ -55,6 +60,15 @@ class MainActivity : AppCompatActivity() {
     private fun initSession() {
         lifecycleScope.launch {
             sessionManager.authorize()
+
+        }
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            sessionManager.isFirstTime.collect { isFirstTime ->
+                if (isFirstTime) {
+                    navController.navigate(R.id.action_global_loginFragment)
+                }
+            }
         }
     }
 
@@ -68,10 +82,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavBar() {
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
-        navController = navHostFragment.navController
 
         val bottomNavigation = binding.bottomNavView
 

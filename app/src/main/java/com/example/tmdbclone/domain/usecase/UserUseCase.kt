@@ -4,21 +4,30 @@ import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.domain.AuthValidator
 import com.example.tmdbclone.domain.SessionManager
 import com.example.tmdbclone.domain.repository.UserRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UserUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val validator: AuthValidator,
     private val sessionManager: SessionManager
 ) {
 
-    suspend fun execute(username: String, password: String) {
+    suspend fun execute(username: String, password: String): Flow<Resource<String>> = flow {
         if (validator.isValid(username, password)) {
 
             val authToken = userRepository.logIn(username, password)
 
-            if (authToken is Resource.Success) {
-                sessionManager.saveToken(authToken.data!!)
+            authToken.collect { response ->
+                if (response is Resource.Success) {
+                    sessionManager.saveToken(response.data!!)
+                }
+                emit(response)
             }
         }
     }

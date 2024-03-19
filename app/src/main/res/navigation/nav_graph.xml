@@ -138,5 +138,8 @@
     <action
         android:id="@+id/action_global_celebrityDetailsFragment"
         app:destination="@id/celebrityDetailsFragment" />
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment" />
 
 </navigation>

@@ -16,7 +16,6 @@ interface UserService {
 
     @POST(LOGIN)
     @Headers("Accept: application/json")
-//    @Headers("Content-Type: application/json")
     suspend fun logInUser(
         @Body userLoginModel: UserModel.UserLoginModel
     ): Response<String>

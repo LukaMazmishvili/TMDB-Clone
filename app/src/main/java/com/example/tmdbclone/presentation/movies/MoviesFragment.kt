@@ -141,6 +141,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         (activity as MainActivity).apply {
             setToolBarTitle("Movies")
             showToolBar()
+            showBottomNavigation()
         }
     }
 

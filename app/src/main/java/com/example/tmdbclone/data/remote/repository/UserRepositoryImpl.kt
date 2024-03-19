@@ -12,6 +12,7 @@ import com.example.tmdbclone.domain.SessionManager
 import com.example.tmdbclone.domain.repository.UserRepository
 import com.example.tmdbclone.extension.dataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -20,9 +21,9 @@ class UserRepositoryImpl @Inject constructor(
     private val sessionManager: SessionManager,
 ) : UserRepository {
 
-    override suspend fun logIn(userName: String, password: String): Resource<String> {
-        return try {
-            // todo test if works corectly
+    override suspend fun logIn(userName: String, password: String): Flow<Resource<String>> = flow {
+        try {
+            // todo test if works correctly // checking....
             val response = userService.logInUser(UserModel.UserLoginModel(userName, password))
 
             if (response.isSuccessful) {
@@ -31,14 +32,14 @@ class UserRepositoryImpl @Inject constructor(
                     getCurrentUser(token)
                 }
 
-                Resource.Success(response.body())
+                emit(Resource.Success(response.body()))
 
             } else {
-                Resource.Error(response.errorBody()!!.string(), response.code())
+                emit(Resource.Error(response.errorBody()!!.string(), response.code()))
             }
 
         } catch (e: Exception) {
-            Resource.Error(e.message.toString())
+            emit(Resource.Error(e.message.toString()))
         }
     }
 
