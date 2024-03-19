@@ -1,5 +1,7 @@
 package com.example.tmdbclone.presentation.auth
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Build
 import android.view.View
 import android.widget.Toast
@@ -60,6 +62,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
             }
 
+
+
             btnSignUp.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment())
             }
@@ -84,14 +88,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 authViewModel.errorMsg.collect { errorMsg ->
                     if (errorMsg.isNotEmpty())
                         Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                authViewModel.isLoading.collect { isLoading ->
-//                    Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.example.tmdbclone.ui.customViews
+package com.example.tmdbclone.presentation.ui.customViews
 
 import android.content.Context
 import android.util.AttributeSet

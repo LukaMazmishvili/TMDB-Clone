@@ -40,11 +40,7 @@ class SessionManager @Inject constructor(private val context: Context) {
                     _currentUser.value = username ?: "Username"
                 }
             }
-
-            _isAuthorized.value = false
         }
-
-
     }
 
     suspend fun saveFirstTimeFlag(isFirstTime: Boolean) {

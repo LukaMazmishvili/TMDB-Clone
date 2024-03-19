@@ -156,7 +156,7 @@
                 app:layout_constraintStart_toEndOf="@id/ivMovieImage"
                 app:layout_constraintTop_toTopOf="@id/ivMovieImage" />
 
-            <com.example.tmdbclone.ui.customViews.RatingsView
+            <com.example.tmdbclone.presentation.ui.customViews.RatingsView
                 android:id="@+id/rvRatings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -200,14 +200,14 @@
 
             </LinearLayout>
 
-            <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+            <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
                 android:id="@+id/trvCast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:layout_constraintTop_toBottomOf="@id/itemCollectionWrapper" />
 
-            <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+            <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
                 android:id="@+id/trvVideos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -216,14 +216,14 @@
 
             <!--    todo in information-->
 
-            <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+            <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
                 android:id="@+id/trvRecommended"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:layout_constraintTop_toBottomOf="@id/trvVideos" />
 
-            <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+            <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
                 android:id="@+id/trvSimilar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

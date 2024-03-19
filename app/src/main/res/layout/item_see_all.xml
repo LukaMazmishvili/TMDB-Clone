@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <com.example.tmdbclone.ui.customViews.RatingsView
+    <com.example.tmdbclone.presentation.ui.customViews.RatingsView
         android:id="@+id/rvRatings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

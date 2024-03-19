@@ -28,4 +28,5 @@
     <string name="search">Search</string>
     <string name="similar_search">Similar Search</string>
     <string name="collection">Collection</string>
+    <string name="not_authorized_message">You are not signed in. Please sign in to your TMDB Clone account</string>
 </resources>

@@ -12,6 +12,9 @@ import javax.inject.Inject
 @HiltViewModel
 class TMDBViewModel @Inject constructor(private val userUseCase: UserUseCase) : BaseViewModel() {
 
+
+    val isAuthorized = userUseCase.isAuthorized()
+
     init {
         getCurrentUser()
     }

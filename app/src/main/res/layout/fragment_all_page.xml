@@ -10,19 +10,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+        <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
             android:id="@+id/trvMovies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" />
 
-        <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+        <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
             android:id="@+id/trvTvShows"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" />
 
-        <com.example.tmdbclone.ui.customViews.TitledRecyclerView
+        <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
             android:id="@+id/trvCelebrities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

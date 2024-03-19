@@ -8,4 +8,5 @@
     <color name="app_gray">#8e9191</color>
     <color name="app_background">#122728</color>
     <color name="shimmer_color">#80122728</color>
+    <color name="dialog_color">#17352b</color>
 </resources>

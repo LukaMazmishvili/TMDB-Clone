@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentTmdbBinding
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.ui.customViews.notAuthorizedDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,6 +28,16 @@ class TMDBFragment : BaseFragment<FragmentTmdbBinding>(FragmentTmdbBinding::infl
     override fun listeners() {
         binding.btnLoginorRegister.setOnClickListener {
             findNavController().navigate(TMDBFragmentDirections.actionTMDBFragmentToLoginFragment())
+        }
+
+        binding.ivIcFav.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.isAuthorized.collect { isAuthorized ->
+                    if (!isAuthorized) {
+                        notAuthorizedDialog(requireContext())
+                    }
+                }
+            }
         }
 
         binding.btnSignOut.setOnClickListener {
