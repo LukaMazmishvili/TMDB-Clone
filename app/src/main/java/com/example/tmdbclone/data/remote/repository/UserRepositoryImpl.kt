@@ -14,6 +14,7 @@ import com.example.tmdbclone.extension.dataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -38,58 +39,75 @@ class UserRepositoryImpl @Inject constructor(
                 emit(Resource.Error(response.errorBody()!!.string(), response.code()))
             }
 
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.message().toString(), e.code()))
+
         } catch (e: Exception) {
             emit(Resource.Error(e.message.toString()))
         }
     }
 
-    override suspend fun register(userName: String, email: String, password: String): String {
+    override suspend fun register(
+        userName: String,
+        email: String,
+        password: String
+    ): Flow<Resource<String>> = flow {
         try {
             val response = userService.registerUser(UserModel.Register(userName, password, email))
 
             if (response.isSuccessful) {
-                println(response.code())
-                return response.body() ?: ""
+                emit(Resource.Success(response.body()))
 
             } else {
-                println(response.code())
+                emit(Resource.Error(response.errorBody()!!.string(), response.code()))
             }
-        } catch (e: Exception) {
-            return e.message.toString()
-        }
-        return ""
-    }
-
-    override suspend fun addToFavourite(movieId: Int, userToken: String): Int {
-        return try {
-
-            val response = userService.addToFavourites(movieId, userToken)
-
-            if (response.isSuccessful) {
-                1
-            } else {
-                0
-            }
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.message().toString(), e.code()))
 
         } catch (e: Exception) {
-            Log.d("AddFavouritesExceptionMessage", "addToFavourite: ${e.message}")
-            0
+            emit(Resource.Error(e.message.toString()))
+
         }
     }
 
-    override suspend fun getCurrentUser(userToken: String) {
+    override suspend fun addToFavourite(movieId: Int, userToken: String): Flow<Resource<Int>> =
+        flow {
+            try {
+
+                val response = userService.addToFavourites(movieId, userToken)
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    emit(Resource.Success(body))
+                } else {
+
+                    emit(Resource.Error(response.errorBody()!!.string(), response.code()))
+                }
+
+            } catch (e: HttpException) {
+                emit(Resource.Error(e.message().toString(), e.code()))
+
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message.toString()))
+            }
+        }
+
+    override suspend fun getCurrentUser(userToken: String): Flow<Resource<UserModel>> = flow {
         try {
-
-            sessionManager.saveUsername("test")
             val response = userService.getCurrentUser("Bearer $userToken")
 
             if (response.isSuccessful) {
-                response.body()!!.username?.let { username ->
+                val body = response.body()
+                body?.username?.let { username ->
                     sessionManager.saveUsername(username)
                 }
+
+                emit(Resource.Success(body))
             }
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.message().toString(), e.code()))
         } catch (e: Exception) {
-            Log.d("CurrentUserExc", "getCurrentUser: ${e.message}")
+            emit(Resource.Error(e.message.toString()))
         }
     }
 

@@ -25,7 +25,9 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:boxStrokeColor="@color/color_selector"
+        app:boxStrokeErrorColor="#FF0000"
         app:boxStrokeWidthFocused="1dp"
+        app:cursorColor="@color/app_green"
         app:hintTextColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/ivLogo">
 
@@ -48,7 +50,9 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:boxStrokeColor="@color/color_selector"
+        app:boxStrokeErrorColor="#FF0000"
         app:boxStrokeWidthFocused="1dp"
+        app:cursorColor="@color/app_green"
         app:hintTextColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tilUsername"
         app:passwordToggleEnabled="true">

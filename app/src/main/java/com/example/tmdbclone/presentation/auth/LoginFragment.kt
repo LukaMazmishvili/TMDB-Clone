@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentLoginBinding
 import com.example.tmdbclone.domain.SessionManager
@@ -32,22 +33,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun started() {
-
-        lifecycleScope.launch {
-            sessionManager.isFirstTime.collect { isFirstTime ->
-                if (isFirstTime) {
-                    binding.btnContinue.visibility = View.VISIBLE
-                    binding.linearLayout.visibility = View.VISIBLE
-                    binding.btnContinue.setOnClickListener {
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            sessionManager.saveFirstTimeFlag(false)
-                        }
-                        findNavController().navigate(LoginFragmentDirections.actionGlobalMoviesFragment())
-                        findNavController().popBackStack()
-                    }
-                }
-            }
-        }
 
         (activity as MainActivity).hideBottomNavigation()
     }
@@ -75,10 +60,46 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun observer() {
+        lifecycleScope.launch {
+            sessionManager.isFirstTime.collect { isFirstTime ->
+                if (isFirstTime) {
+                    binding.btnContinue.visibility = View.VISIBLE
+                    binding.linearLayout.visibility = View.VISIBLE
+                    binding.btnContinue.setOnClickListener {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            sessionManager.saveFirstTimeFlag(false)
+                        }
+                        findNavController().navigate(LoginFragmentDirections.actionGlobalMoviesFragment())
+                        findNavController().popBackStack()
+                    }
+                }
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 authViewModel.authState.collect { token ->
-                    findNavController().popBackStack()
+                    if (token.isNotEmpty())
+                        findNavController().popBackStack()
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                authViewModel.validationState.collect { result ->
+                    with(binding) {
+                        when (result.error) {
+                            R.string.invalid_password_or_username -> {
+                                tietPassword.error = getString(R.string.invalid_password_or_username)
+                                tietUserName.error = getString(R.string.invalid_password_or_username)
+                            }
+
+                            R.string.invalid_password -> {
+                                tietPassword.error = getString(R.string.invalid_password)
+                            }
+                        }
+                    }
                 }
             }
         }

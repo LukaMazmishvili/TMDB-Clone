@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
 
     suspend fun logIn(userName: String, password: String): Flow<Resource<String>>
-    suspend fun register(userName: String, email: String, password: String): String
-    suspend fun addToFavourite(movieId: Int, userToken: String = ""): Int
-    suspend fun getCurrentUser(userToken: String)
+    suspend fun register(userName: String, email: String, password: String): Flow<Resource<String>>
+    suspend fun addToFavourite(movieId: Int, userToken: String = ""): Flow<Resource<Int>>
+    suspend fun getCurrentUser(userToken: String): Flow<Resource<UserModel>>
 
     suspend fun saveUserToken(token: String)
 
