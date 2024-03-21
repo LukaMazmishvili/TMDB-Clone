@@ -24,7 +24,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun logIn(userName: String, password: String): Flow<Resource<String>> = flow {
         try {
-            // todo test if works correctly // checking....
+
             val response = userService.logInUser(UserModel.UserLoginModel(userName, password))
 
             if (response.isSuccessful) {

@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentSearchRecommendationsBinding
+import com.example.tmdbclone.network.ConnectivityObserver
+import com.example.tmdbclone.network.NetworkConnectivityObserver
 import com.example.tmdbclone.presentation.auth.LoginFragment
 import com.example.tmdbclone.presentation.auth.RegistrationFragment
 import com.example.tmdbclone.presentation.details.seeAll.SeeAllFragment
@@ -32,6 +34,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchRecommendationsFragment :
@@ -44,6 +47,9 @@ class SearchRecommendationsFragment :
     private var firstTime: Boolean = true
 
     private val fragmentList = mutableListOf<Fragment?>(null, null, null)
+
+    @Inject
+    lateinit var networkConnectivityObserver: NetworkConnectivityObserver
 
     private val adapterSimilarSearches by lazy {
         SimilarSearchesAdapter()
@@ -63,6 +69,7 @@ class SearchRecommendationsFragment :
             getSearchedCelebrities(args.query)
         }
 
+        networkObserver(networkConnectivityObserver, viewModel)
         setupViews()
         search()
 

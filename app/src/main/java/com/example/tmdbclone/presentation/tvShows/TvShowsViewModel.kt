@@ -35,93 +35,111 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
 
     init {
         fetchAiringTodayTvShows()
-        fetchTrendingTvShows()
         fetchTopRatedTvShows()
         fetchPopularTvShows()
     }
 
-    fun fetchAiringTodayTvShows() {
+    private fun fetchAiringTodayTvShows() {
         viewModelScope.launch(Dispatchers.IO) {
-            getTvShowsUseCase.getAiringTodayTvShows().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _airingTodayTvShowsState.value = response.data!!.results!!
+            networkStatus.collect { networkStatus ->
+                networkStatus.let {
+//                    if (networkStatus) {
+                    getTvShowsUseCase.getAiringTodayTvShows().collect { response ->
+                        when (response) {
+                            is Resource.Success -> {
+                                hideLoading()
+                                _airingTodayTvShowsState.value = response.data!!.results!!
+                            }
+
+                            is Resource.Error -> {
+                                hideLoading()
+                                setErrorMsg(response.errorMsg)
+                            }
+
+                            is Resource.Loading -> showLoading()
+
+                        }
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
+//                    }
                 }
             }
         }
     }
 
-    fun fetchTrendingTvShows() {
+    private fun fetchTrendingTvShows() {
         viewModelScope.launch(Dispatchers.IO) {
-            getTvShowsUseCase.getTrendingTvShows().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _trendingTvShowsState.value = response.data!!.results!!
+            networkStatus.collect { networkStatus ->
+                networkStatus.let {
+//                    if (networkStatus) {
+                    getTvShowsUseCase.getTrendingTvShows().collect { response ->
+                        when (response) {
+                            is Resource.Success -> {
+                                hideLoading()
+                                _trendingTvShowsState.value = response.data!!.results!!
+                            }
+
+                            is Resource.Error -> {
+                                hideLoading()
+                                setErrorMsg(response.errorMsg)
+                            }
+
+                            is Resource.Loading -> showLoading()
+
+                        }
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
+//                    }
                 }
             }
         }
     }
 
-    fun fetchTopRatedTvShows() {
+    private fun fetchTopRatedTvShows() {
         viewModelScope.launch(Dispatchers.IO) {
-            getTvShowsUseCase.getTopRatedTvShows().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _topRatedTvShowsState.value = response.data!!.results!!
+            networkStatus.collect { networkStatus ->
+//                networkStatus?.let {
+                getTvShowsUseCase.getTopRatedTvShows().collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoading()
+                            _topRatedTvShowsState.value = response.data!!.results!!
+                        }
+
+                        is Resource.Error -> {
+                            hideLoading()
+                            setErrorMsg(response.errorMsg)
+                        }
+
+                        is Resource.Loading -> showLoading()
+
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
+//                    }
                 }
             }
         }
     }
 
-    fun fetchPopularTvShows() {
+    private fun fetchPopularTvShows() {
         viewModelScope.launch(Dispatchers.IO) {
-            getTvShowsUseCase.getPopularTvShows().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _popularTvShowsState.value = response.data!!.results!!
+            networkStatus.collect { networkStatus ->
+//                networkStatus?.let {
+                getTvShowsUseCase.getPopularTvShows().collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoading()
+                            _popularTvShowsState.value = response.data!!.results!!
+                        }
+
+                        is Resource.Error -> {
+                            hideLoading()
+                            setErrorMsg(response.errorMsg)
+                        }
+
+                        is Resource.Loading -> showLoading()
+
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
+//                    }
                 }
             }
         }
     }
-
 }

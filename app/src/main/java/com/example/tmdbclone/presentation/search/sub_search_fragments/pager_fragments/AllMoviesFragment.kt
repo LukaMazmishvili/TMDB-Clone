@@ -33,7 +33,7 @@ class AllMoviesFragment :
         adapter.onItemClickListener = {
             findNavController().navigate(
                 AllMoviesFragmentDirections.actionGlobalMovieDetailFragment(
-                    it.title ?: it.originalTitle!!, it.id!!
+                    it.title ?: it.originalTitle!!, "Movie" ,it.id!!
                 )
             )
         }

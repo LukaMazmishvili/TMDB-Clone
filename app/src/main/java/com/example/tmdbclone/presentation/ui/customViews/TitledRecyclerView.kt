@@ -66,7 +66,6 @@ class TitledRecyclerView @JvmOverloads constructor(
         recyclerView.adapter = adapter
     }
 
-    // todo must rename this function
     fun setRecyclerViewAdapter(adapter: ListAdapter<*, *>) {
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

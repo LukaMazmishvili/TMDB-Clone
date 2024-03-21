@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 abstract class BaseViewModel : ViewModel() {
 
-    private val _isLoading = MutableStateFlow<Boolean>(false)
+    private val _isLoading = MutableStateFlow<Boolean>(true)
     val isLoading = _isLoading.asStateFlow()
 
     private val _errorMsg = MutableStateFlow<String>("")

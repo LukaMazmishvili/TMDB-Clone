@@ -14,18 +14,23 @@ import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.databinding.FragmentCelebritiesBinding
 import com.example.tmdbclone.domain.model.CelebritiesModel
+import com.example.tmdbclone.network.ConnectivityObserver
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
 import com.example.tmdbclone.presentation.adapters.GridAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CelebritiesFragment :
     BaseFragment<FragmentCelebritiesBinding>(FragmentCelebritiesBinding::inflate) {
 
     private val viewModel: CelebritiesViewModel by activityViewModels()
+
+    @Inject
+    lateinit var networkConnectivityObserver: ConnectivityObserver
 
     private val adapterPopular by lazy {
         CelebritiesAdapter()
@@ -41,6 +46,7 @@ class CelebritiesFragment :
 
     override fun started() {
         setupViews()
+        networkObserver(networkConnectivityObserver, viewModel)
     }
 
 

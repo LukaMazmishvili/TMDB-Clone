@@ -2,6 +2,7 @@ package com.example.tmdbclone.presentation.details.movie
 
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
+import com.example.tmdbclone.common.MediaTypes
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
@@ -15,6 +16,9 @@ import com.example.tmdbclone.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +30,7 @@ class MovieDetailsViewModel @Inject constructor(
     BaseViewModel() {
 
     val movieIdState = MutableStateFlow<Int>(-1)
+    val mediaTypeState = MutableStateFlow<MediaTypes>(MediaTypes.None)
 
     private val _moviesDetailsState =
         MutableStateFlow<MovieDetailsModel?>(null)
@@ -63,8 +68,13 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun fetchMovieDetails() {
         viewModelScope.launch {
-            movieIdState.collect { movieId ->
-                getMovieDetailsUseCase.getMovieDetails(movieId).collect { response ->
+
+            movieIdState.combine(mediaTypeState) { movieId, mediaType ->
+                Pair(movieId, mediaType)
+            }.collect { (movieId, mediaType) ->
+                println(movieId)
+                println(mediaType)
+                getMovieDetailsUseCase.getMovieDetails(movieId, mediaType).collect { response ->
                     when (response) {
                         is Resource.Success -> {
                             hideLoading()

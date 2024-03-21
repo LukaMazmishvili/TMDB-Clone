@@ -49,6 +49,7 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
                 findNavController().navigate(
                     SeeAllFragmentDirections.actionGlobalMovieDetailFragment(
                         it.title!!,
+                        "",
                         it.id!!
                     )
                 )

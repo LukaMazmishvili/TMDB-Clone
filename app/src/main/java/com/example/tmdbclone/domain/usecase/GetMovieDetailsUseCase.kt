@@ -1,5 +1,6 @@
 package com.example.tmdbclone.domain.usecase
 
+import com.example.tmdbclone.common.MediaTypes
 import com.example.tmdbclone.domain.repository.MovieDetailRepository
 import com.example.tmdbclone.domain.repository.UserRepository
 import javax.inject.Inject
@@ -11,7 +12,7 @@ class GetMovieDetailsUseCase @Inject constructor(
 
     suspend fun getGenres(movieId: Int) = movieDetailRepository.fetchMovieGenres()
 
-    suspend fun getMovieDetails(movieId: Int) = movieDetailRepository.fetchMovieDetails(movieId)
+    suspend fun getMovieDetails(movieId: Int, mediaType: MediaTypes) = movieDetailRepository.fetchMovieDetails(movieId, mediaType)
 
     suspend fun getMovieCast(movieId: Int) = movieDetailRepository.fetchMovieCast(movieId)
 

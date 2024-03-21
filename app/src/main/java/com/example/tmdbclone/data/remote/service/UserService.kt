@@ -24,7 +24,7 @@ interface UserService {
     @POST(REGISTER)
     suspend fun registerUser(
         @Body userMode: UserModel.Register
-    ): Response<String> // TODO model for registering user
+    ): Response<String>
 
     @POST(ADD_FAVOURITE)
     suspend fun addToFavourites(

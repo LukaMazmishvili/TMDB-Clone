@@ -1,6 +1,7 @@
 package com.example.tmdbclone.data.remote.repository
 
 import android.util.Log
+import com.example.tmdbclone.common.MediaTypes
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.fetchFlow
 import com.example.tmdbclone.data.remote.mapper.toCelebritiesModel
@@ -12,6 +13,7 @@ import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
+import com.example.tmdbclone.data.remote.service.TvShowDetailsService
 import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.domain.model.MovieDetailsModel
 import com.example.tmdbclone.domain.model.MovieModel
@@ -22,6 +24,7 @@ import javax.inject.Inject
 
 class MovieDetailRepositoryImpl @Inject constructor(
     private val movieDetailService: MovieDetailService,
+    private val tvShowDetailsService: TvShowDetailsService,
     private val genresService: GenresService
 ) :
     MovieDetailRepository {
@@ -51,10 +54,19 @@ class MovieDetailRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun fetchMovieDetails(movieId: Int): Flow<Resource<MovieDetailsModel>> =
+    override suspend fun fetchMovieDetails(
+        movieId: Int,
+        mediaType: MediaTypes
+    ): Flow<Resource<MovieDetailsModel>> =
 
         fetchFlow<MovieDetailsModelDto, MovieDetailsModel>(
-            block = { movieDetailService.fetchMovieDetails(movieId) },
+            block = {
+                if (mediaType == MediaTypes.Movie) {
+                    movieDetailService.fetchMovieDetails(movieId)
+                } else {
+                    tvShowDetailsService.fetchTvShowDetails(movieId)
+                }
+            },
             mapper = {
                 it.toMovieDetailsModel(genres)
             }

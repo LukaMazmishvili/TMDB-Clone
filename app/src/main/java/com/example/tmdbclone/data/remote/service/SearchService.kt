@@ -21,7 +21,7 @@ interface SearchService {
         @Query("page") page: Int,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<SearchModelDto> // todo search dto model
+    ): Response<SearchModelDto>
 
     @GET(SEARCH_TV_SHOWS)
     suspend fun fetchSearchedTvShows(
@@ -29,7 +29,7 @@ interface SearchService {
         @Query("page") page: Int,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<SearchModelDto> // todo search dto model
+    ): Response<SearchModelDto>
 
     @GET(SEARCH_PERSON)
     suspend fun fetchSearchedPersons(
@@ -37,7 +37,7 @@ interface SearchService {
         @Query("page") page: Int,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<SearchPersonModelDto> // todo search dto model
+    ): Response<SearchPersonModelDto>
 
     @GET(SEARCH_MULTI)
     suspend fun fetchSimilarSearches(

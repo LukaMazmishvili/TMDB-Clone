@@ -1,6 +1,5 @@
 package com.example.tmdbclone.data.remote.repository
 
-import android.util.Log
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.fetchFlow
 import com.example.tmdbclone.data.remote.mapper.toMovieModel
@@ -8,14 +7,8 @@ import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.service.GenresService
 import com.example.tmdbclone.data.remote.service.MoviesService
 import com.example.tmdbclone.domain.model.MovieModel
-import com.example.tmdbclone.domain.model.MovieModel.Movie
 import com.example.tmdbclone.domain.repository.MoviesRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 
@@ -28,12 +21,12 @@ class MoviesRepositoryImpl @Inject constructor(
     MoviesRepository {
 
     init {
-        CoroutineScope(Dispatchers.IO).launch {
-            genres()
-        }
+//        CoroutineScope(Dispatchers.Main).launch {
+//            genres()
+//        }
     }
 
-    suspend fun genres() {
+    override suspend fun genres() {
         val responseMovieGenres = genresService.fetchMovieGenres()
         val responseTvShowGenres = genresService.fetchTvShowGenres()
 

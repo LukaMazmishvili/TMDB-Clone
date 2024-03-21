@@ -31,20 +31,26 @@ class CelebritiesViewModel @Inject constructor(private val getCelebritiesUseCase
 
     fun getPopularCelebrities() {
         viewModelScope.launch {
-            getCelebritiesUseCase.getPopularCelebrities().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _popularCelebritiesState.value = response.data!!
+            networkStatus.collect { networkStatus ->
+                networkStatus?.let {
+                    if (networkStatus) {
+                        getCelebritiesUseCase.getPopularCelebrities().collect { response ->
+                            when (response) {
+                                is Resource.Success -> {
+                                    hideLoading()
+                                    _popularCelebritiesState.value = response.data!!
+                                }
+
+                                is Resource.Error -> {
+                                    hideLoading()
+                                    setErrorMsg(response.errorMsg)
+                                }
+
+                                is Resource.Loading -> showLoading()
+
+                            }
+                        }
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
                 }
             }
         }
@@ -52,20 +58,26 @@ class CelebritiesViewModel @Inject constructor(private val getCelebritiesUseCase
 
     fun getTrendingCelebrities() {
         viewModelScope.launch {
-            getCelebritiesUseCase.getTrendingCelebrities().collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoading()
-                        _trendingCelebritiesState.value = response.data!!
+            networkStatus.collect { networkStatus ->
+                networkStatus?.let {
+                    if (networkStatus) {
+                        getCelebritiesUseCase.getTrendingCelebrities().collect { response ->
+                            when (response) {
+                                is Resource.Success -> {
+                                    hideLoading()
+                                    _trendingCelebritiesState.value = response.data!!
+                                }
+
+                                is Resource.Error -> {
+                                    hideLoading()
+                                    setErrorMsg(response.errorMsg)
+                                }
+
+                                is Resource.Loading -> showLoading()
+
+                            }
+                        }
                     }
-
-                    is Resource.Error -> {
-                        hideLoading()
-                        setErrorMsg(response.errorMsg)
-                    }
-
-                    is Resource.Loading -> showLoading()
-
                 }
             }
         }

@@ -1,28 +1,33 @@
 package com.example.tmdbclone.presentation
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.tmdbclone.R
 import com.example.tmdbclone.databinding.ActivityMainBinding
 import com.example.tmdbclone.domain.SessionManager
+import com.example.tmdbclone.domain.repository.MoviesRepository
+import com.example.tmdbclone.network.ConnectivityObserver
+import com.example.tmdbclone.network.ConnectivityObserver.Status.Available
+import com.example.tmdbclone.network.ConnectivityObserver.Status.Losing
+import com.example.tmdbclone.network.ConnectivityObserver.Status.Lost
+import com.example.tmdbclone.network.ConnectivityObserver.Status.Unavailable
 import com.example.tmdbclone.presentation.celebrities.CelebritiesViewModel
-import com.example.tmdbclone.presentation.movies.MoviesViewModel
-import com.example.tmdbclone.presentation.tvShows.TvShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,10 +37,21 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val viewModel: MainViewModel by viewModels()
+
     private lateinit var navController: NavController
 
     @Inject
     lateinit var sessionManager: SessionManager
+
+    @Inject
+    lateinit var connectivityManager: ConnectivityManager
+
+    @Inject
+    lateinit var connectivityObserver: ConnectivityObserver
+
+    @Inject
+    lateinit var moviesRepository: MoviesRepository
 
     private val celebritiesViewModel: CelebritiesViewModel by viewModels()
 
@@ -51,16 +67,74 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
         navController = navHostFragment.navController
 
+        networkObserver()
         initSession()
         setupBottomNavBar()
         initViewModels()
 
     }
 
+    private fun getGenres() {
+        lifecycleScope.launch {
+            moviesRepository.genres()
+        }
+    }
+
+    private fun networkObserver() {
+        if (!isInternetAvailable()) {
+            navController.navigate(R.id.action_global_noNetworkFragment)
+        } else {
+            getGenres()
+        }
+
+        lifecycleScope.launch {
+            connectivityObserver.observe().collect { networkStatus ->
+                when (networkStatus) {
+                    Lost, Unavailable, Losing -> {
+                        viewModel.setNetworkStatus(false)
+                    }
+
+                    Available -> {
+                        viewModel.setNetworkStatus(true)
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                connectivityObserver.observe().collect { networkStatus ->
+                    when (networkStatus) {
+                        ConnectivityObserver.Status.Lost, ConnectivityObserver.Status.Unavailable, ConnectivityObserver.Status.Losing -> {
+                            viewModel.setNetworkStatus(false)
+                            navController.navigate(R.id.noNetworkFragment)
+                        }
+
+                        ConnectivityObserver.Status.Available -> {
+                            viewModel.setNetworkStatus(true)
+                            navController.popBackStack()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun isInternetAvailable(): Boolean {
+        val activeNetwork = connectivityManager.activeNetwork
+
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+
+        return networkCapabilities != null && (networkCapabilities.hasTransport(
+            NetworkCapabilities.TRANSPORT_WIFI
+        ) || networkCapabilities.hasTransport(
+            NetworkCapabilities.TRANSPORT_CELLULAR
+        ))
+    }
+
     private fun initSession() {
         lifecycleScope.launch {
             sessionManager.authorize()
-
         }
 
         lifecycleScope.launch(Dispatchers.Main) {
@@ -122,7 +196,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // This prevents from adding new instance of already chosen fragment // todo delete comment
         bottomNavigation.setOnItemReselectedListener {
             when (it.itemId) {
                 R.id.moviesFragment -> {
@@ -139,10 +212,6 @@ class MainActivity : AppCompatActivity() {
             bottomNavigation.menu.findItem(destination.id)?.isChecked = true
         }
 
-    }
-
-    override fun navigateUpTo(upIntent: Intent?): Boolean {
-        return navController.navigateUp()
     }
 
     private fun showViews() {

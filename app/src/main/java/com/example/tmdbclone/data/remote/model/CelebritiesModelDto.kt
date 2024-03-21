@@ -31,7 +31,7 @@ data class CelebritiesModelDto(
         @SerializedName("profile_path")
         val profilePath: String?,
         @SerializedName("known_for")
-        val knownFor: List<MoviesDTO>?, // todo change model into something global or separate models
+        val knownFor: List<MoviesDTO>?
     )
 
 }

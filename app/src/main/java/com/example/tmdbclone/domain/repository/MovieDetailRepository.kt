@@ -1,5 +1,6 @@
 package com.example.tmdbclone.domain.repository
 
+import com.example.tmdbclone.common.MediaTypes
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
@@ -14,7 +15,10 @@ interface MovieDetailRepository {
 
     suspend fun fetchMovieGenres(): Map<Int, String>
 
-    suspend fun fetchMovieDetails(movieId: Int): Flow<Resource<MovieDetailsModel>>
+    suspend fun fetchMovieDetails(
+        movieId: Int,
+        mediaType: MediaTypes
+    ): Flow<Resource<MovieDetailsModel>>
 
     suspend fun fetchMovieCast(movieId: Int): Flow<Resource<CelebritiesModel>>
 

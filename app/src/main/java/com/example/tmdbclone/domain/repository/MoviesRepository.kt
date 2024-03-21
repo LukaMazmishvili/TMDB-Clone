@@ -16,4 +16,5 @@ interface MoviesRepository {
     suspend fun fetchTopRatedMovies(): Flow<Resource<MovieModel>>
 
     suspend fun fetchUpcomingMovies(): Flow<Resource<MovieModel>>
+    suspend fun genres()
 }

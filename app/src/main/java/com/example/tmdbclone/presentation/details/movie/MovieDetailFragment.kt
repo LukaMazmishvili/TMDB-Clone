@@ -20,7 +20,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
+import com.example.tmdbclone.common.MediaTypes
 import com.example.tmdbclone.databinding.FragmentMovieDetailBinding
+import com.example.tmdbclone.extension.toMediaTypes
 import com.example.tmdbclone.extension.uploadImage
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
@@ -81,10 +83,10 @@ class MovieDetailFragment :
             }
 
             recommendedAdapter.onItemClickedListener = {
-                navigateToDetails(it.id!!, it.title!!)
+                navigateToDetails(it.id!!, it.mediaType!!, it.title!!)
             }
             similarAdapter.onItemClickedListener = {
-                navigateToDetails(it.id!!, it.title!!)
+                navigateToDetails(it.id!!, it.mediaType!!, it.title!!)
             }
 
             trvCast.setSeeAllButtonClickListener {
@@ -153,6 +155,8 @@ class MovieDetailFragment :
     override fun observer() {
 
         viewModel.movieIdState.value = args.movieId
+        println("fragment " + args.mediaType)
+        viewModel.mediaTypeState.value = args.mediaType.toMediaTypes()
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -175,8 +179,8 @@ class MovieDetailFragment :
                                     ivMovieCover.uploadImage750x450(IMAGE_BASE_URL + path)
                                 }
                                 tvMovieDescription.text = it.overview
-                                tvMovieTitle.text = it.title
-                                movieTitle.text = it.title
+                                tvMovieTitle.text = it.title ?: it.originalName
+                                movieTitle.text = it.title ?: it.originalName
                                 genresAdapter.submitList(it.genres)
                                 it.belongsToCollection?.let { collection ->
                                     itemCollection.tvTitle.text = collection.name
@@ -184,13 +188,12 @@ class MovieDetailFragment :
                                         it.genres.toString().replace("[", "")
                                     it.posterPath?.let { backDropPath ->
                                         itemCollection.ivCollectionImage.uploadImage350x450(
-                                            backDropPath
+                                            IMAGE_BASE_URL + backDropPath
                                         )
                                     }
                                 } ?: run {
                                     itemCollectionWrapper.visibility = View.GONE
                                 }
-
                             }
                         }
                     }
@@ -263,11 +266,12 @@ class MovieDetailFragment :
 
     }
 
-    private fun navigateToDetails(movieId: Int, movieTitle: String) {
+    private fun navigateToDetails(movieId: Int, movieTitle: String, mediaType: String) {
         activity?.supportFragmentManager
         findNavController().navigate(
             MoviesFragmentDirections.actionGlobalMovieDetailFragment(
                 movieTitle,
+                mediaType,
                 movieId
             )
         )

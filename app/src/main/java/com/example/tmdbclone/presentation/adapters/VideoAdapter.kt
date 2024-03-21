@@ -10,8 +10,6 @@ class VideoAdapter : BaseAdapter<VideoModelDto.Video, ItemMovieBinding>(ItemMovi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
 
-        // todo youtube view
-
         with(holder.binding) {
             ivMovieImage.uploadImage("https://img.youtube.com/vi/${item.key}/mqdefault.jpg")
             tvMovieTitle.visibility = View.GONE

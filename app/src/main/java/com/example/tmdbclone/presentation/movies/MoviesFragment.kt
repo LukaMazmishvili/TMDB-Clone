@@ -10,20 +10,28 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
+import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.databinding.FragmentMoviesBinding
+import com.example.tmdbclone.network.ConnectivityObserver
+import com.example.tmdbclone.network.NetworkConnectivityObserver
 import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.adapters.GridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.math.log
 
 @AndroidEntryPoint
 class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding::inflate) {
 
     private val viewModel: MoviesViewModel by activityViewModels()
+
+    @Inject
+    lateinit var networkConnectivityObserver: ConnectivityObserver
 
     private val adapterPopular by lazy {
         PopularAdapter(0)
@@ -47,23 +55,24 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     override fun started() {
         setupViews()
+        networkObserver(networkConnectivityObserver, viewModel)
     }
 
     override fun listeners() {
         adapterPopular.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
         }
         adapterPIT.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
         }
         adapterTrending.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
         }
         adapterTopRated.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
         }
         adapterUpcoming.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
         }
 
         with(binding) {
@@ -218,6 +227,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         findNavController().navigate(
             MoviesFragmentDirections.actionGlobalMovieDetailFragment(
                 movieTitle,
+                "Movie",
                 movieId
             )
         )

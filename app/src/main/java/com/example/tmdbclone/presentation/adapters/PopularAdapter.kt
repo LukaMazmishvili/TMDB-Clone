@@ -9,7 +9,6 @@ import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
 
-// todo create enum class data type
 class PopularAdapter(private val type: Int) :
     BaseAdapter<MovieModel.Movie, ItemMovieBinding>(ItemMovieBinding::inflate) {
 

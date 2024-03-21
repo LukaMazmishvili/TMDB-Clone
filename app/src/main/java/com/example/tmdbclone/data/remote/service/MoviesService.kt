@@ -26,27 +26,27 @@ interface MoviesService {
         @Query("page") page: String = "1",
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<MoviesDTO> // todo rename ro make base model class
+    ): Response<MoviesDTO>
 
     @GET(TRENDING_ALL)
     suspend fun fetchTrendingMovies(
         @Query("page") page: String = "1",
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<MoviesDTO> // todo rename ro make base model class
+    ): Response<MoviesDTO>
 
     @GET(TOP_RATED)
     suspend fun fetchTopRatedMovies(
         @Query("page") page: String = "1",
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<MoviesDTO> // todo rename ro make base model class
+    ): Response<MoviesDTO>
 
     @GET(UPCOMING)
     suspend fun fetchUpcomingMovies(
         @Query("page") page: String = "1",
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<MoviesDTO> // todo rename ro make base model class
+    ): Response<MoviesDTO>
 
 }

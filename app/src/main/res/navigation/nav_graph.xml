@@ -49,7 +49,7 @@
         android:id="@+id/tvShowsFragment"
         android:name="com.example.tmdbclone.presentation.tvShows.TvShowsFragment"
         android:label="fragment_tv_shows"
-        tools:layout="@layout/fragment_tv_shows" >
+        tools:layout="@layout/fragment_tv_shows">
         <action
             android:id="@+id/action_tvShowsFragment_to_seeAllFragment"
             app:destination="@id/seeAllFragment" />
@@ -86,6 +86,10 @@
 
         <argument
             android:name="movieTitle"
+            app:argType="string" />
+
+        <argument
+            android:name="mediaType"
             app:argType="string" />
     </fragment>
     <action
@@ -141,5 +145,13 @@
     <action
         android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment" />
+    <fragment
+        android:id="@+id/noNetworkFragment"
+        android:name="com.example.tmdbclone.presentation.NoNetworkFragment"
+        android:label="fragment_no_network"
+        tools:layout="@layout/fragment_no_network" />
+    <action
+        android:id="@+id/action_global_noNetworkFragment"
+        app:destination="@id/noNetworkFragment" />
 
 </navigation>

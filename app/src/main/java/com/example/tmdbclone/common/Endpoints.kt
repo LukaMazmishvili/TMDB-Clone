@@ -49,6 +49,9 @@ object Endpoints {
     const val MOVIE_RECOMMENDATION = "movie/{movieId}/recommendations?language=en-US&page=1"
     const val MOVIE_SIMILAR = "movie/{movieId}/similar?language=en-US&page=1"
 
+    // Tv Show Detail Endpoints
+    const val TV_SHOW_DETAILS = "tv/{movieId}?language=en-US"
+
     // User Endpoints
     const val LOGIN = "Users/Login"
     const val REGISTER = "Users/Register"

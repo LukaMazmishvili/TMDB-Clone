@@ -74,8 +74,6 @@ fun ImageView.uploadImage750x450(url: String) {
         .into(this)
 }
 
-
-// todo correct image size
 fun ImageView.uploadImage(url: String) {
     Glide.with(this)
         .load(url)

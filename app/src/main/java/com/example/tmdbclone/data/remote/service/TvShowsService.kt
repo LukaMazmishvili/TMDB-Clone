@@ -25,20 +25,20 @@ interface TvShowsService {
         @Query("page") page: String,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<MoviesDTO> // todo rename ro make base model class
+    ): Response<MoviesDTO>
 
     @GET(TOP_RATED_TV_SHOWS)
     suspend fun fetchTopRatedTvShows(
         @Query("page") page: String,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<MoviesDTO> // todo rename ro make base model class
+    ): Response<MoviesDTO>
 
     @GET(POPULAR_TV_SHOWS)
     suspend fun fetchPopularTvShows(
         @Query("page") page: String,
         @Header("accept") format: String = "Application/Json",
         @Header("Authorization") bearer: String = BEARER_TOKEN
-    ): Response<MoviesDTO> // todo rename ro make base model class
+    ): Response<MoviesDTO>
 
 }

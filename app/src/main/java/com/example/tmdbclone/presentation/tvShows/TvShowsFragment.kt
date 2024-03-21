@@ -53,6 +53,15 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
     }
 
     override fun listeners() {
+        adapterPopular.onItemClickedListener = {
+            findNavController().navigate(
+                TvShowsFragmentDirections.actionGlobalMovieDetailFragment(
+                    it.title ?: it.originalTitle ?: it.originalName!!,
+                    "Tv Show",
+                    it.id!!
+                )
+            )
+        }
 
     }
 
@@ -106,67 +115,64 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
     }
 
     override fun observer() {
-
-        viewLifecycleOwner.lifecycleScope.launch() {
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.airingTodayTvShowsState.collect { list ->
-                        adapterAiringToday.submitList(list)
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.airingTodayTvShowsState.collect { list ->
+                    adapterAiringToday.submitList(list)
                 }
             }
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.trendingTvShowsState.collect { list ->
-                        adapterTrending.submitList(list)
-                    }
-                }
-            }
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.topRatedTvShowsState.collect { list ->
-                        adapterTopRated.submitList(list)
-                    }
-                }
-            }
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.popularTvShowsState.collect { list ->
-                        adapterPopular.submitList(list)
-                    }
-                }
-            }
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.errorMsg.collect { msg ->
-                        if (msg.isNotEmpty()) {
-                            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.isLoading.collect { isLoading ->
-                        if (!isLoading) {
-                            delay(3000)
-                            binding.shimmer.visibility = View.INVISIBLE
-                            binding.dataLayout.visibility = View.VISIBLE
-                        } else {
-                            binding.shimmer.visibility = View.VISIBLE
-                            binding.dataLayout.visibility = View.INVISIBLE
-                        }
-                    }
-                }
-            }
-
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.trendingTvShowsState.collect { list ->
+                    adapterTrending.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.topRatedTvShowsState.collect { list ->
+                    adapterTopRated.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.popularTvShowsState.collect { list ->
+                    adapterPopular.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.errorMsg.collect { msg ->
+                    if (msg.isNotEmpty()) {
+                        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.isLoading.collect { isLoading ->
+                    if (!isLoading) {
+                        delay(3000)
+                        binding.shimmer.visibility = View.INVISIBLE
+                        binding.dataLayout.visibility = View.VISIBLE
+                    } else {
+                        binding.shimmer.visibility = View.VISIBLE
+                        binding.dataLayout.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        }
+
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
