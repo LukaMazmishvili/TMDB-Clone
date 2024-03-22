@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentTvShowsBinding
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.adapters.GridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -175,10 +176,10 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).setToolBarTitle("Tv Shows")
-        (activity as MainActivity).showToolBar()
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.setToolBarTitle("Tv Shows")
+        mainActivityListener.showToolBar()
     }
 }

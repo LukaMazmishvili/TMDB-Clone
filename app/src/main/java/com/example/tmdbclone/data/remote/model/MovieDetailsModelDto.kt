@@ -9,7 +9,7 @@ data class MovieDetailsModelDto(
     @SerializedName("belongs_to_collection")
     val belongsToCollection: Collection?,
     val budget: Long?,
-    val genres: List<GenresModelDto.Genre>?,
+    val genres: List<GenresModelDto.Genre?>?,
     val homePage: String?,
     val id: Int?,
     @SerializedName("imdb_id")
@@ -25,13 +25,13 @@ data class MovieDetailsModelDto(
     @SerializedName("production_companies")
     val productionCompanies: List<Company>?,
     @SerializedName("production_countries")
-    val productionCountries: List<Country>,
+    val productionCountries: List<Country?>?,
     @SerializedName("release_date")
     val releaseDate: String?,
     val revenue: Long?,
     val runtime: Long?,
     @SerializedName("spoken_languages")
-    val spokenLanguages: List<Language>,
+    val spokenLanguages: List<Language?>?,
     val status: String?,
     val tagline: String?,
     val title: String?,
@@ -43,19 +43,18 @@ data class MovieDetailsModelDto(
     @SerializedName("created_by")
     val createdBy: List<Any?>?,
     @SerializedName("episode_run_time")
-    val episodeRunTime: List<Int>?,
+    val episodeRunTime: List<Int?>?,
     @SerializedName("first_air_date")
     val firstAirDate: String?,
-    val homepage: String?,
     @SerializedName("in_production")
     val inProduction: Boolean?,
-    val languages: List<String>?,
+    val languages: List<String?>?,
     @SerializedName("last_air_date")
     val lastAirDate: String?,
     @SerializedName("last_episode_to_air")
     val lastEpisodeToAir: LastEpisodeToAir?,
     val name: String?,
-    val networks: List<Network>?,
+    val networks: List<Network?>?,
     @SerializedName("next_episode_to_air")
     val nextEpisodeToAir: Any?,
     @SerializedName("number_of_episodes")
@@ -63,10 +62,10 @@ data class MovieDetailsModelDto(
     @SerializedName("number_of_seasons")
     val numberOfSeasons: Int?,
     @SerializedName("origin_country")
-    val originCountry: List<String>?,
+    val originCountry: List<String?>?,
     @SerializedName("original_name")
     val originalName: String?,
-    val seasons: List<Season>?,
+    val seasons: List<Season?>?,
     val type: String?,
 ) {
 
@@ -99,7 +98,7 @@ data class MovieDetailsModelDto(
         val englishName: String?,
         @SerializedName("iso_639_1")
         val iso6391: String?,
-        val name: String
+        val name: String?
     )
 
     data class LastEpisodeToAir(
@@ -149,7 +148,7 @@ data class MovieDetailsModelDto(
         @SerializedName("season_number")
         val seasonNumber: Int?,
         @SerializedName("vote_average")
-        val voteAverage: Int?
+        val voteAverage: Float?
     )
 }
 

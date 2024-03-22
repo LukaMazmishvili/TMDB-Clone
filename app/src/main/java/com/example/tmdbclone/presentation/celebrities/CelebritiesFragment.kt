@@ -16,6 +16,7 @@ import com.example.tmdbclone.databinding.FragmentCelebritiesBinding
 import com.example.tmdbclone.domain.model.CelebritiesModel
 import com.example.tmdbclone.network.ConnectivityObserver
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
 import com.example.tmdbclone.presentation.adapters.GridAdapter
@@ -149,11 +150,13 @@ class CelebritiesFragment :
         return listOf(list1, list2)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).setToolBarTitle("Celebrities")
-        (activity as MainActivity).showToolBar()
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.apply {
+            setToolBarTitle("Celebrities")
+            showToolBar()
+        }
     }
 
 }

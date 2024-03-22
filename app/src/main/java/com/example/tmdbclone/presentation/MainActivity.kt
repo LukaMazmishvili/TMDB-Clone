@@ -32,8 +32,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-@RequiresApi(Build.VERSION_CODES.O)
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainActivityListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -220,23 +219,23 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.visibility = View.VISIBLE
     }
 
-    fun setToolBarTitle(title: String) {
+    override fun setToolBarTitle(title: String) {
         supportActionBar?.title = title
     }
 
-    fun hideToolBar() {
+    override fun hideToolBar() {
         supportActionBar?.hide()
     }
 
-    fun showToolBar() {
+    override fun showToolBar() {
         supportActionBar?.show()
     }
 
-    fun hideBottomNavigation() {
+    override fun hideBottomNavigation() {
         binding.bottomNavView.visibility = View.GONE
     }
 
-    fun showBottomNavigation() {
+    override fun showBottomNavigation() {
         binding.bottomNavView.visibility = View.VISIBLE
     }
 

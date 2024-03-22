@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentTmdbBinding
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.ui.customViews.notAuthorizedDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -20,9 +21,10 @@ class TMDBFragment : BaseFragment<FragmentTmdbBinding>(FragmentTmdbBinding::infl
 
     private val viewModel: TMDBViewModel by viewModels()
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun started() {
-        (activity as MainActivity).showBottomNavigation()
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.showBottomNavigation()
     }
 
     override fun listeners() {

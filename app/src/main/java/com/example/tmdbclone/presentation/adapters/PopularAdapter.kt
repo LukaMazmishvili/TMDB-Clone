@@ -1,6 +1,7 @@
 package com.example.tmdbclone.presentation.adapters
 
 import android.util.Log
+import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
 import com.example.tmdbclone.data.remote.model.MoviesDTO
@@ -21,11 +22,21 @@ class PopularAdapter(private val type: Int) :
         with(holder.binding) {
             when (type) {
                 0 -> {
-                    ivMovieImage.uploadImage350x450(IMAGE_BASE_URL + item.posterPath)
+                    item.posterPath?.let {
+                        ivMovieImage.uploadImage350x450(
+                            IMAGE_BASE_URL + item.posterPath,
+                            placeHolder = R.drawable.ic_movies
+                        )
+                    }
                 }
 
                 1 -> {
-                    ivMovieImage.uploadImage750x450(IMAGE_BASE_URL + item.backdropPath)
+                    item.posterPath?.let {
+                        ivMovieImage.uploadImage750x450(
+                            IMAGE_BASE_URL + item.backdropPath,
+                            placeHolder = R.drawable.ic_movies
+                        )
+                    }
                 }
             }
             Log.d("Link_In_adapter", "onBindViewHolder: ${IMAGE_BASE_URL + item.posterPath}")

@@ -17,6 +17,7 @@ import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentLoginBinding
 import com.example.tmdbclone.domain.SessionManager
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -31,10 +32,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     @Inject
     lateinit var sessionManager: SessionManager
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun started() {
-
-        (activity as MainActivity).hideBottomNavigation()
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.hideBottomNavigation()
     }
 
     override fun listeners() {
@@ -91,8 +91,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     with(binding) {
                         when (result.error) {
                             R.string.invalid_password_or_username -> {
-                                tietPassword.error = getString(R.string.invalid_password_or_username)
-                                tietUserName.error = getString(R.string.invalid_password_or_username)
+                                tietPassword.error =
+                                    getString(R.string.invalid_password_or_username)
+                                tietUserName.error =
+                                    getString(R.string.invalid_password_or_username)
                             }
 
                             R.string.invalid_password -> {

@@ -17,6 +17,7 @@ import com.example.tmdbclone.databinding.FragmentMoviesBinding
 import com.example.tmdbclone.network.ConnectivityObserver
 import com.example.tmdbclone.network.NetworkConnectivityObserver
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.adapters.GridAdapter
 import com.example.tmdbclone.presentation.adapters.PopularAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -144,10 +145,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).apply {
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.apply {
             setToolBarTitle("Movies")
             showToolBar()
             showBottomNavigation()
@@ -223,7 +224,6 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
     }
 
     private fun navigateToDetails(movieId: Int, movieTitle: String) {
-        activity?.supportFragmentManager
         findNavController().navigate(
             MoviesFragmentDirections.actionGlobalMovieDetailFragment(
                 movieTitle,

@@ -27,6 +27,7 @@ import com.example.tmdbclone.extension.uploadImage
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
 import com.example.tmdbclone.presentation.adapters.GenresAdapter
@@ -64,9 +65,9 @@ class MovieDetailFragment :
         PopularAdapter(0)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun started() {
-        (activity as MainActivity).hideToolBar()
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.hideToolBar()
         setupViews()
     }
 
@@ -83,10 +84,18 @@ class MovieDetailFragment :
             }
 
             recommendedAdapter.onItemClickedListener = {
-                navigateToDetails(it.id!!, it.mediaType!!, it.title!!)
+                navigateToDetails(
+                    it.id!!,
+                    it.title ?: it.originalName ?: it.originalTitle!!,
+                    it.mediaType!!,
+                )
             }
             similarAdapter.onItemClickedListener = {
-                navigateToDetails(it.id!!, it.mediaType!!, it.title!!)
+                navigateToDetails(
+                    it.id!!,
+                    it.title ?: it.originalName ?: it.originalTitle!!,
+                    it.mediaType ?: "Movie",
+                )
             }
 
             trvCast.setSeeAllButtonClickListener {
@@ -172,8 +181,11 @@ class MovieDetailFragment :
                                 rvRatings.setOverallRating(it.voteAverage!!)
                                 rvRatings.fillStars(it.voteAverage)
                                 rvRatings.setTotalVotes(it.voteCount!!)
-                                it.posterPath?.let { path ->
-                                    ivMovieImage.uploadImage350x450(IMAGE_BASE_URL + path)
+                                it.posterPath.let { path ->
+                                    ivMovieImage.uploadImage350x450(
+                                        IMAGE_BASE_URL + path,
+                                        placeHolder = R.drawable.ic_movies
+                                    )
                                 }
                                 it.backdropPath?.let { path ->
                                     ivMovieCover.uploadImage750x450(IMAGE_BASE_URL + path)
@@ -184,11 +196,16 @@ class MovieDetailFragment :
                                 genresAdapter.submitList(it.genres)
                                 it.belongsToCollection?.let { collection ->
                                     itemCollection.tvTitle.text = collection.name
+                                    val genres = mutableListOf<String>()
+                                    it.genres?.forEach { genre ->
+                                        genres.add(genre?.name.toString())
+                                    }
                                     itemCollection.tvGenres.text =
-                                        it.genres.toString().replace("[", "")
+                                        genres.toString().replace("[", "").replace("]", "")
                                     it.posterPath?.let { backDropPath ->
                                         itemCollection.ivCollectionImage.uploadImage350x450(
-                                            IMAGE_BASE_URL + backDropPath
+                                            IMAGE_BASE_URL + backDropPath,
+                                            placeHolder = R.drawable.ic_movies
                                         )
                                     }
                                 } ?: run {
@@ -243,7 +260,7 @@ class MovieDetailFragment :
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.moviesSimilarState.collect { list ->
                     if (list != null) {
-                        similarAdapter.submitList(list!!.results)
+                        similarAdapter.submitList(list.results)
                     }
                 }
             }
@@ -267,7 +284,7 @@ class MovieDetailFragment :
     }
 
     private fun navigateToDetails(movieId: Int, movieTitle: String, mediaType: String) {
-        activity?.supportFragmentManager
+        findNavController().popBackStack()
         findNavController().navigate(
             MoviesFragmentDirections.actionGlobalMovieDetailFragment(
                 movieTitle,

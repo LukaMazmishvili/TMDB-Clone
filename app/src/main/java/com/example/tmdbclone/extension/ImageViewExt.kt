@@ -1,6 +1,7 @@
 package com.example.tmdbclone.extension
 
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.tmdbclone.R
@@ -23,7 +24,11 @@ fun ImageView.uploadImage80x80(url: String, round: Boolean = false) {
     }
 }
 
-fun ImageView.uploadImage200x300(url: Any, round: Boolean = false, placeHolder: Int = 0) {
+fun ImageView.uploadImage200x300(
+    url: Any,
+    round: Boolean = false,
+    @DrawableRes placeHolder: Int = 0
+) {
     if (!round) {
         Glide.with(this)
             .load(url)
@@ -44,7 +49,11 @@ fun ImageView.uploadImage200x300(url: Any, round: Boolean = false, placeHolder: 
     }
 }
 
-fun ImageView.uploadImage350x450(url: Any, round: Boolean = false, placeHolder: Int = 0) {
+fun ImageView.uploadImage350x450(
+    url: Any,
+    round: Boolean = false,
+    @DrawableRes placeHolder: Int = 0
+) {
     if (!round) {
         Glide.with(this)
             .load(url)
@@ -66,10 +75,11 @@ fun ImageView.uploadImage350x450(url: Any, round: Boolean = false, placeHolder: 
     }
 }
 
-fun ImageView.uploadImage750x450(url: String) {
+fun ImageView.uploadImage750x450(url: String, @DrawableRes placeHolder: Int = 0) {
     Glide.with(this)
         .load(url)
         .override(850, 700)
+        .placeholder(placeHolder)
         .centerInside()
         .into(this)
 }

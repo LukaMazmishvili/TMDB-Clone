@@ -40,7 +40,6 @@ fun MovieDetailsModelDto.toMovieDetailsModel(genresList: Map<Int, String>): Movi
         createdBy = emptyList(),
         episodeRunTime = this.episodeRunTime,
         firstAirDate = this.firstAirDate,
-        homepage = this.homepage,
         inProduction = this.inProduction,
         languages = this.languages,
         lastAirDate = this.lastAirDate,
@@ -82,47 +81,47 @@ private fun mapProductionCompanies(list: List<MovieDetailsModelDto.Company>?): L
     } ?: emptyList()
 }
 
-private fun mapProductionCountries(list: List<MovieDetailsModelDto.Country>?): List<MovieDetailsModel.Country> {
+private fun mapProductionCountries(list: List<MovieDetailsModelDto.Country?>?): List<MovieDetailsModel.Country> {
     return list?.map {
         MovieDetailsModel.Country(
-            iso31661 = it.iso31661,
-            name = it.name
+            iso31661 = it?.iso31661,
+            name = it?.name
         )
     } ?: emptyList()
 }
 
-private fun mapSpokenLanguages(list: List<MovieDetailsModelDto.Language>?): List<MovieDetailsModel.Language> {
+private fun mapSpokenLanguages(list: List<MovieDetailsModelDto.Language?>?): List<MovieDetailsModel.Language> {
     return list?.map {
         MovieDetailsModel.Language(
-            englishName = it.englishName,
-            iso6391 = it.iso6391,
-            name = it.name
+            englishName = it?.englishName,
+            iso6391 = it?.iso6391,
+            name = it?.name
         )
     } ?: emptyList()
 }
 
-private fun mapNetworks(list: List<MovieDetailsModelDto.Network>?): List<MovieDetailsModel.Network> {
+private fun mapNetworks(list: List<MovieDetailsModelDto.Network?>?): List<MovieDetailsModel.Network> {
     return list?.map {
         MovieDetailsModel.Network(
-            id = it.id,
-            logoPath = it.logoPath,
-            name = it.name,
-            originCountry = it.originCountry
+            id = it?.id,
+            logoPath = it?.logoPath,
+            name = it?.name,
+            originCountry = it?.originCountry
         )
     } ?: emptyList()
 }
 
-private fun mapSeason(list: List<MovieDetailsModelDto.Season>?): List<MovieDetailsModel.Season> {
+private fun mapSeason(list: List<MovieDetailsModelDto.Season?>?): List<MovieDetailsModel.Season> {
     return list?.map {
         MovieDetailsModel.Season(
-            airDate = it.airDate,
-            episodeCount = it.episodeCount,
-            id = it.id,
-            name = it.name,
-            overview = it.overview,
-            posterPath = it.posterPath,
-            seasonNumber = it.seasonNumber,
-            voteAverage = it.voteAverage
+            airDate = it?.airDate,
+            episodeCount = it?.episodeCount,
+            id = it?.id,
+            name = it?.name,
+            overview = it?.overview,
+            posterPath = it?.posterPath,
+            seasonNumber = it?.seasonNumber,
+            voteAverage = it?.voteAverage
         )
     } ?: emptyList()
 }

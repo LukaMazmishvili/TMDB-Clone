@@ -33,7 +33,7 @@ data class MoviesDTO(
         @SerializedName("poster_path")
         val posterPath: String?,
         @SerializedName("media_type")
-        val mediaType: String,
+        val mediaType: String?,
         @SerializedName("release_date")
         val releaseDate: String?,
         val title: String?,

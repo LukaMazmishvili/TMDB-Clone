@@ -17,6 +17,7 @@ import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentSearchBinding
 import com.example.tmdbclone.extension.insertTextViews
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.movies.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -51,12 +52,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).apply {
-            hideToolBar()
-        }
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.hideToolBar()
+
     }
 
     override fun listeners() {
