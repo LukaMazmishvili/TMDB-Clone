@@ -1,13 +1,8 @@
 package com.example.tmdbclone.presentation.auth
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.os.Build
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,11 +11,8 @@ import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentLoginBinding
 import com.example.tmdbclone.domain.SessionManager
-import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.MainActivityListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -60,13 +52,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun observer() {
         lifecycleScope.launch {
             sessionManager.isFirstTime.collect { isFirstTime ->
+                println("isFirstTime" + isFirstTime)
                 if (isFirstTime) {
+                    sessionManager.saveFirstTimeFlag(false)
                     binding.btnContinue.visibility = View.VISIBLE
                     binding.linearLayout.visibility = View.VISIBLE
                     binding.btnContinue.setOnClickListener {
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            sessionManager.saveFirstTimeFlag(false)
-                        }
                         findNavController().navigate(LoginFragmentDirections.actionGlobalMoviesFragment())
                         findNavController().popBackStack()
                     }
@@ -76,9 +67,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                authViewModel.authState.collect { token ->
-//                    if (token.isNotEmpty())
-//                        findNavController().popBackStack()
+                authViewModel.loginState.collect { token ->
+                    if (token.isNotEmpty())
+                        findNavController().popBackStack()
                 }
             }
         }

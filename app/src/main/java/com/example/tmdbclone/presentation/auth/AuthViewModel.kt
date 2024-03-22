@@ -1,17 +1,15 @@
 package com.example.tmdbclone.presentation.auth
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.common.ValidationResult
+import com.example.tmdbclone.data.remote.model.UserModel
 import com.example.tmdbclone.domain.usecase.UserUseCase
 import com.example.tmdbclone.domain.usecase.ValidationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,8 +19,11 @@ class AuthViewModel @Inject constructor(
     private val validationUseCase: ValidationUseCase
 ) : BaseViewModel() {
 
-    private val _authState = MutableSharedFlow<String>()
-    val authState = _authState.asSharedFlow()
+    private val _loginState = MutableSharedFlow<String>()
+    val loginState = _loginState.asSharedFlow()
+
+    private val _registerState = MutableSharedFlow<UserModel?>()
+    val registerState = _registerState.asSharedFlow()
 
     private val _validationState = MutableSharedFlow<ValidationResult>()
     val validationState = _validationState.asSharedFlow()
@@ -35,7 +36,7 @@ class AuthViewModel @Inject constructor(
                     when (response) {
                         is Resource.Success -> {
                             hideLoading()
-                            _authState.emit(response.data!!)
+                            _loginState.emit(response.data!!)
                         }
 
                         is Resource.Error -> {
@@ -60,7 +61,7 @@ class AuthViewModel @Inject constructor(
                     when (response) {
                         is Resource.Success -> {
                             hideLoading()
-                            _authState.emit(response.data!!)
+                            _registerState.emit(response.data!!)
                         }
 
                         is Resource.Error -> {

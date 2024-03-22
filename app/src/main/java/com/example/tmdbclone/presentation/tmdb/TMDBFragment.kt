@@ -51,30 +51,37 @@ class TMDBFragment : BaseFragment<FragmentTmdbBinding>(FragmentTmdbBinding::infl
     override fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.getCurrentUser().collect { currentUser ->
-                    when (currentUser) {
-                        "Username" -> {
-                            binding.btnLoginorRegister.visibility = View.VISIBLE
-                            binding.btnSignOut.visibility = View.GONE
-                            binding.tvUsername.text = currentUser
-                        }
+                viewModel.isAuthorized.collect { isAuthorized ->
+                    println(isAuthorized)
+                    if (isAuthorized) {
+                        println("inIF" + isAuthorized)
+                        binding.btnLoginorRegister.visibility = View.GONE
+                        binding.btnSignOut.visibility = View.VISIBLE
 
-                        "" -> {
-                            binding.btnLoginorRegister.visibility = View.VISIBLE
-                            binding.btnSignOut.visibility = View.GONE
-                            binding.tvUsername.text = "Username"
-                        }
+                        viewModel.getCurrentUser().collect { currentUser ->
+                            when (currentUser) {
+                                "Username" -> {
+                                    binding.btnLoginorRegister.visibility = View.VISIBLE
+                                    binding.btnSignOut.visibility = View.GONE
+                                    binding.tvUsername.text = currentUser
+                                }
 
-                        else -> {
-                            binding.btnLoginorRegister.visibility = View.GONE
-                            binding.btnSignOut.visibility = View.VISIBLE
-                            binding.tvUsername.text = currentUser
-                        }
+                                "" -> {
+                                    binding.btnLoginorRegister.visibility = View.VISIBLE
+                                    binding.btnSignOut.visibility = View.GONE
+                                    binding.tvUsername.text = "Username"
+                                }
 
+                                else -> {
+                                    binding.btnLoginorRegister.visibility = View.GONE
+                                    binding.btnSignOut.visibility = View.VISIBLE
+                                    binding.tvUsername.text = currentUser
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
-
 }

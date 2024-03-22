@@ -4,6 +4,7 @@ import com.example.tmdbclone.common.ValidationResult
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.FavouriteModelDTO
 import com.example.tmdbclone.data.remote.model.FavouriteResponseDto
+import com.example.tmdbclone.data.remote.model.UserModel
 import com.example.tmdbclone.domain.AuthValidator
 import com.example.tmdbclone.domain.SessionManager
 import com.example.tmdbclone.domain.repository.UserRepository
@@ -28,13 +29,14 @@ class UserUseCase @Inject constructor(
         }
     }
 
-    suspend fun execute(username: String, email: String, password: String): Flow<Resource<String>> =
+    suspend fun execute(
+        username: String,
+        email: String,
+        password: String
+    ): Flow<Resource<UserModel>> =
         flow {
             val authToken = userRepository.register(username, email, password)
             authToken.collect { response ->
-                if (response is Resource.Success) {
-                    sessionManager.saveToken(response.data!!)
-                }
                 emit(response)
             }
         }
@@ -49,6 +51,17 @@ class UserUseCase @Inject constructor(
                     emit(response)
                 }
             }
+        }
+    }
+
+    suspend fun removeFavourite(movieId: Int): Flow<Resource<Unit>> = flow {
+        sessionManager.getToken().collect { token ->
+            token?.let {
+                userRepository.removeFavourite(movieId, "$token").collect { response ->
+                    emit(response)
+                }
+            }
+
         }
     }
 

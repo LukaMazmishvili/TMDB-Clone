@@ -57,6 +57,10 @@ class MovieDetailsViewModel @Inject constructor(
         MutableSharedFlow<Boolean>()
     val isFavouriteState = _isFavouriteState.asSharedFlow()
 
+    private val _removeFavouriteState =
+        MutableSharedFlow<Boolean>()
+    val removeFavouriteState = _removeFavouriteState.asSharedFlow()
+
     init {
         fetchMovieDetails()
         fetchMovieCast()
@@ -72,6 +76,27 @@ class MovieDetailsViewModel @Inject constructor(
                     is Resource.Success -> {
                         hideLoading()
                         _isFavouriteState.emit(true)
+                    }
+
+                    is Resource.Error -> {
+                        hideLoading()
+                        setErrorMsg(response.errorMsg)
+                    }
+
+                    is Resource.Loading -> showLoading()
+
+                }
+            }
+        }
+    }
+
+    fun removeFavourite(movieId: Int) {
+        viewModelScope.launch {
+            userUseCase.removeFavourite(movieId).collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        hideLoading()
+                        _removeFavouriteState.emit(true)
                     }
 
                     is Resource.Error -> {

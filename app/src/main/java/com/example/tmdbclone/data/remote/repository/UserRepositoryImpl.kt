@@ -30,8 +30,9 @@ class UserRepositoryImpl @Inject constructor(
 
             if (response.isSuccessful) {
                 response.body()?.let { token ->
+
                     saveUserToken(token)
-                    getCurrentUser(token)
+                    sessionManager.saveUsername(userName)
                 }
 
                 emit(Resource.Success(response.body()))
@@ -52,9 +53,9 @@ class UserRepositoryImpl @Inject constructor(
         userName: String,
         email: String,
         password: String
-    ): Flow<Resource<String>> = flow {
+    ): Flow<Resource<UserModel>> = flow {
         try {
-            val response = userService.registerUser(UserModel.Register(userName, password, email))
+            val response = userService.registerUser(UserModel.Register(userName, email, password))
 
             if (response.isSuccessful) {
                 emit(Resource.Success(response.body()))
@@ -90,6 +91,21 @@ class UserRepositoryImpl @Inject constructor(
             } catch (e: HttpException) {
                 emit(Resource.Error(e.message().toString(), e.code()))
 
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message.toString()))
+            }
+        }
+
+    override suspend fun removeFavourite(movieId: Int, userToken: String): Flow<Resource<Unit>> =
+        flow {
+            try {
+                val response = userService.removeFavourite(movieId, "Bearer $userToken")
+
+                if (response.isSuccessful) {
+                    emit(Resource.Success(Unit))
+                }
+            } catch (e: HttpException) {
+                emit(Resource.Error(e.message().toString(), e.code()))
             } catch (e: Exception) {
                 emit(Resource.Error(e.message.toString()))
             }

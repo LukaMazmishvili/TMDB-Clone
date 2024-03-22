@@ -45,6 +45,8 @@ class MovieDetailFragment :
     private val viewModel: MovieDetailsViewModel by viewModels()
     private val args: MovieDetailFragmentArgs by navArgs()
 
+    private var isFavorite: Boolean = false
+
     private val genresAdapter by lazy {
         GenresAdapter()
     }
@@ -136,9 +138,13 @@ class MovieDetailFragment :
             trvSimilar.setRecyclerViewAdapter(similarAdapter)
 
             heartIcon.setOnClickListener {
-                viewModel.addToFavourites(args.movieId)
-            }
 
+                if (!isFavorite) {
+                    viewModel.addToFavourites(args.movieId)
+                } else {
+                    viewModel.removeFavourite(args.movieId)
+                }
+            }
         }
     }
 
@@ -260,13 +266,24 @@ class MovieDetailFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.isFavouriteState.collect { isFavourite ->
-                    Log.d("IsFavouriteState", "observer: $isFavourite")
                     if (isFavourite) {
+                        isFavorite = true
                         binding.heartIcon.setImageResource(R.drawable.ic_favourite_full)
                     } else {
                         binding.heartIcon.setImageResource(R.drawable.ic_favourite)
                     }
 
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.removeFavouriteState.collect { removed ->
+                    if (removed) {
+                        isFavorite = false
+                        binding.heartIcon.setImageResource(R.drawable.ic_favourite)
+                    }
                 }
             }
         }
@@ -285,7 +302,6 @@ class MovieDetailFragment :
                 }
             }
         }
-
     }
 
     private fun navigateToDetails(movieId: Int, movieTitle: String, mediaType: String) {

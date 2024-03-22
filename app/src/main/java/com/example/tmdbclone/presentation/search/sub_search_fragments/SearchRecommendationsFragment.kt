@@ -116,6 +116,10 @@ class SearchRecommendationsFragment :
                     getSearchedTvShows(query)
                     getSearchedCelebrities(query)
                 }
+
+                viewPager.visibility = View.VISIBLE
+                rvSimilarSearches.visibility = View.GONE
+                tabLayout.visibility = View.VISIBLE
             }
 
         }

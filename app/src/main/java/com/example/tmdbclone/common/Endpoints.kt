@@ -58,5 +58,6 @@ object Endpoints {
     const val ADD_FAVOURITE = "Favorites/AddFavorite"
     const val CURRENT_USER = "Users/CurrentUser"
     const val IS_FAVOURITE = "Favorites/CheckFavoriteMovie/{movieId}"
+    const val REMOVE_FAVOURITE = "Favorites/{movieId}"
 
 }
