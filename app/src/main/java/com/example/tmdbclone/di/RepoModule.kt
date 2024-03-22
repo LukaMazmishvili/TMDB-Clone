@@ -12,6 +12,7 @@ import com.example.tmdbclone.data.remote.service.UserService
 import com.example.tmdbclone.data.remote.service.CelebritiesService
 import com.example.tmdbclone.data.remote.service.CelebrityDetailsService
 import com.example.tmdbclone.data.remote.service.GenresService
+import com.example.tmdbclone.data.remote.service.IsFavouriteService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.data.remote.service.MoviesService
 import com.example.tmdbclone.data.remote.service.SearchService
@@ -59,9 +60,15 @@ object RepoModule {
     fun provideMovieDetailsRepo(
         apiService: MovieDetailService,
         tvShowDetailsService: TvShowDetailsService,
+        isFavouriteService: IsFavouriteService,
         genresApi: GenresService
     ): MovieDetailRepository {
-        return MovieDetailRepositoryImpl(apiService, tvShowDetailsService, genresApi)
+        return MovieDetailRepositoryImpl(
+            apiService,
+            tvShowDetailsService,
+            isFavouriteService,
+            genresApi
+        )
     }
 
     @Provides

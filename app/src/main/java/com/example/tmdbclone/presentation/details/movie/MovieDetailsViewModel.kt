@@ -14,7 +14,9 @@ import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.domain.usecase.GetMovieDetailsUseCase
 import com.example.tmdbclone.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -26,8 +28,7 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val userUseCase: UserUseCase
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
 
     val movieIdState = MutableStateFlow<Int>(-1)
     val mediaTypeState = MutableStateFlow<MediaTypes>(MediaTypes.None)
@@ -52,6 +53,10 @@ class MovieDetailsViewModel @Inject constructor(
         MutableStateFlow<MovieModel?>(null)
     val moviesSimilarState = _moviesSimilarState.asStateFlow()
 
+    private val _isFavouriteState =
+        MutableSharedFlow<Boolean>()
+    val isFavouriteState = _isFavouriteState.asSharedFlow()
+
     init {
         fetchMovieDetails()
         fetchMovieCast()
@@ -62,7 +67,43 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun addToFavourites(movieId: Int) {
         viewModelScope.launch {
-            userUseCase.addFavourite(movieId)
+            userUseCase.addFavourite(movieId).collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        hideLoading()
+                        _isFavouriteState.emit(true)
+                    }
+
+                    is Resource.Error -> {
+                        hideLoading()
+                        setErrorMsg(response.errorMsg)
+                    }
+
+                    is Resource.Loading -> showLoading()
+
+                }
+            }
+        }
+    }
+
+    fun isFavourite(movieId: Int) {
+        viewModelScope.launch {
+            userUseCase.isFavourite(movieId).collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        hideLoading()
+                        _isFavouriteState.emit(response.data!!.isAdded)
+                    }
+
+                    is Resource.Error -> {
+                        hideLoading()
+                        setErrorMsg(response.errorMsg)
+                    }
+
+                    is Resource.Loading -> showLoading()
+
+                }
+            }
         }
     }
 

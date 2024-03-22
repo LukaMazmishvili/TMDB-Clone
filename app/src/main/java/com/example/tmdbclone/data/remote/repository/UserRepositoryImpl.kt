@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.tmdbclone.common.Constants.AUTH_TOKEN
 import com.example.tmdbclone.common.Resource
+import com.example.tmdbclone.data.remote.model.FavouriteModelDTO
 import com.example.tmdbclone.data.remote.model.UserModel
 import com.example.tmdbclone.data.remote.service.UserService
 import com.example.tmdbclone.domain.SessionManager
@@ -70,11 +71,13 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addToFavourite(movieId: Int, userToken: String): Flow<Resource<Int>> =
+    override suspend fun addToFavourite(
+        movieId: Int,
+        userToken: String
+    ): Flow<Resource<FavouriteModelDTO>> =
         flow {
             try {
-
-                val response = userService.addToFavourites(movieId, userToken)
+                val response = userService.addToFavourites(FavouriteModelDTO(movieId), userToken)
 
                 if (response.isSuccessful) {
                     val body = response.body()

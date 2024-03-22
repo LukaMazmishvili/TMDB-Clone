@@ -8,10 +8,12 @@ import com.example.tmdbclone.data.remote.mapper.toCelebritiesModel
 import com.example.tmdbclone.data.remote.mapper.toMovieDetailsModel
 import com.example.tmdbclone.data.remote.mapper.toMovieModel
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
+import com.example.tmdbclone.data.remote.model.FavouriteResponseDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
 import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
 import com.example.tmdbclone.data.remote.service.GenresService
+import com.example.tmdbclone.data.remote.service.IsFavouriteService
 import com.example.tmdbclone.data.remote.service.MovieDetailService
 import com.example.tmdbclone.data.remote.service.TvShowDetailsService
 import com.example.tmdbclone.domain.model.CelebritiesModel
@@ -20,14 +22,37 @@ import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.domain.repository.MovieDetailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class MovieDetailRepositoryImpl @Inject constructor(
     private val movieDetailService: MovieDetailService,
     private val tvShowDetailsService: TvShowDetailsService,
+    private val isFavouriteService: IsFavouriteService,
     private val genresService: GenresService
 ) :
     MovieDetailRepository {
+
+    override suspend fun checkIfFavourite(movieId: Int, token: String): Flow<Resource<FavouriteResponseDto>> =
+        flow {
+            try {
+
+                val response = isFavouriteService.checkFavourite(movieId, bearer = token)
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    emit(Resource.Success(body))
+                } else {
+                    emit(Resource.Error(response.errorBody()?.string() ?: "Something went wrong !"))
+                }
+            } catch (e: HttpException) {
+                Log.d("CheckHttpException", "fetchFlow: ${e.message()}")
+                emit(Resource.Error(e.message(), e.code()))
+            } catch (e: Exception) {
+                Log.d("CheckException", "fetchFlow: ${e.message.toString()}")
+                emit(Resource.Error(e.message.toString()))
+            }
+        }
 
     override suspend fun fetchMovieGenres(): Map<Int, String> {
         try {

@@ -47,8 +47,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
             }
 
-
-
             btnSignUp.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment())
             }
@@ -79,8 +77,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 authViewModel.authState.collect { token ->
-                    if (token.isNotEmpty())
-                        findNavController().popBackStack()
+//                    if (token.isNotEmpty())
+//                        findNavController().popBackStack()
                 }
             }
         }

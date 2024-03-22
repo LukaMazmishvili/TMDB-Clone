@@ -4,6 +4,7 @@ import com.example.tmdbclone.common.Endpoints.ADD_FAVOURITE
 import com.example.tmdbclone.common.Endpoints.CURRENT_USER
 import com.example.tmdbclone.common.Endpoints.LOGIN
 import com.example.tmdbclone.common.Endpoints.REGISTER
+import com.example.tmdbclone.data.remote.model.FavouriteModelDTO
 import com.example.tmdbclone.data.remote.model.UserModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -28,10 +29,10 @@ interface UserService {
 
     @POST(ADD_FAVOURITE)
     suspend fun addToFavourites(
-        @Body movieId: Int,
+        @Body movieId: FavouriteModelDTO,
         @Header("Authorization") userToken: String,
         @Header("accept") format: String = "application/json"
-    ): Response<Int>
+    ): Response<FavouriteModelDTO>
 
     @GET(CURRENT_USER)
     suspend fun getCurrentUser(

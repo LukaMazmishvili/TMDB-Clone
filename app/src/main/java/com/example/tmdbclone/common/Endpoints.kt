@@ -55,7 +55,8 @@ object Endpoints {
     // User Endpoints
     const val LOGIN = "Users/Login"
     const val REGISTER = "Users/Register"
-    const val ADD_FAVOURITE = "Favourites/AddFavourite"
+    const val ADD_FAVOURITE = "Favorites/AddFavorite"
     const val CURRENT_USER = "Users/CurrentUser"
+    const val IS_FAVOURITE = "Favorites/CheckFavoriteMovie/{movieId}"
 
 }

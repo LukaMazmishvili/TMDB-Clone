@@ -136,16 +136,7 @@ class MovieDetailFragment :
             trvSimilar.setRecyclerViewAdapter(similarAdapter)
 
             heartIcon.setOnClickListener {
-                val isFavorite = heartIcon.drawable.constantState?.let {
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_favourite
-                    )?.constantState == it
-                } ?: false
-
-                if (!isFavorite) {
-                    viewModel.addToFavourites(args.movieId)
-                }
+                viewModel.addToFavourites(args.movieId)
             }
 
         }
@@ -164,8 +155,8 @@ class MovieDetailFragment :
     override fun observer() {
 
         viewModel.movieIdState.value = args.movieId
-        println("fragment " + args.mediaType)
         viewModel.mediaTypeState.value = args.mediaType.toMediaTypes()
+        viewModel.isFavourite(args.movieId)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -262,6 +253,20 @@ class MovieDetailFragment :
                     if (list != null) {
                         similarAdapter.submitList(list.results)
                     }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.isFavouriteState.collect { isFavourite ->
+                    Log.d("IsFavouriteState", "observer: $isFavourite")
+                    if (isFavourite) {
+                        binding.heartIcon.setImageResource(R.drawable.ic_favourite_full)
+                    } else {
+                        binding.heartIcon.setImageResource(R.drawable.ic_favourite)
+                    }
+
                 }
             }
         }

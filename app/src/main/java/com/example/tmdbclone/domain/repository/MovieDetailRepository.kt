@@ -3,6 +3,7 @@ package com.example.tmdbclone.domain.repository
 import com.example.tmdbclone.common.MediaTypes
 import com.example.tmdbclone.common.Resource
 import com.example.tmdbclone.data.remote.model.CelebritiesModelDto
+import com.example.tmdbclone.data.remote.model.FavouriteResponseDto
 import com.example.tmdbclone.data.remote.model.MovieDetailsModelDto
 import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.data.remote.model.VideoModelDto
@@ -12,6 +13,8 @@ import com.example.tmdbclone.domain.model.MovieModel
 import kotlinx.coroutines.flow.Flow
 
 interface MovieDetailRepository {
+
+    suspend fun checkIfFavourite(movieId: Int, token: String): Flow<Resource<FavouriteResponseDto>>
 
     suspend fun fetchMovieGenres(): Map<Int, String>
 
