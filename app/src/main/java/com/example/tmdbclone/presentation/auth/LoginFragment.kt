@@ -34,12 +34,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             btnSignIn.setOnClickListener {
                 val username: String = tietUserName.text.toString().trim()
                 val password: String = tietPassword.text.toString().trim()
-
+                lifecycleScope.launch {
+                    sessionManager.saveFirstTimeFlag(false)
+                }
                 loginUser(username, password)
 
             }
 
             btnSignUp.setOnClickListener {
+                lifecycleScope.launch {
+                    sessionManager.saveFirstTimeFlag(false)
+                }
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment())
             }
         }
@@ -52,12 +57,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun observer() {
         lifecycleScope.launch {
             sessionManager.isFirstTime.collect { isFirstTime ->
-                println("isFirstTime" + isFirstTime)
                 if (isFirstTime) {
-                    sessionManager.saveFirstTimeFlag(false)
                     binding.btnContinue.visibility = View.VISIBLE
                     binding.linearLayout.visibility = View.VISIBLE
                     binding.btnContinue.setOnClickListener {
+                        lifecycleScope.launch {
+                            sessionManager.saveFirstTimeFlag(false)
+                        }
                         findNavController().navigate(LoginFragmentDirections.actionGlobalMoviesFragment())
                         findNavController().popBackStack()
                     }
@@ -68,8 +74,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 authViewModel.loginState.collect { token ->
-                    if (token.isNotEmpty())
-                        findNavController().popBackStack()
+//                    if (token.isNotEmpty())
+//                        findNavController().popBackStack()
                 }
             }
         }

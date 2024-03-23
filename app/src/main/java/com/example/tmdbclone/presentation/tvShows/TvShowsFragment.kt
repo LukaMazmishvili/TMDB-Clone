@@ -1,31 +1,20 @@
 package com.example.tmdbclone.presentation.tvShows
 
-import android.os.Build
-import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
-import android.util.SparseArray
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentTvShowsBinding
-import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.adapters.GridAdapter
-import com.example.tmdbclone.presentation.adapters.PopularAdapter
+import com.example.tmdbclone.presentation.adapters.MovieAdapter
+import com.example.tmdbclone.presentation.movies.MoviesFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -34,11 +23,11 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
     private val viewModel: TvShowsViewModel by activityViewModels()
 
     private val adapterAiringToday by lazy {
-        PopularAdapter(1)
+        MovieAdapter(1)
     }
 
     private val adapterTrending by lazy {
-        PopularAdapter(0)
+        MovieAdapter(0)
     }
 
     private val adapterTopRated by lazy {
@@ -46,7 +35,7 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
     }
 
     private val adapterPopular by lazy {
-        PopularAdapter(0)
+        MovieAdapter(0)
     }
 
     override fun started() {
@@ -54,14 +43,21 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
     }
 
     override fun listeners() {
+
+        adapterAiringToday.onItemClickedListener = {
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName!!)
+        }
+
+        adapterTrending.onItemClickedListener = {
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName!!)
+        }
+
+        adapterTopRated.onItemClickedListener = {
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName!!)
+        }
+
         adapterPopular.onItemClickedListener = {
-            findNavController().navigate(
-                TvShowsFragmentDirections.actionGlobalMovieDetailFragment(
-                    it.title ?: it.originalTitle ?: it.originalName!!,
-                    "Tv Show",
-                    it.id!!
-                )
-            )
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName!!)
         }
 
     }
@@ -163,7 +159,7 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
                 viewModel.isLoading.collect { isLoading ->
                     if (!isLoading) {
                         delay(3000)
-                        binding.shimmer.visibility = View.INVISIBLE
+                        binding.shimmer.visibility = View.GONE
                         binding.dataLayout.visibility = View.VISIBLE
                     } else {
                         binding.shimmer.visibility = View.VISIBLE
@@ -181,5 +177,15 @@ class TvShowsFragment : BaseFragment<FragmentTvShowsBinding>(FragmentTvShowsBind
         val mainActivityListener = activity as MainActivityListener
         mainActivityListener.setToolBarTitle("Tv Shows")
         mainActivityListener.showToolBar()
+    }
+
+    private fun navigateToDetails(movieId: Int, movieTitle: String) {
+        findNavController().navigate(
+            MoviesFragmentDirections.actionGlobalMovieDetailFragment(
+                movieTitle,
+                "Tv Show",
+                movieId
+            )
+        )
     }
 }

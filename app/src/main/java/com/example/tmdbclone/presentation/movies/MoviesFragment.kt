@@ -1,30 +1,22 @@
 package com.example.tmdbclone.presentation.movies
 
-import android.os.Build
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
-import com.example.tmdbclone.base.BaseViewModel
 import com.example.tmdbclone.databinding.FragmentMoviesBinding
 import com.example.tmdbclone.network.ConnectivityObserver
-import com.example.tmdbclone.network.NetworkConnectivityObserver
-import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.adapters.GridAdapter
-import com.example.tmdbclone.presentation.adapters.PopularAdapter
+import com.example.tmdbclone.presentation.adapters.MovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 @AndroidEntryPoint
 class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding::inflate) {
@@ -35,15 +27,15 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
     lateinit var networkConnectivityObserver: ConnectivityObserver
 
     private val adapterPopular by lazy {
-        PopularAdapter(0)
+        MovieAdapter(0)
     }
 
     private val adapterPIT by lazy {
-        PopularAdapter(1)
+        MovieAdapter(1)
     }
 
     private val adapterTrending by lazy {
-        PopularAdapter(0)
+        MovieAdapter(0)
     }
 
     private val adapterTopRated by lazy {
@@ -51,7 +43,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
     }
 
     private val adapterUpcoming by lazy {
-        PopularAdapter(0)
+        MovieAdapter(0)
     }
 
     override fun started() {
@@ -61,19 +53,19 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     override fun listeners() {
         adapterPopular.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName ?: "")
         }
         adapterPIT.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName ?: "")
         }
         adapterTrending.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName ?: "")
         }
         adapterTopRated.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName ?: "")
         }
         adapterUpcoming.onItemClickedListener = {
-            navigateToDetails(it.id!!, it.title ?: it.originalTitle!!)
+            navigateToDetails(it.id!!, it.title ?: it.originalTitle ?: it.originalName ?: "")
         }
 
         with(binding) {

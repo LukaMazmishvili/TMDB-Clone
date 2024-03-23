@@ -2,15 +2,8 @@ package com.example.tmdbclone.presentation.details.movie
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,18 +13,14 @@ import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
-import com.example.tmdbclone.common.MediaTypes
 import com.example.tmdbclone.databinding.FragmentMovieDetailBinding
 import com.example.tmdbclone.extension.toMediaTypes
-import com.example.tmdbclone.extension.uploadImage
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
-import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.MainActivityListener
-import com.example.tmdbclone.presentation.adapters.CelebritiesAdapter
 import com.example.tmdbclone.presentation.adapters.CelebritiesGridAdapter
 import com.example.tmdbclone.presentation.adapters.GenresAdapter
-import com.example.tmdbclone.presentation.adapters.PopularAdapter
+import com.example.tmdbclone.presentation.adapters.MovieAdapter
 import com.example.tmdbclone.presentation.adapters.VideoAdapter
 import com.example.tmdbclone.presentation.movies.MoviesFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,11 +49,11 @@ class MovieDetailFragment :
     }
 
     private val recommendedAdapter by lazy {
-        PopularAdapter(0)
+        MovieAdapter(0)
     }
 
     private val similarAdapter by lazy {
-        PopularAdapter(0)
+        MovieAdapter(0)
     }
 
     override fun started() {

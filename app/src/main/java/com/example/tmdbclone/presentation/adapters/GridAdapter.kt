@@ -19,7 +19,7 @@ class GridAdapter :
             ivImage.uploadImage80x80(IMAGE_BASE_URL + item.posterPath)
             Log.d("PosterPathInAdapter", "onBindViewHolder: ${IMAGE_BASE_URL + item.posterPath}")
             tvTitle.text = item.title ?: item.originalName
-            tvGenres.text = item.genreIds.toString()
+            tvGenres.text = item.genreIds.toString().replace("[", "").replace("]", "")
             root.setOnClickListener {
                 onItemClickedListener?.invoke(item)
             }

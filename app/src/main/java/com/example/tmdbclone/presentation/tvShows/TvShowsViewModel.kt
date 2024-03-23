@@ -35,6 +35,7 @@ class TvShowsViewModel @Inject constructor(private val getTvShowsUseCase: GetTvS
 
     init {
         fetchAiringTodayTvShows()
+        fetchTrendingTvShows()
         fetchTopRatedTvShows()
         fetchPopularTvShows()
     }

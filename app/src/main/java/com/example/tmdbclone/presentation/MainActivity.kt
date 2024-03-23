@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(), MainActivityListener {
             sessionManager.authorize()
         }
 
-        lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch {
             sessionManager.isFirstTime.collect { isFirstTime ->
                 if (isFirstTime) {
                     navController.navigate(R.id.action_global_loginFragment)
@@ -161,8 +161,10 @@ class MainActivity : AppCompatActivity(), MainActivityListener {
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.moviesFragment -> {
-                    navController.navigate(R.id.moviesFragment)
-                    showViews()
+                    if (navController.currentDestination?.id != R.id.loginFragment) {
+                        navController.navigate(R.id.moviesFragment)
+                        showViews()
+                    }
                     true
                 }
 

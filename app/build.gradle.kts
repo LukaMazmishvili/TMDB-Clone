@@ -26,7 +26,7 @@ android {
     }
 
 //    signingConfigs {
-//        release {
+//        create("release") {
 //            storeFile =
 //                file("\"C:\\Users\\l.mazmishvili\\Documents\\KeyStores\\TMDB_key_store.jks\"")
 //            storePassword = "asdlasd123"
@@ -37,7 +37,7 @@ android {
 
     buildTypes {
         release {
-//            signingConfig = signingConfigs.release
+//            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

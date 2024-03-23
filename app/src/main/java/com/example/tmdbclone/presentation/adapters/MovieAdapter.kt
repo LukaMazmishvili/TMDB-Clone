@@ -4,13 +4,12 @@ import android.util.Log
 import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseAdapter
 import com.example.tmdbclone.common.Endpoints.IMAGE_BASE_URL
-import com.example.tmdbclone.data.remote.model.MoviesDTO
 import com.example.tmdbclone.databinding.ItemMovieBinding
 import com.example.tmdbclone.domain.model.MovieModel
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.extension.uploadImage750x450
 
-class PopularAdapter(private val type: Int) :
+class MovieAdapter(private val type: Int) :
     BaseAdapter<MovieModel.Movie, ItemMovieBinding>(ItemMovieBinding::inflate) {
 
 
