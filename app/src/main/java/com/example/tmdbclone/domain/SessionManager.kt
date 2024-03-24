@@ -15,65 +15,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class SessionManager @Inject constructor(private val context: Context) {
+interface SessionManager {
 
-    private val authTokenKey = stringPreferencesKey(AUTH_TOKEN)
-    private val usernameKey = stringPreferencesKey(CURRENT_USERNAME)
-    private val firstTimeKey = booleanPreferencesKey(IS_FIRST_TIME)
+    val isAuthorized: Flow<Boolean>
+    val currentUser: Flow<String>
+    val isFirstTime: Flow<Boolean>
 
-    private val _isAuthorized = MutableStateFlow(false)
-    val isAuthorized = _isAuthorized.asStateFlow()
-
-    private val _currentUser = MutableStateFlow("")
-    val currentUser = _currentUser.asStateFlow()
-
-    val isFirstTime: Flow<Boolean> = context.dataStore.data.map { preferences ->
-        preferences[firstTimeKey] ?: true
-    }
-
-    suspend fun authorize() {
-        getToken().collect { token ->
-            token?.let {
-                _isAuthorized.value = token.isNotEmpty()
-
-                getCurrentUserName().collect { username ->
-                    _currentUser.value = username ?: "Username"
-                }
-            }
-        }
-    }
-
-    suspend fun saveFirstTimeFlag(isFirstTime: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[firstTimeKey] = isFirstTime
-        }
-    }
-
-    suspend fun saveToken(authToken: String) {
-        context.dataStore.edit {
-            it[authTokenKey] = authToken
-        }
-    }
-
-    fun getToken(): Flow<String?> = context.dataStore.data.map {
-        it[authTokenKey]
-    }
-
-    suspend fun logout() {
-        context.dataStore.edit {
-            it[authTokenKey] = ""
-            it[usernameKey] = ""
-        }
-    }
-
-    suspend fun saveUsername(username: String) {
-        context.dataStore.edit {
-            it[usernameKey] = username
-        }
-    }
-
-    private fun getCurrentUserName(): Flow<String?> = context.dataStore.data.map {
-        it[usernameKey]
-    }
+    suspend fun authorize()
+    suspend fun saveFirstTimeFlag(isFirstTime: Boolean)
+    suspend fun saveToken(authToken: String)
+    fun getToken(): Flow<String?>
+    suspend fun logout()
+    suspend fun saveUsername(username: String)
 }
 

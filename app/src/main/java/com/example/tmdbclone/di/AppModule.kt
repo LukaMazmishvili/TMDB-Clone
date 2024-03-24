@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.example.tmdbclone.common.Endpoints.BASE_URL
 import com.example.tmdbclone.common.Endpoints.OUR_API_BASE_URL
+import com.example.tmdbclone.data.local.SessionManagerImpl
 import com.example.tmdbclone.data.remote.paging.PagingSource
 import com.example.tmdbclone.data.remote.paging.PagingSourceFactory
 import com.example.tmdbclone.data.remote.paging.PagingSourceFactoryImpl
@@ -69,7 +70,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
-        return SessionManager(context)
+        return SessionManagerImpl(context)
     }
 
     @Provides
