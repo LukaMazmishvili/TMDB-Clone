@@ -127,7 +127,6 @@ class MovieDetailFragment :
             trvSimilar.setRecyclerViewAdapter(similarAdapter)
 
             heartIcon.setOnClickListener {
-
                 if (!isFavorite) {
                     viewModel.addToFavourites(args.movieId)
                 } else {
@@ -174,7 +173,10 @@ class MovieDetailFragment :
                                     )
                                 }
                                 it.backdropPath?.let { path ->
-                                    ivMovieCover.uploadImage750x450(IMAGE_BASE_URL + path)
+                                    ivMovieCover.uploadImage750x450(
+                                        IMAGE_BASE_URL + path,
+                                        placeHolder = R.drawable.ic_movies
+                                    )
                                 }
                                 tvMovieDescription.text = it.overview
                                 tvMovieTitle.text = it.title ?: it.originalName
@@ -226,7 +228,11 @@ class MovieDetailFragment :
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.moviesVideosState.collect { list ->
                     list?.let {
-                        videosAdapter.submitList(list.results!!)
+                        if (!list.results.isNullOrEmpty()) {
+                            videosAdapter.submitList(list.results)
+                        } else {
+                            binding.trvVideos.visibility = View.GONE
+                        }
                     }
                 }
             }
@@ -235,8 +241,12 @@ class MovieDetailFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.moviesRecommendedState.collect { list ->
-                    if (list != null) {
-                        recommendedAdapter.submitList(list.results)
+                    list?.let {
+                        if (!list.results.isNullOrEmpty()) {
+                            recommendedAdapter.submitList(list.results)
+                        } else {
+                            binding.trvRecommended.visibility = View.GONE
+                        }
                     }
                 }
             }
@@ -245,8 +255,12 @@ class MovieDetailFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.moviesSimilarState.collect { list ->
-                    if (list != null) {
-                        similarAdapter.submitList(list.results)
+                    list?.let {
+                        if (!list.results.isNullOrEmpty()) {
+                            similarAdapter.submitList(list.results)
+                        } else {
+                            binding.trvSimilar.visibility = View.GONE
+                        }
                     }
                 }
             }

@@ -1,7 +1,5 @@
 package com.example.tmdbclone.presentation.details.seeAll
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,10 +7,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tmdbclone.base.BaseFragment
-import com.example.tmdbclone.common.Headings
 import com.example.tmdbclone.databinding.FragmentSeeAllBinding
 import com.example.tmdbclone.extension.toHeading
-import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import com.example.tmdbclone.presentation.details.seeAll.adapter.SeeAllAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,9 +25,9 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(FragmentSeeAllBinding
         SeeAllAdapter()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun started() {
-        (activity as MainActivity).hideToolBar()
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.hideToolBar()
 
         if (args.title.startsWith("Tv-")) {
             binding.tvToolBarTitle.text = args.title.drop(3)

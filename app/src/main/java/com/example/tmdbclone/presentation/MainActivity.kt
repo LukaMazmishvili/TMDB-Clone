@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.MainThread
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -15,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.example.tmdbclone.R
 import com.example.tmdbclone.databinding.ActivityMainBinding
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity(), MainActivityListener {
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var navController: NavController
+    private lateinit var navGraph: NavGraph
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -60,14 +63,20 @@ class MainActivity : AppCompatActivity(), MainActivityListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         window.statusBarColor = getColor(R.color.app_darker)
         setSupportActionBar(binding.toolBar)
-        setContentView(binding.root)
+
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
         navController = navHostFragment.navController
+        navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+
+        initSession()
+
+        navController.graph = navGraph
+
+        setContentView(binding.root)
 
         networkObserver()
-        initSession()
         setupBottomNavBar()
         initViewModels()
 
@@ -131,15 +140,20 @@ class MainActivity : AppCompatActivity(), MainActivityListener {
         ))
     }
 
+    @MainThread
     private fun initSession() {
         lifecycleScope.launch {
             sessionManager.authorize()
         }
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             sessionManager.isFirstTime.collect { isFirstTime ->
                 if (isFirstTime) {
-                    navController.navigate(R.id.action_global_loginFragment)
+                    navGraph.setStartDestination(R.id.loginFragment)
+                    navController.navigate(R.id.loginFragment)
+                } else {
+                    navGraph.setStartDestination(R.id.moviesFragment)
+                    navController.navigate(R.id.moviesFragment)
                 }
             }
         }
@@ -164,8 +178,10 @@ class MainActivity : AppCompatActivity(), MainActivityListener {
                     if (navController.currentDestination?.id != R.id.loginFragment) {
                         navController.navigate(R.id.moviesFragment)
                         showViews()
+                        true
+                    } else {
+                        false
                     }
-                    true
                 }
 
                 R.id.tvShowsFragment -> {

@@ -5,8 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/moviesFragment">
 
-    <!--    <include app:graph="@navigation/nav_movies_fragment"/>-->
-
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.tmdbclone.presentation.auth.LoginFragment"
@@ -96,9 +94,6 @@
         android:id="@+id/action_global_movieDetailFragment"
         app:destination="@id/movieDetailFragment"
         app:enterAnim="@anim/scale_up" />
-    <action
-        android:id="@+id/action_global_nav_movies_fragment"
-        app:destination="@id/nav_movies_fragment" />
 
     <fragment
         android:id="@+id/seeAllFragment"
@@ -153,5 +148,8 @@
     <action
         android:id="@+id/action_global_noNetworkFragment"
         app:destination="@id/noNetworkFragment" />
+    <action
+        android:id="@+id/action_global_seeAllFragment"
+        app:destination="@id/seeAllFragment" />
 
 </navigation>

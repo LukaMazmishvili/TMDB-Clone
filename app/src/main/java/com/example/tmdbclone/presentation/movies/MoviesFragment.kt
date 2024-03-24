@@ -71,7 +71,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         with(binding) {
             trvPopularMovies.setSeeAllButtonClickListener {
                 findNavController().navigate(
-                    MoviesFragmentDirections.actionMoviesFragmentToSeeAllFragment(
+                    MoviesFragmentDirections.actionGlobalSeeAllFragment(
                         "Popular"
                     )
                 )
