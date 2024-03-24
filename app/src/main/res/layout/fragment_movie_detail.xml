@@ -7,11 +7,6 @@
     android:background="@color/app_background"
     tools:context=".presentation.details.movie.MovieDetailFragment">
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="vertical">-->
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -214,8 +209,6 @@
                 android:layout_margin="10dp"
                 app:layout_constraintTop_toBottomOf="@id/trvCast" />
 
-            <!--    todo in information-->
-
             <com.example.tmdbclone.presentation.ui.customViews.TitledRecyclerView
                 android:id="@+id/trvRecommended"
                 android:layout_width="match_parent"
@@ -233,7 +226,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

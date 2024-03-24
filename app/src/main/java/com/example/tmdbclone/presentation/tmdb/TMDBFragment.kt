@@ -1,18 +1,16 @@
 package com.example.tmdbclone.presentation.tmdb
 
-import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.tmdbclone.R
 import com.example.tmdbclone.base.BaseFragment
 import com.example.tmdbclone.databinding.FragmentTmdbBinding
-import com.example.tmdbclone.presentation.MainActivity
 import com.example.tmdbclone.presentation.MainActivityListener
-import com.example.tmdbclone.presentation.ui.customViews.notAuthorizedDialog
+import com.example.tmdbclone.presentation.ui.customViews.createDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -28,23 +26,37 @@ class TMDBFragment : BaseFragment<FragmentTmdbBinding>(FragmentTmdbBinding::infl
     }
 
     override fun listeners() {
-        binding.btnLoginorRegister.setOnClickListener {
-            findNavController().navigate(TMDBFragmentDirections.actionTMDBFragmentToLoginFragment())
-        }
+        with(binding) {
+            btnLoginorRegister.setOnClickListener {
+                findNavController().navigate(TMDBFragmentDirections.actionTMDBFragmentToLoginFragment())
+            }
 
-        binding.ivIcFav.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.isAuthorized.collect { isAuthorized ->
-                    if (!isAuthorized) {
-                        notAuthorizedDialog(requireContext())
+            layoutFav.setOnClickListener {
+                lifecycleScope.launch {
+                    viewModel.isAuthorized.collect { isAuthorized ->
+                        if (!isAuthorized) {
+                            createDialog(requireContext(), R.string.not_authorized_message)
+                        }
                     }
                 }
             }
-        }
 
-        binding.btnSignOut.setOnClickListener {
-            viewModel.logOut()
-            observer()
+            layoutRatings.setOnClickListener {
+                createDialog(requireContext(), R.string.under_development)
+            }
+
+            layoutWatchList.setOnClickListener {
+                createDialog(requireContext(), R.string.under_development)
+            }
+
+            layoutAppearance.setOnClickListener {
+                createDialog(requireContext(), R.string.under_development)
+            }
+
+            btnSignOut.setOnClickListener {
+                viewModel.logOut()
+                observer()
+            }
         }
     }
 
@@ -52,9 +64,7 @@ class TMDBFragment : BaseFragment<FragmentTmdbBinding>(FragmentTmdbBinding::infl
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.isAuthorized.collect { isAuthorized ->
-                    println(isAuthorized)
                     if (isAuthorized) {
-                        println("inIF" + isAuthorized)
                         binding.btnLoginorRegister.visibility = View.GONE
                         binding.btnSignOut.visibility = View.VISIBLE
 

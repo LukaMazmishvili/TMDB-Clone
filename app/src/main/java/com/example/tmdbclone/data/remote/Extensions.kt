@@ -14,21 +14,17 @@ inline fun <reified T, reified R> fetchFlow(
     try {
         emit(Resource.Loading(true))
         val response = block()
-        Log.d("CheckIfIsSuccessful", "fetchFlow: ${response.isSuccessful}")
         if (response.isSuccessful) {
             response.body()?.let { data ->
                 val mappedData = mapper(data)
                 emit(Resource.Success(mappedData))
             }
         } else {
-            Log.d("CheckIfIsNotSuccessful", "fetchFlow: ${response.errorBody()}")
             emit(Resource.Error("Something Went Wrong !"))
         }
     } catch (e: HttpException) {
-        Log.d("CheckHttpException", "fetchFlow: ${e.message()}")
-        emit(Resource.Error(e.message(), e.code()))
+        emit(Resource.Error(e.message.toString(), e.code()))
     } catch (e: Exception) {
-        Log.d("CheckException", "fetchFlow: ${e.message.toString()}")
         emit(Resource.Error(e.message.toString()))
     }
 }

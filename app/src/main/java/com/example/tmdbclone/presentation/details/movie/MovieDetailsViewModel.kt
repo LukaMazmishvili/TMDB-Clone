@@ -33,6 +33,8 @@ class MovieDetailsViewModel @Inject constructor(
     val movieIdState = MutableStateFlow<Int>(-1)
     val mediaTypeState = MutableStateFlow<MediaTypes>(MediaTypes.None)
 
+    val isAuthorized = userUseCase.isAuthorized()
+
     private val _moviesDetailsState =
         MutableStateFlow<MovieDetailsModel?>(null)
     val moviesDetailsState = _moviesDetailsState.asStateFlow()
@@ -138,8 +140,6 @@ class MovieDetailsViewModel @Inject constructor(
             movieIdState.combine(mediaTypeState) { movieId, mediaType ->
                 Pair(movieId, mediaType)
             }.collect { (movieId, mediaType) ->
-                println(movieId)
-                println(mediaType)
                 getMovieDetailsUseCase.getMovieDetails(movieId, mediaType).collect { response ->
                     when (response) {
                         is Resource.Success -> {

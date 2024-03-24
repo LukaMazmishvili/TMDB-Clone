@@ -23,6 +23,7 @@ import com.example.tmdbclone.presentation.adapters.GenresAdapter
 import com.example.tmdbclone.presentation.adapters.MovieAdapter
 import com.example.tmdbclone.presentation.adapters.VideoAdapter
 import com.example.tmdbclone.presentation.movies.MoviesFragmentDirections
+import com.example.tmdbclone.presentation.ui.customViews.createDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -81,6 +82,7 @@ class MovieDetailFragment :
                     it.mediaType!!,
                 )
             }
+
             similarAdapter.onItemClickedListener = {
                 navigateToDetails(
                     it.id!!,
@@ -90,16 +92,12 @@ class MovieDetailFragment :
             }
 
             trvCast.setSeeAllButtonClickListener {
-                // todo
             }
             trvVideos.setSeeAllButtonClickListener {
-                // todo
             }
             trvRecommended.setSeeAllButtonClickListener {
-                // todo
             }
         }
-
     }
 
     private fun setupViews() {
@@ -127,11 +125,27 @@ class MovieDetailFragment :
             trvSimilar.setRecyclerViewAdapter(similarAdapter)
 
             heartIcon.setOnClickListener {
-                if (!isFavorite) {
-                    viewModel.addToFavourites(args.movieId)
-                } else {
-                    viewModel.removeFavourite(args.movieId)
+                lifecycleScope.launch {
+                    viewModel.isAuthorized.collect { isAuthorized ->
+                        if (!isAuthorized) {
+                            createDialog(requireContext(), R.string.not_authorized_message)
+                        } else {
+                            if (!isFavorite) {
+                                viewModel.addToFavourites(args.movieId)
+                            } else {
+                                viewModel.removeFavourite(args.movieId)
+                            }
+                        }
+                    }
                 }
+            }
+
+            starIcon.setOnClickListener {
+                createDialog(requireContext(), R.string.under_development)
+            }
+
+            bookmarkIcon.setOnClickListener {
+                createDialog(requireContext(), R.string.under_development)
             }
         }
     }
@@ -142,7 +156,6 @@ class MovieDetailFragment :
         intent.data = Uri.parse("https://www.youtube.com/watch?v=$videoId")
         intent.setPackage("com.google.android.youtube")
 
-        // todo open link in web if youtube app is not installed
         startActivity(intent)
     }
 
@@ -155,7 +168,6 @@ class MovieDetailFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.moviesDetailsState.collect {
-                    Log.d("MovieDetailsModelInFragment", "observer: $it")
                     when (it) {
                         null -> {
                             // nothing

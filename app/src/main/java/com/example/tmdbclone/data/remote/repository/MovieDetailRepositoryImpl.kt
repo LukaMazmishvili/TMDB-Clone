@@ -46,10 +46,8 @@ class MovieDetailRepositoryImpl @Inject constructor(
                     emit(Resource.Error(response.errorBody()?.string() ?: "Something went wrong !"))
                 }
             } catch (e: HttpException) {
-                Log.d("CheckHttpException", "fetchFlow: ${e.message()}")
                 emit(Resource.Error(e.message(), e.code()))
             } catch (e: Exception) {
-                Log.d("CheckException", "fetchFlow: ${e.message.toString()}")
                 emit(Resource.Error(e.message.toString()))
             }
         }
@@ -72,7 +70,6 @@ class MovieDetailRepositoryImpl @Inject constructor(
                 return genresMap
             }
         } catch (e: Exception) {
-            Log.d("ExceptionFetchingGenres", "fetchGenres: ${e.message}")
         }
 
         return mapOf()
@@ -125,7 +122,6 @@ class MovieDetailRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
 
                 emit(Resource.Error("Something Went Wrong !"))
-                Log.d("RequestBodyVideosExec", "fetchMovieDetails: ${e.message}")
 
             }
         }

@@ -15,9 +15,11 @@ import javax.inject.Inject
 
 class SessionManagerImpl @Inject constructor(private val context: Context) : SessionManager {
 
-    private val authTokenKey = stringPreferencesKey(Constants.AUTH_TOKEN)
-    private val usernameKey = stringPreferencesKey(Constants.CURRENT_USERNAME)
-    private val firstTimeKey = booleanPreferencesKey(Constants.IS_FIRST_TIME)
+    companion object {
+        private val authTokenKey = stringPreferencesKey(Constants.AUTH_TOKEN)
+        private val usernameKey = stringPreferencesKey(Constants.CURRENT_USERNAME)
+        private val firstTimeKey = booleanPreferencesKey(Constants.IS_FIRST_TIME)
+    }
 
     private val _isAuthorized = MutableStateFlow(false)
     override val isAuthorized = _isAuthorized.asStateFlow()

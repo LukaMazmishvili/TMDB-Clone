@@ -7,10 +7,10 @@
     android:background="@drawable/bg_round_corners">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="@string/not_authorized_message"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

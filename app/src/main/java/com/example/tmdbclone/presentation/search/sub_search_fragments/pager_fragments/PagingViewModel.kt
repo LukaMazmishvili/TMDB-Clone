@@ -16,7 +16,6 @@ import javax.inject.Inject
 class PagingViewModel @Inject constructor(private val getSearPagingUseCase: GetPagingUseCase) :
     BaseViewModel() {
 
-    // todo change data model to domain model
     private val _dataState = MutableStateFlow<PagingData<MoviesDTO.MovieModelDto>>(
         PagingData.empty()
     )

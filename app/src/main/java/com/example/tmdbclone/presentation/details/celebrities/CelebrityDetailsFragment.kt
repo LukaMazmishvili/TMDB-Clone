@@ -21,6 +21,7 @@ import com.example.tmdbclone.databinding.FragmentCelebrityDetailsBinding
 import com.example.tmdbclone.extension.uploadImage200x300
 import com.example.tmdbclone.extension.uploadImage350x450
 import com.example.tmdbclone.presentation.MainActivity
+import com.example.tmdbclone.presentation.MainActivityListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -34,10 +35,9 @@ class CelebrityDetailsFragment :
 
     private val args: CelebrityDetailsFragmentArgs by navArgs()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun started() {
-
-        (activity as MainActivity).hideToolBar()
+        val mainActivityListener = activity as MainActivityListener
+        mainActivityListener.hideToolBar()
         binding.celebrityName.text = args.celebrityName
         viewModel.personIdState.value = args.celebrityId
 
@@ -55,7 +55,6 @@ class CelebrityDetailsFragment :
                 viewModel.celebrityDetailsState.collect { details ->
                     details?.let { model ->
                         with(binding) {
-                            Log.d("PosterPath", "observer: ${model.profilePath}")
                             model.profilePath?.let { posterPath ->
                                 ivCelebImage.uploadImage350x450(IMAGE_BASE_URL + posterPath, true)
                             }

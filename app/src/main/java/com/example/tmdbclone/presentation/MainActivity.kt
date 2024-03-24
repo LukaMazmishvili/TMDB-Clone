@@ -36,7 +36,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MainActivityListener {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -60,7 +62,6 @@ class MainActivity : AppCompatActivity(), MainActivityListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         window.statusBarColor = getColor(R.color.app_darker)
         setSupportActionBar(binding.toolBar)
 

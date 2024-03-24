@@ -29,6 +29,7 @@
     <string name="similar_search">Similar Search</string>
     <string name="collection">Collection</string>
     <string name="not_authorized_message">You are not signed in. Please sign in to your TMDB Clone account</string>
+    <string name="under_development">This feature is under development</string>
     <string name="invalid_password_or_username">Invalid password or username</string>
     <string name="invalid_password">Invalid password, must be minimum 8 letters contain: [A–Z][a–z][0–9] </string>
     <string name="something_went_wrong">Something went wrong!</string>

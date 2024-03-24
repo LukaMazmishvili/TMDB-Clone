@@ -58,7 +58,6 @@ class PagingSource @Inject constructor(
             }
 
         } catch (e: Exception) {
-            Log.d("PagingDataSourceExc", "load: ${e.message}")
             LoadResult.Error(Exception(e))
         }
     }

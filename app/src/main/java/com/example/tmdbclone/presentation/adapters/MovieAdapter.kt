@@ -12,9 +12,6 @@ import com.example.tmdbclone.extension.uploadImage750x450
 class MovieAdapter(private val type: Int) :
     BaseAdapter<MovieModel.Movie, ItemMovieBinding>(ItemMovieBinding::inflate) {
 
-
-    // todo create another view holder for grid recycler item
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
 
@@ -38,7 +35,6 @@ class MovieAdapter(private val type: Int) :
                     }
                 }
             }
-            Log.d("Link_In_adapter", "onBindViewHolder: ${IMAGE_BASE_URL + item.posterPath}")
             tvMovieTitle.text = item.title ?: item.originalName
             tvMovieCategories.text = item.genreIds.toString().replace("[", "").replace("]", "")
             root.setOnClickListener {

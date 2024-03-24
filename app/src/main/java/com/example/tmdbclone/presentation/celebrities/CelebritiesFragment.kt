@@ -135,7 +135,6 @@ class CelebritiesFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.isLoading.collect { isLoading ->
-                    Log.d("isLoading", "observer: $isLoading")
                 }
             }
         }
